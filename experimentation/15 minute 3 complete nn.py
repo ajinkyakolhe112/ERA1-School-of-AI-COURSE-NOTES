@@ -13,7 +13,9 @@ class customNN(nn.Module):
 	def forward(self,input):
 		transform = self.convLayer1(input)
 		transform = nn.functional.relu(transform)
-		transform = transform.view(-1,10) # Flatten to 2D
+		
+		# reduced output size according to padding & stride
+		transform = transform.view(-1,10) # Flatten to 2D, easy resize to 10 because 10 classes.
 		finalResult = nn.functional.log_softmax(transform)
 		return finalResult
 
@@ -53,10 +55,17 @@ for i, (inputData, yActual) in enumerate(train_dataloader):
 ## Training. Error, Error Contribution, Weight Correction according to contribution
 inputDataX,yActualX = next(train_dataloader)
 yPredictedX = model(inputDataX)
-convexLossFunction = nn.CrossEntropyLoss()
-lossValue = convexLossFunction(yActualX,yPredictedX)
+convexErrorFunction = nn.functional.nll_loss(yActualX,yPredictedX)
 
-## Getting to Know PARAMETERS
+convexErrorFunction.backward() # FROM HERE CONTINUE TOMORROW
+
+
+# to get a working model, need to fiddle with matrix sizes to get it right.
+
+
+# Most minimalist image model would be each kernel/feature for its final predicted value 1/0. A widest nn. Each nn can be put as a wide nn. it means, the number of features is a good measure of complexity of the problem. 
+
+## Getting to Know PARAMETERS, size in memory of gpu. Number of matrix multiplications
 ## Getting to know feature spaces
 ## These codes are precise instructions. It runs only if its exactly correct. 
 ## Operations are matrix multiply, and vector addition and a few simple maths functions. and error calculation. Hence, we need to completely understand matrix dimentions which are formed when we build layers.
