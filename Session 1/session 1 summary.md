@@ -11,4 +11,5 @@
 5. DIKW Successive Transformations & Pytorch transformations
    1. Pytorch model as sequential  
 6. Types of Layers. Conv, FC (PYTORCH)
+   1. [Channel Notes & Experiments colab](https://colab.research.google.com/drive/1cKqF4fO5eWTOITeeFfe5Oy0fERGmiuML)
  
