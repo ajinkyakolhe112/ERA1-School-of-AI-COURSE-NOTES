@@ -20,12 +20,9 @@ device = torch.device("cuda" if use_cuda else "cpu")
 batch_size = 128
 
 train_loader = torch.utils.data.DataLoader( 
-    datasets.MNIST('../data', train=True, download=True, 
-                    transform=transforms.Compose([ 
-                        transforms.ToTensor(),
-                        transforms.Normalize((0.1307,), (0.3081,)
-                    )
-                ])),
+    datasets.MNIST('../data', 
+      train=True, download=True, 
+      transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])),
     batch_size=batch_size, shuffle=True) # torch.utils.data.DataLoader does batching...
 train_loader = tqdm(train_loader)
 
@@ -49,6 +46,7 @@ testModel = nn.Sequential(
 
 for batch_idx, (data, yActual) in enumerate(train_loader): 
     yPredicted = testModel(data)
+    # Error Function & Optimizer
     errorFunction = nn.functional.nll_loss(yActual,yPredicted)
     errorFunction.backward() # Error Gradient Calculated
     # Print gradients & weights & weight change
