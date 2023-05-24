@@ -3,6 +3,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
+#%%
+use_cuda = torch.cuda.is_available()
+device = torch.device("cuda" if use_cuda else "cpu")
+device
 
 #%%
 # Train data transformations
@@ -30,6 +34,7 @@ test_loader = torch.utils.data.DataLoader(train_data, **kwargs)
 train_loader = torch.utils.data.DataLoader(train_data, **kwargs)
 
 #%%
+"""
 import matplotlib.pyplot as plt
 batch_data, batch_label = next(iter(train_loader)) 
 fig = plt.figure()
@@ -40,7 +45,7 @@ for i in range(12):
 	plt.title(batch_label[i].item())
 	plt.xticks([])
 	plt.yticks([])
-
+"""
 #%%
 class Net(nn.Module):
 	#This defines the structure of the NN.
@@ -74,20 +79,20 @@ test_incorrect_pred = {'images': [], 'ground_truths': [], 'predicted_vals': []}
 
 #%%
 
-from tqdm import tqdm
+#from tqdm import tqdm
 
 def GetCorrectPredCount(pPrediction, pLabels):
 	return pPrediction.argmax(dim=1).eq(pLabels).sum().item()
 
 def train(model, device, train_loader, optimizer):
 	model.train()
-	pbar = tqdm(train_loader)
+#	pbar = tqdm(train_loader)
 	
 	train_loss = 0
 	correct = 0
 	processed = 0
 	
-	for batch_idx, (data, target) in enumerate(pbar):
+	for batch_idx, (data, target) in enumerate(train_loader):
 		data, target = data.to(device), target.to(device)
 		optimizer.zero_grad()
 		

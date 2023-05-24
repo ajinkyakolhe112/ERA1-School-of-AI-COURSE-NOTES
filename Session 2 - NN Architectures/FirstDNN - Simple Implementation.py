@@ -33,29 +33,17 @@ test_loader = torch.utils.data.DataLoader(
                     ])),
     batch_size=batch_size, shuffle=True)
 
-
 # Testing
 device = torch.device("cuda") # cuda, cpu, tpu
 channels, neurons = 1, 1
 singleImage = torch.randn(channels,28,28)
 
-testModel = nn.Sequential(
-   nn.Conv2d(channels,neurons,3)
-   )
+basicModel = nn.Sequential(
+  nn.Conv2d(channels,neurons,3)
+  )
+basicModel(singleImage)
 
-
-for batch_idx, (data, yActual) in enumerate(train_loader): 
-    yPredicted = testModel(data)
-    # Error Function & Optimizer
-    errorFunction = nn.functional.nll_loss(yActual,yPredicted)
-    errorFunction.backward() # Error Gradient Calculated
-    # Print gradients & weights & weight change
-
-    optimizer = optim.SGD(testModel.parameters())   # Optimize what?
-    optimizer.step()
-    break
-
-#%% #
+#%%
 # Neural Network Block
 # RF Formulae: https://share.cleanshot.com/Xw5YtDb7 & https://docs.google.com/spreadsheets/d/1GoGSYCGxL0AUagRUIVULokRRnrvmuQaCBZW-kZEbX8w/edit#gid=0
 
@@ -90,38 +78,21 @@ print(summary(model, input_size=(1, 28, 28),
            verbose=2,
            col_names=["input_size","kernel_size", "output_size", "num_params", "params_percent"],col_width=20))
 #%%
-# Training & Testing Block
-def train(model, device, train_loader, optimizer): 
-    model.train()
-    pbar = tqdm(train_loader)
-    for batch_idx, (data, target) in enumerate(pbar): 
-        data, target = data.to(device), target.to(device)
-        optimizer.zero_grad()
-        output = model(data) 
-        loss = F.nll_loss(output, target) 
-        loss.backward() 
-        optimizer.step() 
-        pbar.set_description(desc= f'loss={loss.item()} batch_id={batch_idx}')
+
+for batch_idx, (data, yActual) in enumerate(train_loader): 
+  yPredicted = testModel(data)
+  # Error Function & Optimizer
+  errorFunction = nn.functional.nll_loss(yActual,yPredicted)
+  errorFunction.backward() # Error Gradient Calculated
+  # Print gradients & weights & weight change
+  
+  optimizer = optim.SGD(testModel.parameters())   # Optimize what?
+  optimizer.step()
+  break
 
 
-def test(model, device, test_loader):
-    model.eval()
-    test_loss = 0
-    correct = 0
-    with torch.no_grad():
-        for data, target in test_loader:
-            data, target = data.to(device), target.to(device)
-            output = model(data)
-            test_loss += F.nll_loss(output, target, reduction='sum').item()  
-            pred = output.argmax(dim=1, keepdim=True)  
-            correct += pred.eq(target.view_as(pred)).sum().item()
-
-    test_loss /= len(test_loader.dataset)
-
-    print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
-        test_loss, correct, len(test_loader.dataset),
-        100. * correct / len(test_loader.dataset)))
 #%%
+"TODO: Training & Testing Loop"
 optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
 
 for epoch in range(1, 2):

@@ -14,3 +14,6 @@ data/MNIST/raw/train-images-idx3-ubyte
 data/MNIST/raw/train-images-idx3-ubyte.gz
 data/MNIST/raw/train-labels-idx1-ubyte
 data/MNIST/raw/train-labels-idx1-ubyte.gz
+.idea/workspace.xml
+.idea/ERA1.iml
+.idea/modules.xml
