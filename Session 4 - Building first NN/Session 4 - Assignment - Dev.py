@@ -29,7 +29,7 @@ test_data = datasets.MNIST('../data', train=True, download=True, transform=train
 
 #%%
 batch_size = 512
-kwargs = {'batch_size': batch_size, 'shuffle': False, 'num_workers': 2, 'pin_memory': True}
+kwargs = {'batch_size': batch_size, 'shuffle': True, 'pin_memory': True} #FixME: spec error on coderunner 4. works fine on colab
 test_loader = torch.utils.data.DataLoader(train_data, **kwargs)
 train_loader = torch.utils.data.DataLoader(train_data, **kwargs)
 
@@ -79,20 +79,19 @@ test_incorrect_pred = {'images': [], 'ground_truths': [], 'predicted_vals': []}
 
 #%%
 
-#from tqdm import tqdm
-
+from tqdm import tqdm
 def GetCorrectPredCount(pPrediction, pLabels):
 	return pPrediction.argmax(dim=1).eq(pLabels).sum().item()
 
 def train(model, device, train_loader, optimizer):
 	model.train()
-#	pbar = tqdm(train_loader)
+	pbar = tqdm(train_loader)
 	
 	train_loss = 0
 	correct = 0
 	processed = 0
 	
-	for batch_idx, (data, target) in enumerate(train_loader):
+	for batch_idx, (data, target) in enumerate(pbar):
 		data, target = data.to(device), target.to(device)
 		optimizer.zero_grad()
 		
