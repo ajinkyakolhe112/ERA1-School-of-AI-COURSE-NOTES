@@ -34,6 +34,16 @@ test_loader = torch.utils.data.DataLoader(train_data, **kwargs)
 train_loader = torch.utils.data.DataLoader(train_data, **kwargs)
 
 #%%
+from tqdm import tqdm
+pbar = tqdm(train_loader)
+
+for batch_idx, (data, target) in enumerate(pbar):
+	data, target = data.to(device), target.to(device)
+	print("One Batch Ends")
+	break
+	
+	
+#%%
 """
 import matplotlib.pyplot as plt
 batch_data, batch_label = next(iter(train_loader)) 
@@ -66,9 +76,61 @@ class Net(nn.Module):
 		x = x.view(-1, 320)
 		x = F.relu(self.fc1(x))
 		x = self.fc2(x)
+		x = x.view(-1, 10)
 		return F.log_softmax(x, dim=1)
 
 #%%
+class testingNN(nn.Module):
+	def __init__(self):
+		super().__init__()
+		self.conv1 = nn.Conv2d(1, 32, 3, padding=1)
+		self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
+		self.pool1 = nn.MaxPool2d(2, 2)
+		self.conv3 = nn.Conv2d(64, 128, 3, padding=1)
+		self.conv4 = nn.Conv2d(128, 256, 3, padding = 1)
+		self.pool2 = nn.MaxPool2d(2, 2)
+		self.compressCh = nn.Conv2d(256,10,(1,1))
+		self.fc = nn.Linear(10*7*7,10)
+
+# Correct values
+# https://user-images.githubusercontent.com/498461/238034116-7db4cec0-7738-42df-8b67-afa971428d39.png
+	def forward(self, x):
+		x = self.pool1(F.relu(self.conv2(F.relu(self.conv1(x)))))
+		x = self.pool2(F.relu(self.conv4(F.relu(self.conv3(x)))))
+		x = self.compressCh(x)
+		x = x.view(-1, 10)
+		return F.log_softmax(x)
+	
+
+testingModel = testingNN().to(device)
+optimizer = optim.SGD(testingModel.parameters(), lr=10.01, momentum=0.9)	
+
+batch_size = 128
+kwargs = {'batch_size': batch_size, 'shuffle': True, 'pin_memory': True} #FixME: spec error on coderunner 4. works fine on colab
+test_loader = torch.utils.data.DataLoader(train_data, **kwargs)
+train_loader = torch.utils.data.DataLoader(train_data, **kwargs)
+
+from tqdm import tqdm
+pbar = tqdm(train_loader)
+
+for batch_idx, (data, target) in enumerate(pbar):
+	data, target = data.to(device), target.to(device)
+	print("One Batch Ends")
+	
+	optimizer.zero_grad()
+	pred = testingModel(data)
+	
+	# Calculate loss
+	loss = F.nll_loss(pred, target)
+	train_loss+=loss.item()
+	
+	# Backpropagation
+	loss.backward()
+	optimizer.step()
+	break
+	
+	
+
 # Data to plot accuracy and loss graphs
 train_losses = []
 test_losses = []
