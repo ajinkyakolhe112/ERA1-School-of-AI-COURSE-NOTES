@@ -5,6 +5,9 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 
 #%%
+use_cuda = torch.cuda.is_available()
+device = torch.device("cuda" if use_cuda else "cpu")
+device
 # Train data transformations
 train_transforms = transforms.Compose([
 	transforms.RandomApply([transforms.CenterCrop(22), ], p=0.1),
@@ -25,11 +28,12 @@ test_data = datasets.MNIST('../data', train=True, download=True, transform=train
 
 #%%
 batch_size = 512
-kwargs = {'batch_size': batch_size, 'shuffle': False, 'num_workers': 2, 'pin_memory': True}
+kwargs = {'batch_size': batch_size, 'shuffle': False, 'pin_memory': True} #FixME: spec error on coderunner 4. works fine on colab
 test_loader = torch.utils.data.DataLoader(train_data, **kwargs)
 train_loader = torch.utils.data.DataLoader(train_data, **kwargs)
 
 #%%
+"""
 import matplotlib.pyplot as plt
 batch_data, batch_label = next(iter(train_loader)) 
 fig = plt.figure()
@@ -40,7 +44,7 @@ for i in range(12):
 	plt.title(batch_label[i].item())
 	plt.xticks([])
 	plt.yticks([])
-
+"""
 #%%
 class Net(nn.Module):
 	#This defines the structure of the NN.

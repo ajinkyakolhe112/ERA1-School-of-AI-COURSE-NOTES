@@ -12,6 +12,7 @@ use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 device
 
+#%%
 batch_size = 1024
 
 train_loader = torch.utils.data.DataLoader(
@@ -29,6 +30,15 @@ test_loader = torch.utils.data.DataLoader(
 					])),
 	batch_size=batch_size, shuffle=True)
 
+#%%
+from tqdm import tqdm
+pbar = tqdm(train_loader)
+
+for batch_idx, (data, target) in enumerate(pbar):
+	data, target = data.to(device), target.to(device)
+	print("One Batch Ends")
+
+#%%
 class FirstDNN(nn.Module):
 	def __init__(self):
 		super(FirstDNN, self).__init__()
