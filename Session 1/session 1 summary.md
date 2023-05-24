@@ -12,4 +12,10 @@
    1. Pytorch model as sequential  
 6. Types of Layers. Conv, FC (PYTORCH)
    1. [Channel Notes & Experiments colab](https://colab.research.google.com/drive/1cKqF4fO5eWTOITeeFfe5Oy0fERGmiuML)
- 
+   
+   
+Tensorflow vs Pytorch
+0. Standing on shoulders of giants. In any domain, past libraries and lessons learned and improved versions being continued.
+1. Tensorflow is written from point of view of Google. To run their own huge workloads in highly optmized way for billions of users. 
+2. Pytorch was a library with focus on "few simple and customizable and fast implementations" and simpler compiler. 
+

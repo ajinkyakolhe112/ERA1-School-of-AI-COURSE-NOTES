@@ -17,18 +17,9 @@ class reshape2d(nn.Module):
 		outputX = inputX.view(-1,self.nClasses) # n_dim = 1 ( channels, 1 dim. or channels, 2 dim, or channels , 3 dims
 		return outputX
 
-linear11= nn.Linear(1,1)
-linear12 = nn.Linear(1,2)
-linear21 = nn.Linear(2,1)
-linear22 = nn.Linear(2,2)
-linear32 = nn.Linear(3,2)
-linear23 = nn.Linear(2,3)
+
 # LINEAR => Vector to Vector.. columns or features
 # CONV2D ( chw
-
-	# What kind of problem: Single Image = 0 to 9 Digits. (How is the problem. What does NN need to do?)
-	# 0 to 9. a-z English, mandrin Detector, Multiple languages, (
-	# Handwritten vs Computer Printed 0 to 9. a-z English, Multiple languages
 
 model = nn.Sequential( # X_{out} = X_{in} \odot W + b. X_{in} or X_{out} = C * H * W
 	nn.Conv2d(in_channels = 1,out_channels = 100,kernel_size = (3,3)), # Important terms, channels in features & receptive fields & number of neurons
