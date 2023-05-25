@@ -8,11 +8,13 @@ from torchvision import datasets, transforms
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 device
+
 # Train data transformations
+"Same Train & Test Transformation"
 train_transforms = transforms.Compose([
-	transforms.RandomApply([transforms.CenterCrop(22), ], p=0.1),
-	transforms.Resize((28, 28)),
-	transforms.RandomRotation((-15., 15.), fill=0),
+#	transforms.RandomApply([transforms.CenterCrop(22), ], p=0.1),
+#	transforms.Resize((28, 28)),
+#	transforms.RandomRotation((-15., 15.), fill=0),
 	transforms.ToTensor(),
 	transforms.Normalize((0.1307,), (0.3081,)),
 	])
@@ -20,15 +22,16 @@ train_transforms = transforms.Compose([
 # Test data transformations
 test_transforms = transforms.Compose([
 	transforms.ToTensor(),
-	transforms.Normalize((0.1407,), (0.4081,))
+	transforms.Normalize((0.1307,), (0.3081,)),
 	])
-	
+"train=False"
 train_data = datasets.MNIST('../data', train=True, download=True, transform=train_transforms)
-test_data = datasets.MNIST('../data', train=True, download=True, transform=train_transforms)
+test_data = datasets.MNIST('../data', train=False, download=True, transform=train_transforms)
 
 #%%
+"Shuffle = True for Data Batch"
 batch_size = 512
-kwargs = {'batch_size': batch_size, 'shuffle': False, 'pin_memory': True} #FixME: spec error on coderunner 4. works fine on colab
+kwargs = {'batch_size': batch_size, 'shuffle': True, 'pin_memory': True} #FixME: spec error on coderunner 4. works fine on colab
 test_loader = torch.utils.data.DataLoader(train_data, **kwargs)
 train_loader = torch.utils.data.DataLoader(train_data, **kwargs)
 
