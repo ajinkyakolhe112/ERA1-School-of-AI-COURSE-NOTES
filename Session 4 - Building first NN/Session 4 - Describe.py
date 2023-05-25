@@ -1,19 +1,23 @@
+"CODE BLOCK 1"
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
+
 #%%
+"CODE BLOCK 2"
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 device
 
-#%%
+"CODE BLOCK 3"
 # Train data transformations
+"Same Train & Test Transformation"
 train_transforms = transforms.Compose([
-	transforms.RandomApply([transforms.CenterCrop(22), ], p=0.1),
-	transforms.Resize((28, 28)),
-	transforms.RandomRotation((-15., 15.), fill=0),
+#	transforms.RandomApply([transforms.CenterCrop(22), ], p=0.1),
+#	transforms.Resize((28, 28)),
+#	transforms.RandomRotation((-15., 15.), fill=0),
 	transforms.ToTensor(),
 	transforms.Normalize((0.1307,), (0.3081,)),
 	])
@@ -21,32 +25,28 @@ train_transforms = transforms.Compose([
 # Test data transformations
 test_transforms = transforms.Compose([
 	transforms.ToTensor(),
-	transforms.Normalize((0.1407,), (0.4081,))
+	transforms.Normalize((0.1307,), (0.3081,)),
 	])
-	
-train_data = datasets.MNIST('../data', train=True, download=True, transform=train_transforms)
-test_data = datasets.MNIST('../data', train=True, download=True, transform=train_transforms)
 
+"CODE BLOCK 4"
+# Two mistakes
+"train=False & transform = test_transforms"
+train_data = datasets.MNIST('../data', train=True, download=True, transform=train_transforms)
+test_data = datasets.MNIST('../data', train=False, download=True, transform=test_transforms)
+
+"CODE BLOCK 5"
 #%%
+"Shuffle = True for Data Batch & test_data loader"
 batch_size = 512
 kwargs = {'batch_size': batch_size, 'shuffle': True, 'pin_memory': True} #FixME: spec error on coderunner 4. works fine on colab
-test_loader = torch.utils.data.DataLoader(train_data, **kwargs)
+test_loader = torch.utils.data.DataLoader(test_data, **kwargs)
 train_loader = torch.utils.data.DataLoader(train_data, **kwargs)
 
-#%%
-from tqdm import tqdm
-pbar = tqdm(train_loader)
-
-for batch_idx, (data, target) in enumerate(pbar):
-	data, target = data.to(device), target.to(device)
-	print("One Batch Ends")
-	break
-	
-	
+"CODE BLOCK 6"
 #%%
 """
 import matplotlib.pyplot as plt
-batch_data, batch_label = next(iter(train_loader)) 
+batch_data, batch_label = next(iter(train_loader)) # First batch is being discarded here. 
 fig = plt.figure()
 for i in range(12):
 	plt.subplot(3,4,i+1)
@@ -56,81 +56,43 @@ for i in range(12):
 	plt.xticks([])
 	plt.yticks([])
 """
+	
+"CODE BLOCK 7"
 #%%
 class Net(nn.Module):
 	#This defines the structure of the NN.
 	def __init__(self):
 		super(Net, self).__init__()
-		self.conv1 = nn.Conv2d(1, 32, kernel_size=3)
-		self.conv2 = nn.Conv2d(32, 64, kernel_size=3)
-		self.conv3 = nn.Conv2d(64, 128, kernel_size=3)
-		self.conv4 = nn.Conv2d(128, 256, kernel_size=3)
-		self.fc1 = nn.Linear(320, 50)
-		self.fc2 = nn.Linear(50, 10)
+		# 4 blocks of 4 conv layers each extracting increasing in number & higher depth features each
+		# 2 max pooling & 4 conv layers. (image size after: (28 - 4*2)/2*2
+		self.conv1 = nn.Conv2d(1, 32, kernel_size=3) # 26*26
+		self.conv2 = nn.Conv2d(32, 64, kernel_size=3) # 24*24, 12*12
+		self.conv3 = nn.Conv2d(64, 128, kernel_size=3) # 10*10
+		self.conv4 = nn.Conv2d(128, 256, kernel_size=3) # 8*8, 4*4
+		# output Image = (256,5,5)
+		# check transform stage in forward
+		self.fc1 = nn.Linear(256*4*4, 50) # singleImage = 256 Channels. Size = 4*4. Converted to Vector. Output = (1*50) or (1,50)
+		self.fc2 = nn.Linear(50, 10) # Output = (1*10) or (1,10)
 		
 	def forward(self, x):
 		x = F.relu(self.conv1(x), 2)
 		x = F.relu(F.max_pool2d(self.conv2(x), 2)) 
 		x = F.relu(self.conv3(x), 2)
 		x = F.relu(F.max_pool2d(self.conv4(x), 2)) 
-		x = x.view(-1, 320)
+		
+		# output Image = (-1,256,5,5)
+		# incoming vector = (-1,1,Multiplication)
+		x = x.view(-1, 256*4*4)
 		x = F.relu(self.fc1(x))
 		x = self.fc2(x)
-		x = x.view(-1, 10)
-		return F.log_softmax(x, dim=1)
+		x = F.log_softmax(x, dim=1)
+		return x
+
+model = Net()
+imageBatch = torch.randn(512,1,28,28)
+model(imageBatch)
 
 #%%
-class testingNN(nn.Module):
-	def __init__(self):
-		super().__init__()
-		self.conv1 = nn.Conv2d(1, 32, 3, padding=1)
-		self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
-		self.pool1 = nn.MaxPool2d(2, 2)
-		self.conv3 = nn.Conv2d(64, 128, 3, padding=1)
-		self.conv4 = nn.Conv2d(128, 256, 3, padding = 1)
-		self.pool2 = nn.MaxPool2d(2, 2)
-		self.compressCh = nn.Conv2d(256,10,(1,1))
-		self.fc = nn.Linear(10*7*7,10)
-
-# Correct values
-# https://user-images.githubusercontent.com/498461/238034116-7db4cec0-7738-42df-8b67-afa971428d39.png
-	def forward(self, x):
-		x = self.pool1(F.relu(self.conv2(F.relu(self.conv1(x)))))
-		x = self.pool2(F.relu(self.conv4(F.relu(self.conv3(x)))))
-		x = self.compressCh(x)
-		x = x.view(-1, 10)
-		return F.log_softmax(x)
-	
-
-testingModel = testingNN().to(device)
-optimizer = optim.SGD(testingModel.parameters(), lr=10.01, momentum=0.9)	
-
-batch_size = 128
-kwargs = {'batch_size': batch_size, 'shuffle': True, 'pin_memory': True} #FixME: spec error on coderunner 4. works fine on colab
-test_loader = torch.utils.data.DataLoader(train_data, **kwargs)
-train_loader = torch.utils.data.DataLoader(train_data, **kwargs)
-
-from tqdm import tqdm
-pbar = tqdm(train_loader)
-
-for batch_idx, (data, target) in enumerate(pbar):
-	data, target = data.to(device), target.to(device)
-	print("One Batch Ends")
-	
-	optimizer.zero_grad()
-	pred = testingModel(data)
-	
-	# Calculate loss
-	loss = F.nll_loss(pred, target)
-	train_loss+=loss.item()
-	
-	# Backpropagation
-	loss.backward()
-	optimizer.step()
-	break
-	
-	
-
 # Data to plot accuracy and loss graphs
 train_losses = []
 test_losses = []
@@ -140,8 +102,9 @@ test_acc = []
 test_incorrect_pred = {'images': [], 'ground_truths': [], 'predicted_vals': []}
 
 #%%
-
+"BLOCK 8"
 from tqdm import tqdm
+
 def GetCorrectPredCount(pPrediction, pLabels):
 	return pPrediction.argmax(dim=1).eq(pLabels).sum().item()
 
@@ -200,6 +163,7 @@ def test(model, device, test_loader):
 			test_loss, correct, len(test_loader.dataset),
 			100. * correct / len(test_loader.dataset)))
 
+"BLOCK 9"
 #%%
 model = Net().to(device)
 optimizer = optim.SGD(model.parameters(), lr=10.01, momentum=0.9)

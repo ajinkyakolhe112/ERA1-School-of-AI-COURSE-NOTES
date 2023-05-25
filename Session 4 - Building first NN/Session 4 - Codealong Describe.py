@@ -38,7 +38,7 @@ for batchId, (data,target) in enumerate(dataLoader):
 	optimizer.zero_grad()
 	yPredicted = model(data)
 	lossFun = F.nll_loss(yPredicted,target) # Error Calculate. (NLL_LOSS = funciton of Error)
-	loss.backward() # one function call, defined error is backpropogated "L" times. (graph which is build in forward pass on Data)
+	loss.backward() # one function call, defined error is backpropogated "L" times through each layer. (graph which is build in forward pass on Data)
 	for params in model.get_parameters():
 		params = params - params.gradient * learning_rate
 		

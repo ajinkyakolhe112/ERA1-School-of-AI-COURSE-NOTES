@@ -1,3 +1,4 @@
+"CODE BLOCK 1"
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -5,10 +6,12 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 
 #%%
+"CODE BLOCK 2"
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 device
 
+"CODE BLOCK 3"
 # Train data transformations
 "Same Train & Test Transformation"
 train_transforms = transforms.Compose([
@@ -24,21 +27,26 @@ test_transforms = transforms.Compose([
 	transforms.ToTensor(),
 	transforms.Normalize((0.1307,), (0.3081,)),
 	])
-"train=False"
-train_data = datasets.MNIST('../data', train=True, download=True, transform=train_transforms)
-test_data = datasets.MNIST('../data', train=False, download=True, transform=train_transforms)
 
+"CODE BLOCK 4"
+# Two mistakes
+"train=False & transform = test_transforms"
+train_data = datasets.MNIST('../data', train=True, download=True, transform=train_transforms)
+test_data = datasets.MNIST('../data', train=False, download=True, transform=test_transforms)
+
+"CODE BLOCK 5"
 #%%
-"Shuffle = True for Data Batch"
+"Shuffle = True for Data Batch & test_data loader"
 batch_size = 512
 kwargs = {'batch_size': batch_size, 'shuffle': True, 'pin_memory': True} #FixME: spec error on coderunner 4. works fine on colab
-test_loader = torch.utils.data.DataLoader(train_data, **kwargs)
+test_loader = torch.utils.data.DataLoader(test_data, **kwargs)
 train_loader = torch.utils.data.DataLoader(train_data, **kwargs)
 
+"CODE BLOCK 6"
 #%%
 """
 import matplotlib.pyplot as plt
-batch_data, batch_label = next(iter(train_loader)) 
+batch_data, batch_label = next(iter(train_loader)) # First batch is being discarded here. 
 fig = plt.figure()
 for i in range(12):
 	plt.subplot(3,4,i+1)
@@ -48,6 +56,8 @@ for i in range(12):
 	plt.xticks([])
 	plt.yticks([])
 """
+	
+"CODE BLOCK 7"
 #%%
 class Net(nn.Module):
 	#This defines the structure of the NN.
@@ -70,6 +80,7 @@ class Net(nn.Module):
 		x = self.fc2(x)
 		return F.log_softmax(x, dim=1)
 
+
 #%%
 # Data to plot accuracy and loss graphs
 train_losses = []
@@ -80,7 +91,7 @@ test_acc = []
 test_incorrect_pred = {'images': [], 'ground_truths': [], 'predicted_vals': []}
 
 #%%
-
+"BLOCK 8"
 from tqdm import tqdm
 
 def GetCorrectPredCount(pPrediction, pLabels):
@@ -141,6 +152,7 @@ def test(model, device, test_loader):
 			test_loss, correct, len(test_loader.dataset),
 			100. * correct / len(test_loader.dataset)))
 
+"BLOCK 9"
 #%%
 model = Net().to(device)
 optimizer = optim.SGD(model.parameters(), lr=10.01, momentum=0.9)
