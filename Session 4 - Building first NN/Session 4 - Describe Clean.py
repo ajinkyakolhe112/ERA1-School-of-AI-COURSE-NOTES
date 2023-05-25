@@ -118,24 +118,17 @@ def train(model, device, train_loader, optimizer):
 	
 	for batch_idx, (data, target) in enumerate(pbar):
 		data, target = data.to(device), target.to(device)
-		optimizer.zero_grad()
-		
-		# Predict
 		pred = model(data)
-		
-		# Calculate loss
 		loss = F.nll_loss(pred, target)
-		train_loss+=loss.item()
-		
-		# Backpropagation
 		loss.backward()
 		optimizer.step()
-		
+		optimizer.zero_grad()
+
+		train_loss+=loss.item()
 		correct += GetCorrectPredCount(pred, target)
 		processed += len(data)
-		
-		pbar.set_description(desc= f'Train: Loss={loss.item():0.4f} Batch_id={batch_idx} Accuracy={100*correct/processed:0.2f}')
-		
+		pbar.set_description("Train: Loss={:0.4f} Batch_id={f} Accuracy={:0.2f}".format(loss.item(),batch_idx,100*correct/processed))
+	
 	train_acc.append(100*correct/processed)
 	train_losses.append(train_loss/len(train_loader))
 	
@@ -148,27 +141,27 @@ def test(model, device, test_loader):
 	with torch.no_grad():
 		for batch_idx, (data, target) in enumerate(test_loader):
 			data, target = data.to(device), target.to(device)
-		
 			output = model(data)
-			test_loss += F.nll_loss(output, target, reduction='sum').item()  # sum up batch loss
-		
+			loss = F.nll_loss
+			
+			test_loss += loss(output, target, reduction='sum').item()  # sum up batch loss
 			correct += GetCorrectPredCount(output, target)
-				
-				
+
 	test_loss /= len(test_loader.dataset)
 	test_acc.append(100. * correct / len(test_loader.dataset))
 	test_losses.append(test_loss)
 
-	print('Test set: Average loss: {:.4f}, Accuracy: {}/{} ({:.2f}%)\n'.format(
-			test_loss, correct, len(test_loader.dataset),
-			100. * correct / len(test_loader.dataset)))
+	print('Test set: Average loss: {:.4f}, Accuracy: {}/{} ({:.2f}%)\n'.
+		format(test_loss, correct, len(test_loader.dataset),100. * correct / len(test_loader.dataset)))
 
 "BLOCK 9"
 #%%
-model = Net().to(device)
+
 optimizer = optim.SGD(model.parameters(), lr=10.01, momentum=0.9)
 scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=15, gamma=0.1, verbose=True)
 num_epochs = 20
+
+model = Net().to(device)
 
 for epoch in range(1, num_epochs+1):
 	print(f'Epoch {epoch}')
