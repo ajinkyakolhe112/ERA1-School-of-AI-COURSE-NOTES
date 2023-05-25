@@ -13,7 +13,7 @@ from torchvision import datasets, transforms
 from torchinfo import summary
 from tqdm import tqdm
 
-use_cuda = torch.cuda.is_available()       
+use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 #%%
 # 1: Data Loader Block
