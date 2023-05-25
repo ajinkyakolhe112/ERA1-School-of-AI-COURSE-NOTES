@@ -83,9 +83,9 @@ class Net(nn.Module):
 		# output Image = (-1,256,5,5)
 		# incoming vector = (-1,1,Multiplication)
 		x = x.view(-1, 256*4*4)
-		x = F.relu(self.fc1(x))
+		x = F.relu(self.fc1(x)) # RELU? Extracted features are being discarded may be?
 		x = self.fc2(x)
-		x = F.log_softmax(x, dim=1)
+		x = F.log_softmax(x, dim=1) # F.softmax(x)[0].sum()
 		return x
 
 model = Net()
