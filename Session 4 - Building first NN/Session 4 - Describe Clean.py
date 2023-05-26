@@ -4,6 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
+import matplotlib.pyplot as plt
 
 #%%
 "CODE BLOCK 2"
@@ -75,8 +76,8 @@ class Net(nn.Module):
 		self.fc2 = nn.Linear(50, 10) # Output = (1*10) or (1,10)
 		
 	def forward(self, x):
-		x = F.relu(self.conv1(x), 2)
-		x = F.relu(F.max_pool2d(self.conv2(x), 2)) 
+		x = F.relu(self.conv1(x), 2) # 2 here is inplace=False. 
+		x = F.relu(F.max_pool2d(self.conv2(x), 2)) # 2 = Kernel Size here. 
 		x = F.relu(self.conv3(x), 2)
 		x = F.relu(F.max_pool2d(self.conv4(x), 2)) 
 		
@@ -88,9 +89,9 @@ class Net(nn.Module):
 		x = F.log_softmax(x, dim=1) # F.softmax(x)[0].sum()
 		return x
 
-model = Net()
+testModel = Net()
 imageBatch = torch.randn(512,1,28,28)
-model(imageBatch)
+testModel(imageBatch)
 
 #%%
 # Data to plot accuracy and loss graphs
@@ -110,13 +111,13 @@ def GetCorrectPredCount(pPrediction, pLabels):
 
 def train(model, device, train_loader, optimizer):
 	model.train()
-	pbar = tqdm(train_loader)
+	train_loader = tqdm(train_loader)
 	
 	train_loss = 0
 	correct = 0
 	processed = 0
 	
-	for batch_idx, (data, target) in enumerate(pbar):
+	for batch_idx, (data, target) in enumerate(train_loader):
 		data, target = data.to(device), target.to(device)
 		pred = model(data)
 		loss = F.nll_loss(pred, target)
@@ -127,7 +128,7 @@ def train(model, device, train_loader, optimizer):
 		train_loss+=loss.item()
 		correct += GetCorrectPredCount(pred, target)
 		processed += len(data)
-		pbar.set_description("Train: Loss={:0.4f} Batch_id={f} Accuracy={:0.2f}".format(loss.item(),batch_idx,100*correct/processed))
+		train_loader.set_description("Train: Loss=%f, Batch_id=%0.2f, Accuracy=%0.4f"%(loss.item(),batch_idx,100*correct/processed))
 	
 	train_acc.append(100*correct/processed)
 	train_losses.append(train_loss/len(train_loader))
@@ -156,21 +157,19 @@ def test(model, device, test_loader):
 
 "BLOCK 9"
 #%%
-
-optimizer = optim.SGD(model.parameters(), lr=10.01, momentum=0.9)
+model = Net()
+model.to(device) # Model, Data both needs to be on device
+optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
 scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=15, gamma=0.1, verbose=True)
-num_epochs = 20
 
-model = Net().to(device)
+num_epochs = 20
 
 for epoch in range(1, num_epochs+1):
 	print(f'Epoch {epoch}')
 	train(model, device, train_loader, optimizer)
-	test(model, device, train_loader)
 	scheduler.step()
 	
-	if epoch == 3:
-		break
+test(model, device, test_loader) # Test Loader
 	
 #%%
 fig, axs = plt.subplots(2,2,figsize=(15,10))
@@ -185,8 +184,11 @@ axs[1, 1].set_title("Test Accuracy")
 
 #%%
 #!pip install torchsummary
-from torchsummary import summary
+from torchinfo import summary
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 model = Net().to(device)
-summary(model, input_size=(1, 28, 28))
+summary(model,input_size=(1,28,28),verbose=2,
+	col_names=["input_size","kernel_size", "output_size", "num_params", "params_percent"],col_width=20);
+
+print("End")

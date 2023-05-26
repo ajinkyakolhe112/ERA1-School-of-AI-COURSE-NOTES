@@ -142,8 +142,7 @@ def test(model, device, test_loader):
 			test_loss += F.nll_loss(output, target, reduction='sum').item()  # sum up batch loss
 		
 			correct += GetCorrectPredCount(output, target)
-				
-				
+
 	test_loss /= len(test_loader.dataset)
 	test_acc.append(100. * correct / len(test_loader.dataset))
 	test_losses.append(test_loss)
@@ -155,19 +154,16 @@ def test(model, device, test_loader):
 "BLOCK 9"
 #%%
 model = Net().to(device)
-optimizer = optim.SGD(model.parameters(), lr=10.01, momentum=0.9)
+optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
 scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=15, gamma=0.1, verbose=True)
 num_epochs = 20
 
 for epoch in range(1, num_epochs+1):
 	print(f'Epoch {epoch}')
 	train(model, device, train_loader, optimizer)
-	test(model, device, train_loader)
 	scheduler.step()
-	
-	if epoch == 3:
-		break
-	
+
+test(model, device, test_loader) # NOT TRAIN_LOADER	
 #%%
 fig, axs = plt.subplots(2,2,figsize=(15,10))
 axs[0, 0].plot(train_losses)
