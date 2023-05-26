@@ -5,3 +5,4 @@
 
 At end of training, value in each vector is corrected "Examples / Batch_Size" times. 
 Each time, its been corrected according to it's contribution in Error. 
+

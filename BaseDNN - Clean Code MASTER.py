@@ -7,44 +7,43 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 #!pip install torchsummary
 from torchsummary import summary
+from tqdm import tqdm
 
-use_cuda = torch.cuda.is_available()
-device = torch.device("cuda" if use_cuda else "cpu")
+use_cudaFlag = torch.cuda.is_available()
+device = torch.device("cuda" if use_cudaFlag else "cpu")
 device
 
 #%%
+"DataSets"
+train_dataset = datasets.MNIST('../data', 
+	train=True, download=True, transform=transforms.Compose([transforms.ToTensor(),transforms.Normalize((0.1307,), (0.3081,))]))
+test_dataset = datasets.MNIST('../data', 
+	train=False, download=True, transform=transforms.Compose([transforms.ToTensor(),transforms.Normalize((0.1307,), (0.3081,))]))
+
+"Data Loaders"
 batch_size = 1024
 
-train_loader = torch.utils.data.DataLoader(
-	datasets.MNIST('../data', train=True, download=True,
-					transform=transforms.Compose([
-						transforms.ToTensor(),
-						transforms.Normalize((0.1307,), (0.3081,))
-					])),
-	batch_size=batch_size, shuffle=True)
+train_dataLoader = torch.utils.data.DataLoader(x_dataset	, batch_size=batch_size, shuffle=True)
+test_dataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, shuffle=True)
+train_dataLoader,test_dataLoader = tqdm(train_dataLoader),tqdm(test_dataLoader)
 
-test_loader = torch.utils.data.DataLoader(
-	datasets.MNIST('../data', train=False, transform=transforms.Compose([
-						transforms.ToTensor(),
-						transforms.Normalize((0.1307,), (0.3081,))
-					])),
-	batch_size=batch_size, shuffle=True)
-
-#%%
-from tqdm import tqdm
-pbar = tqdm(train_loader)
-
-for batch_idx, (data, target) in enumerate(pbar):
-	data, target = data.to(device), target.to(device)
+for batch_idx, (data, target) in enumerate(train_dataLoader):
+	data, target
 	print("One Batch Ends")
 	break
+
+"EXPORTS: train_dataLoader,test_dataLoader with batch_size"
 
 #%%
 class FirstDNN(nn.Module):
 	def __init__(self):
 		super(FirstDNN, self).__init__()
 		# r_in:1, n_in:28, j_in:1, s:1, r_out:3, n_out:28, j_out:1
-		self.conv1 = nn.Conv2d(1, 32, 3, padding=1)
+		"EACH LAYER: (ENTIRE INCOMING DATA For EACH NEURON, NUM OF NEURONS"
+		"FILTER SIZE, CHANNEL SIZE"
+		"PARAMETERS & CHANNEL SIZE MEMORY"
+		"RF & X_OUT formula"
+		self.conv1 = nn.Conv2d(1, 32, 3, padding=1)      #(W)Filter Size= , (X_out)Channel Size=, RF: , (PARAMETERS & MEMORY, CHANNEL SIZE)"
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
 		self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:

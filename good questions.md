@@ -27,3 +27,5 @@ NumPy
 TrainLoader
 # Give case like this. Because its easier to understand. 
 # Then overtime, we will replace them with more efficient ways of writing coding. 
+
+Maxpool after Conv or After Relu?
