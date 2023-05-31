@@ -1,8 +1,8 @@
 from datasetDataloader import getData
 from modelArchitecture import getModel
 "E = YPrecited - Y = f(X,W)"
-"Adusting W"
-""
+"Adusting W according to E"
+"Monitoring E"
 
 import torch
 

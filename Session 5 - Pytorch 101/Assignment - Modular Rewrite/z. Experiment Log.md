@@ -1,7 +1,11 @@
+Phases
+
 1. Data & DataLoader File
 2. Model & Model Architecture File
 3. Model Training Loop & Training model batch wise. Loss
 4. Model Improvement Phase
+
+PROBLEMS
 
 Model loss not decreasing when training the model. For each batch, parameters are being updated according to the gradient. So loss should actually decrease in each step right. 
 But, bard models, give 70% accuracy. Need to check

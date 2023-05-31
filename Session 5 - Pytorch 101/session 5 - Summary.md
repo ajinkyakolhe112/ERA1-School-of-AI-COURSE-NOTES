@@ -9,3 +9,5 @@
 3. *Learning from other libraries Mistakes*
 4. *Constraints*: A few well optimized operations. Low Level Framework vs Low + High Level like Tensorflow. Less to write & optmize for low level.
 5. *Error Messages*: Error Messages are not baked into Pytorch. Low Level Language. Need to understand what error is talking about, and where it's happening. 
+
+## Computers -> Computational Linear Algebra -> Computational Transforming Explict Code -> Computational Transforming Implicit Code

@@ -1,5 +1,4 @@
-
-
+Class Observations
 
 Session 4 uses Alexnet & Vggnet Architectures in assignment. Before covering them. 
 Before covering them later. Architecture consideration. 
@@ -42,4 +41,6 @@ Reflections
 2. Dimentions, squeeze & unsqueeze is also very important
 
 ---
-Still finding new things to learn in fundamentals of NN. 
+Still finding new things to learn in fundamental of NN implementation.. 
+
+Different files have different mindsets & they are specialized for different hings.
