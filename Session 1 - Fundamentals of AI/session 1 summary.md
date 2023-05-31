@@ -8,11 +8,17 @@
    3. Parameters in Layer. 
       1. Parameter count 
       2. Parameter memory
+   4. Flops Operation
+   5. Transform Layers, what they are each doing list
 5. DIKW Successive Transformations & Pytorch transformations
    1. Pytorch model as sequential  
 6. Types of Layers. Conv, FC (PYTORCH)
    1. [Channel Notes & Experiments colab](https://colab.research.google.com/drive/1cKqF4fO5eWTOITeeFfe5Oy0fERGmiuML)
-   
+
+Python Memory Profile & Python Execution Profile
+
+Evaluating Model. (What makes sense in model to evaluate?)
+1. 
    
 Tensorflow vs Pytorch
 0. Standing on shoulders of giants. In any domain, past libraries and lessons learned and improved versions being continued.
