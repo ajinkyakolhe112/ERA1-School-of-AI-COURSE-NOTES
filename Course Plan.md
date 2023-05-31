@@ -1,6 +1,7 @@
 ERA Course Plan
 
 Milestone 1: Fundamentals (May & June)
+
 1. Fundamentals of AI
 2. Exploring NN Architectures
 3. Git & Python
