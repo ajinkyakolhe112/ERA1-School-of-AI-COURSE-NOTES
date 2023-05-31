@@ -5,15 +5,12 @@ import torch.nn.functional as F
 "y = f(X,W)"
 "PARAMETERS INVESTIGATION, at each layer. Successive transformation of each layer tested if possible or in improving phase"
 
-from dataclasses import dataclass
-@dataclass
-class modelUtils:
-    model: torch.nn.Module
+
 
 def getModel():
     model = customModel()
-    modelUtil = modelUtils(model)
-    return modelUtil
+    model
+    return model
 
 
     
