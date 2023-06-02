@@ -11,7 +11,7 @@ class Net(nn.Module):
 		self.conv4 = nn.Conv2d(128,256,3)
 		# Output: torch.Size([1, 256, 4, 4])"
 		
-		self.fc1 = nn.Linear(2096,50)
+		self.fc1 = nn.Linear(256*4*4,50)
 		self.fc2 = nn.Linear(50,10)
 	
 	def forward(self,DataX):
