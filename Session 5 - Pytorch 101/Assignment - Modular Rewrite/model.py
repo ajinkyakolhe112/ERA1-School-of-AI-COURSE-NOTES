@@ -5,6 +5,8 @@ import torch.nn.functional as F
 "y = f(X,W)"
 "PARAMETERS INVESTIGATION, at each layer. Successive transformation of each layer tested if possible or in improving phase"
 
+"Image 3,32,32"
+"RF = 32 in last decision layer. 4 Blocks of distillation generally. Which k will have RF 32 =? 33. Which kernel will have RF 32/4 = 8 => 9"
 
 
 def getModel():
@@ -12,10 +14,6 @@ def getModel():
     model
     return model
 
-
-    
-"Image 3,32,32"
-"RF = 32 in last decision layer. 4 Blocks of distillation generally. Which k will have RF 32 =? 33. Which kernel will have RF 32/4 = 8 => 9"
 class customModel(torch.nn.Module):
     def __init__(self):
         super().__init__()
@@ -27,7 +25,7 @@ class customModel(torch.nn.Module):
         self.firstFeaturesReceiver = nn.Sequential(nn.Linear(256*1*1,512), nn.ReLU())
         self.fc2 = nn.Linear(512,10)
         self.finalDecisionMaker = nn.Linear(10,10) # These 10 are Final Neurons for each class for this example
-
+        
     def forward(self, inputData):
         block1_output = self.block1(inputData)
         currentShape = block1_output.shape
@@ -58,6 +56,7 @@ class customModel(torch.nn.Module):
         one = F.softmax(logits,dim=1)
         
         return output
+    
 
 
     
