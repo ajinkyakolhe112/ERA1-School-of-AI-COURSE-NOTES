@@ -1,4 +1,4 @@
-ERA Course Plan
+# Curriculum
 
 Milestone 1: Fundamentals (May & June)
 
