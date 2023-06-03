@@ -1,34 +1,8 @@
-.data/MNIST/raw/t10k-images-idx3-ubyte
-.data/MNIST/raw/t10k-images-idx3-ubyte.gz
-.data/MNIST/raw/t10k-labels-idx1-ubyte
-.data/MNIST/raw/t10k-labels-idx1-ubyte.gz
-.data/MNIST/raw/train-images-idx3-ubyte
-.data/MNIST/raw/train-images-idx3-ubyte.gz
-.data/MNIST/raw/train-labels-idx1-ubyte
-.data/MNIST/raw/train-labels-idx1-ubyte.gz
-data/MNIST/raw/t10k-images-idx3-ubyte
-data/MNIST/raw/t10k-images-idx3-ubyte.gz
-data/MNIST/raw/t10k-labels-idx1-ubyte
-data/MNIST/raw/t10k-labels-idx1-ubyte.gz
-data/MNIST/raw/train-images-idx3-ubyte
-data/MNIST/raw/train-images-idx3-ubyte.gz
-data/MNIST/raw/train-labels-idx1-ubyte
-data/MNIST/raw/train-labels-idx1-ubyte.gz
-.idea/workspace.xml
-.idea/ERA1.iml
-.idea/modules.xml
+*data/
+*.data/
+*__pycache__/
 *.DS_Store
-Session 5 - Pytorch 101/Assignment - Modular Rewrite/__pycache__/data.cpython-39.pyc
-Session 5 - Pytorch 101/Assignment - Modular Rewrite/__pycache__/datasetDataloader.cpython-39.pyc
-Session 5 - Pytorch 101/Assignment - Modular Rewrite/__pycache__/model.cpython-39.pyc
-Session 5 - Pytorch 101/Assignment - Modular Rewrite/__pycache__/modelArchitecture.cpython-39.pyc
-Session 5 - Pytorch 101/Assignment - Modular Rewrite/__pycache__/utils.cpython-39.pyc
-Session 5 - Pytorch 101/Assignment - Modular Rewrite/data/cifar-10-python.tar.gz
-Session 5 - Pytorch 101/Assignment - Modular Rewrite/data/cifar-10-batches-py/batches.meta
-Session 5 - Pytorch 101/Assignment - Modular Rewrite/data/cifar-10-batches-py/data_batch_1
-Session 5 - Pytorch 101/Assignment - Modular Rewrite/data/cifar-10-batches-py/data_batch_2
-Session 5 - Pytorch 101/Assignment - Modular Rewrite/data/cifar-10-batches-py/data_batch_3
-Session 5 - Pytorch 101/Assignment - Modular Rewrite/data/cifar-10-batches-py/data_batch_4
-Session 5 - Pytorch 101/Assignment - Modular Rewrite/data/cifar-10-batches-py/data_batch_5
-Session 5 - Pytorch 101/Assignment - Modular Rewrite/data/cifar-10-batches-py/readme.html
-Session 5 - Pytorch 101/Assignment - Modular Rewrite/data/cifar-10-batches-py/test_batch
+.vscode*
+.idea
+.conda
+*.ipynb_checkpoints

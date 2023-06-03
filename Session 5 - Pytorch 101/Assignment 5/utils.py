@@ -53,7 +53,7 @@ def test(test_loader, model, errorFun, device):
 		for batch_idx, (data, target) in enumerate(test_loader):
 				data, target = data.to(device), target.to(device)
 				output = model(data)
-				test_loss += criterion(output, target, reduction='sum').item()  # sum up batch loss
+				test_loss += errorFun(output, target, reduction='sum').item()  # sum up batch loss
 				correct += GetCorrectPredCount(output, target)
 	
 	test_loss /= len(test_loader.dataset)
