@@ -1,3 +1,6 @@
+import torch
+model = torch.nn.Sequential()
+
 for param in model.parameters():
 	"grad is on param level not individual element level. grad is an tensor of same shape as params"
 	print(param.shape,param.grad.shape)

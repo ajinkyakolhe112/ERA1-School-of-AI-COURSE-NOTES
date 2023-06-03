@@ -2,7 +2,8 @@
 *.data/
 *__pycache__/
 *.DS_Store
-.vscode*
+.vscode/*
 .idea
 .conda
 *.ipynb_checkpoints
+.gitattributes

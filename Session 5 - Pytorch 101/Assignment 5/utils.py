@@ -1,3 +1,4 @@
+import torch
 from tqdm import tqdm
 
 # Data to plot accuracy and loss graphs

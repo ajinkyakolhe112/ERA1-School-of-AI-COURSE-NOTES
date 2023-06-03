@@ -17,7 +17,6 @@ def trainOneBatch(BatchId, DataX,YActual,model, ErrorFun, optimizer, device):
 	YPredicted = model(DataX) # YPredicted = f(X,W). Computational graph is built here. With every operation being recorded
 	ErrorValue = ErrorFun(YActual,YPredicted)
 	ErrorValue.backward()
-	investigate_Gradients_Parameters(model)
 	"""
 	for i,param in enumerate(model.parameters()):
 		print("In Layer %f",i/2)
@@ -25,6 +24,8 @@ def trainOneBatch(BatchId, DataX,YActual,model, ErrorFun, optimizer, device):
 		param = param - param.grad*learning_rate
 	"""
 	optimizer.step()
+
+	investigate_Gradients_Parameters(model)
 	optimizer.zero_grad()
 	
 	return ErrorValue
@@ -36,11 +37,10 @@ def trainOneEpoch(train_dataloader, epochs , model, ErrorFun, optimizer, device)
 	model.to(device)
 	
 	for batch_id,(dataX,YActual) in enumerate(train_dataloader):
-		dataX, YActual = dataX.to(device), YActual.to(device)
-		
-		lossSingleValue = trainOneBatch(batch_id, dataX,YActual,model, ErrorFun, optimizer, device)
-		
-		historyLoss.append(lossValue.item())
+		lossSingleValue = trainOneBatch(batch_id, dataX, YActual, model, ErrorFun, optimizer, device)
+
+		historyLoss.append(lossSingleValue.item())
+
 		if batch_id==10:
 			break
 	
