@@ -26,9 +26,14 @@ class baselineModel(nn.Module):
 		
 		nn.Conv2d(128,256,(3,3))
 		# output = 3*3
-
+		
+		nn.Linear(9,20) # Grouping extracted features into 20 dim vector
+		
+		nn.Linear(20,10) # Decision Maker
+		nn.Softmax(dim=1)
 		
 	def forward(self, dataX):
+		
 		pass
 
 model = baselineModel()
