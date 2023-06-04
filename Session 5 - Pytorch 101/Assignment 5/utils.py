@@ -18,9 +18,9 @@ def GetCorrectPredCount(YPredicted, YActual):
 def train(train_loader,model,errorFun, optimizer, device):
 	model.train()
 	
-	train_loss = 0
+	train_loss_acum = 0
 	totalCorrect = 0
-	processed = 0
+	processed_images = 0
 	trainProgressBar = tqdm(train_loader)
 	
 	# XDATA: (B,C,H,W)
@@ -35,13 +35,15 @@ def train(train_loader,model,errorFun, optimizer, device):
 		optimizer.step() # weight update in this batch
 		optimizer.zero_grad()
 		
-		train_loss += errorValue.item() # train loss in this batch
-		totalCorrect += GetCorrectPredCount(YPredicted,YActual) # correct values in this batch
+		train_loss_acum += errorValue.item() # train loss in this batch
+		currentCorrect = GetCorrectPredCount(YPredicted,YActual) # correct values in this batch
+		totalCorrect += currentCorrect
 		processed_images += XData.shape[0]
-		trainProgressBar.set_description("Batch No %f, Processed Images %f, Error Value %f, Accuracy Value %f" % (batch_id,processed_images, train_loss,totalCorrect) )
+		trainProgressBar.set_description("Batch No %1.0f, Processed Images %1.0f, Batch Error Value %0.4f, Batch Accuracy Value %0.4f" 
+				   % (batch_id,processed_images, errorValue.item(),currentCorrect) )
 
-	train_acc.append(100*totalCorrect/processed)
-	avg_training_loss = train_loss/len(train_loader)
+	train_acc.append(100*totalCorrect/processed_images)
+	avg_training_loss = train_loss_acum/len(train_loader)
 	train_losses.append(avg_training_loss)
 
 def test(test_loader, model, errorFun, device):
