@@ -9,9 +9,13 @@ class baselineModel(nn.Module):
 		"4 Blocks of Feature Extraction with increasing features."
 		"RF = 9*9. Image = 28*28. Goal RF = 28*28. Delta RF for kernel = 3-1. Goal Depth = 28/2 = 14"
 		"RF = Image Size - Output Size (Easier RF Calculation)"
-		nn.Conv2d(1,32,(3,3))
+		nn.Conv2d(1,32,(3,3))  # RF = 3*3
+		nn.Conv2d(32,32,(3,3)) # RF = 5*5
+		nn.MaxPool2d(2,2)      # RF = 10*10
 		
-		nn.Conv2d(32,64,(3,3))
+		nn.Conv2d(32,64,(3,3)) # RF = 12*12
+		nn.Conv2d(64,64,(3,3)) # RF = 14*14
+		nn.MaxPool2d(2,2)	   # RF = 28*28. GOAL RF Reached
 
 		nn.Conv2d(64,128,(3,3))
 		
