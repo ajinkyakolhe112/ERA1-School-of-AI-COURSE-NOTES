@@ -7,3 +7,4 @@
 .conda
 *.ipynb_checkpoints
 .gitattributes
+.*vscode

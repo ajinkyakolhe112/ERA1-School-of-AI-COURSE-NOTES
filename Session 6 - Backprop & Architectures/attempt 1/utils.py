@@ -14,7 +14,7 @@ optimizer = optim.SGD(TO_OPTIMIZE, lr)
 training_bar = tqdm(train_loader)
 errorFun = torch.nn.functional.nll_loss
 
-def train():
+def train_model():
 	for batch_no, (x_actual,y_actual) in enumerate(training_bar):
 		print("Data is %f",x_actual.shape,"Predicted is ",y_actual.shape)
 	

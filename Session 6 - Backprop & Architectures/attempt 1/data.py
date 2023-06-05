@@ -19,6 +19,10 @@ testDataLoader = torch.utils.data.DataLoader(testData,batch_size=32,shuffle=True
 if __name__=="__main__":
 	vars(trainData) # https://share.cleanshot.com/pMd3QvGR
 	vars(testData)
+	print("Shape of Training Data",trainData.data.shape) # [60000, 28, 28]
+	vars(trainDataLoader) # has just dataset property
+	
+	print("END")
 	
 	#TODO 1: Figure out how to execute transform function on image datasets
 	# trainData = customTransforms(trainData.data) # ERROR
