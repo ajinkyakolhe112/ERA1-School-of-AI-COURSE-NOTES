@@ -3,6 +3,13 @@
 - `less than 20k Parameters` Model Constraint
 - `less than 20 epochs` Training Constraint
 
+### Data.py
+$$
+\Large X_{batch_{i}} \ , Y_{batch_{i}}\\
+i = 0, 1, 2 \ldots,batches_{no}
+$$
+
+
 ### Building Solution Plan
 Data X, Model f(x,W), Forward Pass f(x,W)(X), Error & Reducing Error & Testing at End
 
