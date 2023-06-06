@@ -3,12 +3,12 @@
 - `less than 20k Parameters` Model Constraint
 - `less than 20 epochs` Training Constraint
 
-### Data.py
-$$
-\Large X_{batch_{i}} \ , Y_{batch_{i}}\\
-i = 0, 1, 2 \ldots,batches_{no}
-$$
-
+1. `data.py`
+    - $\Large X_{batch_{i}} \ , Y_{batch_{i}}$
+    - $i = 0, 1, 2 \ldots, batches_{no}$
+2. `model.py`
+    - $\Large X = \vec{[ x_{0},x_{1},\ldots,x_{pixels}]}$
+    - $\Large model = f(X_{batch_{i}} , W_{[layers]}\ _{[neuron\_id]} ) $
 
 ### Building Solution Plan
 Data X, Model f(x,W), Forward Pass f(x,W)(X), Error & Reducing Error & Testing at End
