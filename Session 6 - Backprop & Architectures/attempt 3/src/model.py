@@ -31,7 +31,7 @@ class model_v1(nn.Module):
             "fc1": nn.Linear(3*3,50),               # Output = 512,10
             "relu": nn.ReLU(),
             "fc2": nn.Linear(50,10),                # 10 Neurons for 10 Classes. Output = [1*10]
-            "softmax": nn.Softmax(dim=1),           # dim0 = 1, dim1= 10 in Output = (1,10)
+            "softmax": nn.LogSoftmax(dim=1),           # dim0 = 1, dim1= 10 in Output = (1,10)
             # Using softmax to check if probability sum == 1
 
         }
