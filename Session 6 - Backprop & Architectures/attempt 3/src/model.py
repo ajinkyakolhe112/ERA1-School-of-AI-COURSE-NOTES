@@ -29,16 +29,16 @@ class model_v1(nn.Module):
         X = x_train_batch
         model = self.sequential_model
 
-        result = model(X)
-        result = self.sequential_model(x_train_batch)
+        Y_pred = model(X)
+        Y_pred = self.sequential_model(x_train_batch)
         return result
 
 def test_model():
     img = torch.randn(1,28,28)
     model = model_v1()
 
-    output = model.sequential_model(img)
-    output = model(img)
+    y_pred = model.sequential_model(img)
+    y_pred = model(img)
     "This structure allows for increamental testing layer by layer"
     output.shape
 
