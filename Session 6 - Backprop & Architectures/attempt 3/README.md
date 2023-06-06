@@ -8,6 +8,7 @@
     - $i = 0, 1, 2 \ldots, batches_{no}$
 2. `model.py`
     - $\Large X = \vec{[ x_{0},x_{1},\ldots,x_{pixels}]}$
+    - $\Large model = f(X_{batch_{i}} , W ) $
     - $\Large model = f(X_{batch_{i}} , W_{[layers]}\ _{[neuron\_id]} ) $
 
 ### Building Solution Plan

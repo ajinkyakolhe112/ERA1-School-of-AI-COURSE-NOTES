@@ -10,14 +10,14 @@ class model_v1(nn.Module):
             "relu": nn.ReLU(), 
             "conv2": nn.Conv2d(32,64,(3,3),1,1),    # Delta RF = +2
             "relu": nn.ReLU(),
-            # kernel = [ kernel = (3,3), stride , padding ]
+                                                    # kernel = [ kernel = (3,3), stride , padding ]
             "pool1": nn.MaxPool2d((2,2),2,0),       # Delta RF = *2
 
             "conv3": nn.Conv2d(64,128,(3,3),1,1),   # Delta RF = +2
             "relu": nn.ReLU(),
             "conv4": nn.Conv2d(128,256,(3,3),1,1),  # Delta RF = +2
             "relu": nn.ReLU(),
-            # kernel = [ kernel = (3,3), stride , padding ]
+                                                    # kernel = [ kernel = (3,3), stride , padding ]
             "pool2": nn.MaxPool2d((2,2),2,0),       # Delta RF = *2. RF Total = 28
             
             "conv5": nn.Conv2d(256,512,(3,3),1,0),  # Delta RF = +2
@@ -44,6 +44,7 @@ class model_v1(nn.Module):
         Y_pred = local_model(X)
         Y_pred = self.sequential_model(x_train_batch)
         return Y_pred
+
 
 def test_model():
     img = torch.randn(1,28,28)
