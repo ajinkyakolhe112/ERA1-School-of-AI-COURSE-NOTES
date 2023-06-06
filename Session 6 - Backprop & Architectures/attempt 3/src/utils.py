@@ -32,12 +32,16 @@ def train(train_dataloader,model,errorCalculator,optimizer,device=None):
 
 
         "Calculate dE/dW for each neuron recursively"
+        errorValue.retain_grad()
         errorValue.backward()
 
+
         "Update W of each neuron recursively"
-        optimizer.step()
+        # optimizer.step()
         for param in model.parameters():
-            param.grad # Kernels & Channels
+            delta = param.grad * 0.01
+            param = param - param.grad * 0.01
+            # delta = param.grad * 0.01 . ERROR. Done AFTER param is updated. Hence grad depopulated
 
         "batch details"
         trainingProgress.set_description_str("Correctly Predicted %d,\t Error Value %0.4f"%(correct_preds,errorValue.item()))
