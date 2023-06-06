@@ -14,6 +14,14 @@ class model_v1(nn.Module):
             "conv5": nn.Conv2d(256,512,3,1,0),  # Delta RF = +2
             "conv6": nn.Conv2d(512,512,3,1,0),  # Delta RF = +2, Output = (K:512,H:3,W:3)
 
+            "merge": nn.Conv2d(512,1,(1,1)),    # Reducing Channels to 1. So that we get [1,3*3]. Shape for Linear
+            "flatten": nn.Flatten(),            # RF Total = 32, Output = (512,9)
+            
+            "fc1": nn.Linear(3*3,50),           # Output = 512,10
+            "fc2": nn.Linear(50,10),            # 10 Neurons for 10 Classes. Output = [1*10]
+            "softmax": nn.Softmax(dim=1),       # dim0 = 1, dim1= 10 in Output = (1,10)
+            # Using softmax to check if probability sum == 1
+
         }
         self.sequential_model = nn.Sequential( *self.container.values() )
 
