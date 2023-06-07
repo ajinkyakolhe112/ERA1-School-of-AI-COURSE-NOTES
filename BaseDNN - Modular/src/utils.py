@@ -15,11 +15,9 @@ def train(train_loader, model, errorFun, optimizer, epoch_no, device=None):
 	model.to(device)
 	pbar = tqdm(train_loader)
 	
-	error_value_total = 0
+	train_loss_total = 0
 	correct_preds_total = 0
-	total_processed = 0
-
-	correct_preds_batch = 0
+	processed_total = 0
 
 	"Training Loop"
 	for batch_idx, (x_batch, y_actual) in enumerate(pbar):
@@ -41,22 +39,24 @@ def train(train_loader, model, errorFun, optimizer, epoch_no, device=None):
 		optimizer.zero_grad()
 
 		"Acc Value for Humans"
-		y_pred_class = y_pred_probs.argmax(dim=1)
+		y_pred_class = y_pred_probs.argmax(dim=1,keepdim=False)
 		comparison = torch.eq(y_pred_class, y_actual)
 		correct_preds_batch = comparison.sum().item()
+		correct_pred_indexes = torch.where(comparison == True)
+		correct_preds_batch = y_actual[correct_pred_indexes].numel()
+		
 		accuracy_batch = 100.0 * (correct_preds_batch / x_batch.shape[0])
 		
-		pbar.set_description("Batch= %d, Batch Error = %f, Batch Accuracy = %f" %
+		pbar.set_description("TRAIN: Batch= %d, Batch Error = %f, Batch Accuracy = %f" %
 			(batch_idx, error_value_batch.item(),accuracy_batch))
 		
-		error_value_total += error_value_batch
+		train_loss_total += error_value_batch.item()
 		correct_preds_total += correct_preds_batch
-		total_processed = total_processed + x_batch.shape[0]
+		processed_total = processed_total + x_batch.shape[0]
 
 
-	
-	training_error_value_avg = error_value_total/total_processed
-	training_accuracy_total = 100 * (total_processed/total_processed)
+	training_error_value_avg = train_loss_total /processed_total
+	training_accuracy_total = 100 * (processed_total/processed_total)
 	
 	training_losses_epochwise.append(training_error_value_avg)
 	training_accuracy_epochwise.append(training_accuracy_total)
@@ -70,34 +70,30 @@ def test(test_dataloader, model, errorFun, device=None):
 	correct_preds_total = 0
 	processed_total = 0
 
-	with torch.no_grad():
-		test_loss_batch = 0
-		test_correct_preds_batch = 0
-		test_correct_preds_total = 0
-		
+	with torch.no_grad():		
 		for data, target in pbar:
 			data, target = data.to(device), target.to(device)
 			
 			"1. Calculate Inference"
 			output = model(data)
 			"2. Calcualate Error"
-			loss_batch = errorFun(output, target, reduction='sum').item()   # sum up batch loss
+			error_value_batch = errorFun(output, target, reduction='sum').item()   # sum up batch loss
 			
 			y_pred_class = output.argmax(dim=1, keepdim=False)  # get the index of the max log-probability
 			comparison = torch.eq(y_pred_class, target)
 			# test_correct_preds_batch = target[comparison]
 			correct_pred_indexes = torch.where(comparison == True)
-			accuracy_batch = 100.0 * ( len(correct_pred_indexes) / data.shape[0])
+			correct_preds_batch = y_actual[correct_pred_indexes].numel()
+			accuracy_batch = 100.0 * ( correct_preds_batch / data.shape[0])
 			
-			test_loss_total += loss_batch
-			test_correct_preds_total += test_correct_preds_batch
+			test_loss_total += error_value_batch
+			test_correct_preds_total += correct_preds_batch
 
 			processed_total += data.shape[0]
-			pbar.set_description("Batch: error = %f \t, accuracy %f" % (loss_batch,accuracy_batch))
+			pbar.set_description("TEST: Batch: error = %f \t, accuracy %f" % (error_value_batch,accuracy_batch))
 	
 	test_loss_avg = test_loss_total / processed_total
-	print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.
-		format(test_loss_avg, correct, processed_total,100. * correct / processed_total))
+	print('\nTest set: Average loss total: %f, Accuracy total: %f" \n'.format(test_loss_avg,100.0 * test_correct_preds_total / processed_total))
 
 if __name__ =="__main__":
 	from data import *
