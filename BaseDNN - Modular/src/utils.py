@@ -37,6 +37,9 @@ def train(train_loader, model, errorFun, optimizer, epoch_no, device=None):
 		"4. Update parameters W in direction of Error_gradient"
 		optimizer.step()
 		
+		"5. Clean graph"
+		optimizer.zero_grad()
+
 		"Acc Value for Humans"
 		y_pred_class = y_pred_probs.argmax(dim=1)
 		comparison = torch.eq(y_pred_class, y_actual)
@@ -50,8 +53,7 @@ def train(train_loader, model, errorFun, optimizer, epoch_no, device=None):
 		correct_preds_total += correct_preds_batch
 		total_processed = total_processed + x_batch.shape[0]
 
-		"5. Clean graph"
-		optimizer.zero_grad()
+
 	
 	training_error_value_avg = error_value_total/total_processed
 	training_accuracy_total = 100 * (total_processed/total_processed)
@@ -109,7 +111,7 @@ if __name__ =="__main__":
 	device = torch.device("mps")
 
 	for epoch in range(1, 2):
-		#train(train_dataloader, model, errorFun, optimizer, epoch)
+		train(train_dataloader, model, errorFun, optimizer, epoch)
 		test(test_dataloader, model, errorFun)
 	
 	
