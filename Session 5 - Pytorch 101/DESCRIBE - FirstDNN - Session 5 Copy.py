@@ -19,6 +19,8 @@ import torch.nn as nn # either import as nn or use torch.nn directly. Eitherway 
 #IMP: how torch.nn works really tutorial. Writing same NN in 7 different ways in increamental use of .nn module in pytorch
 import torch.nn.functional as F # all functional equivalent of torch.nn. A place were all functions in nn umbrela live
 import torch.optim as optim # A general optimizer. Precise control over how to optmize something
+dir(optim),dir(nn.functional)
+
 from torchvision import datasets, transforms # torchvision.datasets all group
 #TODO: (MNIST, CIFAR, IMAGENET. LeNet, Alexnet, VggNet, Inception) 3 Datasets, 4 Architectures
 #!pip install torchsummary

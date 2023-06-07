@@ -10,7 +10,7 @@ from torchsummary import summary
 from tqdm import tqdm
 
 use_cudaFlag = torch.cuda.is_available()
-device = torch.device("cuda" if use_cudaFlag else "cpu")
+device = torch.device("cuda" if use_cudaFlag else "mps")
 device
 
 #%%
@@ -21,11 +21,10 @@ test_dataset = datasets.MNIST('../data',
 	train=False, download=True, transform=transforms.Compose([transforms.ToTensor(),transforms.Normalize((0.1307,), (0.3081,))]))
 
 "Data Loaders"
-batch_size = 1024
+batch_size = 32
 
-train_dataLoader = torch.utils.data.DataLoader(x_dataset	, batch_size=batch_size, shuffle=True)
-test_dataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, shuffle=True)
-train_dataLoader,test_dataLoader = tqdm(train_dataLoader),tqdm(test_dataLoader)
+train_dataloader = torch.utils.data.DataLoader(train_dataset	, batch_size=batch_size, shuffle=True)
+test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, shuffle=True)
 
 for batch_idx, (data, target) in enumerate(train_dataLoader):
 	data, target
@@ -71,13 +70,14 @@ class FirstDNN(nn.Module):
 		return F.log_softmax(x)
 
 #%%
-model = FirstDNN().to(device)
+model = FirstDNN()
 summary(model, input_size=(1, 28, 28))
 
 #%%
 from tqdm import tqdm
 def train(model, device, train_loader, optimizer, epoch):
 	model.train()
+	model.to(device)
 	pbar = tqdm(train_loader)
 	for batch_idx, (data, target) in enumerate(pbar):
 		data, target = data.to(device), target.to(device)
@@ -86,31 +86,41 @@ def train(model, device, train_loader, optimizer, epoch):
 		loss = F.nll_loss(output, target)
 		loss.backward()
 		optimizer.step()
-		pbar.set_description("loss= %f,     batch_id= %f" % loss.item(),batch_idx)
-		pbar.set_description("loss= {0},    batch_id= {1}   ".format(loss.item(),batch_idx))
-		pbar.set_description("loss= {0.2f}, batch_id= {0.2f}".format(loss.item(),batch_idx))
+		pbar.set_description("loss= %f,     batch_id= %d" % (loss.item(),batch_idx))
+#		pbar.set_description("loss= {0},    batch_id= {1}   ".format(loss.item(),batch_idx))
+#		pbar.set_description("loss= {0.2f}, batch_id= {0.2f}".format(loss.item(),batch_idx))
 		
 		
 def test(model, device, test_loader):
 	model.eval()
-	test_loss = 0
-	correct = 0
+	test_loss_total = 0
+	correct_preds_total = 0
+	processed_total = 0
+	pbar = tqdm(test_loader)
 	with torch.no_grad():
-		for data, target in test_loader:
+		test_loss_batch = 0
+		correct_preds_batch = 0
+		for data, target in pbar:
 			data, target = data.to(device), target.to(device)
 			output = model(data)
-			test_loss += F.nll_loss(output, target, reduction='sum').item()  # sum up batch loss
-			pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
-			correct += pred.eq(target.view_as(pred)).sum().item()
+			loss_batch = F.nll_loss(output, target, reduction='sum').item()   # sum up batch loss
+			preds_batch = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
+			correct_preds_batch += pred.eq(target.view_as(preds_batch)).sum().item()
 			
-	test_loss /= len(test_loader.dataset)
+			test_loss_total += loss_batch
+			correct_preds_total += correct_preds_batch
+			
+
+			count += 1
+			pbar.set_description("batch loss = %f\t,batch correct = %d\t,batch accuracy %f",(test_loss,correct,target))
 	
+	test_loss_total /= count
 	print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.
-		format(test_loss, correct, len(test_loader.dataset),100. * correct / len(test_loader.dataset)))
+		format(test_loss_total, correct, count,100. * correct / count))
 	
 #%%
 optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
 
 for epoch in range(1, 2):
-	train(model, device, train_loader, optimizer, epoch)
-	test(model, device, test_loader)
+	train(model, device, train_dataloader, optimizer, epoch)
+	test(model, device, test_dataloader)
