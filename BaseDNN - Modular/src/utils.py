@@ -3,27 +3,66 @@ import torch
 import torch.nn as nn
 import torch.optim as torch_optimizer
 
+# Data to plot accuracy and loss graphs
+training_losses_epochwise = []
+training_accuracy_epochwise = []
+
+test_losses_epochwise = []
+test_accuracy_epochwise = []
+
 def train(train_loader, model, errorFun, optimizer, epoch_no, device=None):
 	model.train()
 	model.to(device)
 	pbar = tqdm(train_loader)
-	for batch_idx, (data, target) in enumerate(pbar):
-		data, target = data.to(device), target.to(device)
-		optimizer.zero_grad()
-		output = model(data)
-		loss = errorFun(output, target)
-		loss.backward()
-		optimizer.step()
-		pbar.set_description("loss= %f,     batch_id= %d" % (loss.item(),batch_idx))
-#		pbar.set_description("loss= {0},    batch_id= {1}   ".format(loss.item(),batch_idx))
-#		pbar.set_description("loss= {0.2f}, batch_id= {0.2f}".format(loss.item(),batch_idx))
+	
+	error_value_total = 0
+	correct_preds_total = 0
+	total_processed = 0
+	
+	error_value_batch = 0
+	correct_preds_batch = 0
 
-def test(testDataLoader, model, errorFun, device=None):
+	"Training Loop"
+	for batch_idx, (x_batch, y_actual) in enumerate(pbar):
+		x_batch, y_actual = x_batch.to(device), y_actual.to(device)
+		
+		y_pred_probs = model(x_batch)
+		
+		"Error Value for model"
+		error_value_batch = errorFun(y_pred_probs, y_actual, reduction = "mean")
+		
+		error_value_batch.backward()
+		optimizer.step()
+		
+		optimizer.zero_grad()
+		
+		"Acc Value for Humans"
+		y_pred_class = y_pred_probs.argmax(dim=1)
+		comparison = torch.eq(y_pred_class, y_actual)
+		correct_preds_batch = comparison.sum().item()
+		accuracy_batch = correct_preds_batch / batch_size
+		
+		pbar.set_description("Batch= %d, Batch Error = %f, Batch Correct acc= %d" %
+			(batch_idx, error_value_batch.item(),accuracy_batch))
+		
+		error_value_total += error_value_batch
+		correct_preds_total += correct_preds_batch
+		total_processed = total_processed + x_batch.shape[0]
+	
+	training_error_value_avg = error_value_total/total_processed
+	training_accuracy_total = 100 * (total_processed/total_processed)
+	training_losses_epochwise.append(training_error_value_avg)
+	training_accuracy_epochwise.append(training_accuracy_total)
+
+def test(test_dataloader, model, errorFun, device=None):
 	model.eval()
+	model.to(device)
+	pbar = tqdm(test_dataloader)
+	
 	test_loss_total = 0
 	correct_preds_total = 0
 	processed_total = 0
-	pbar = tqdm(test_loader)
+
 	with torch.no_grad():
 		test_loss_batch = 0
 		correct_preds_batch = 0
@@ -40,9 +79,9 @@ def test(testDataLoader, model, errorFun, device=None):
 			count += 1
 			pbar.set_description("batch loss = %f\t,batch correct = %d\t,batch accuracy %f",(test_loss,correct,target))
 	
-	test_loss /= count
+	test_loss_avg = test_loss_total / count
 	print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.
-		format(test_loss, correct, count,100. * correct / count))
+		format(test_loss_avg, correct, count,100. * correct / count))
 
 if __name__ =="__main__":
 	from data import *
@@ -61,3 +100,4 @@ if __name__ =="__main__":
 	
 	
 
+		
