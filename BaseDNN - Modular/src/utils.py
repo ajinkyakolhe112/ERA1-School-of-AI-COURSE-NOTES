@@ -10,10 +10,11 @@ training_accuracy_epochwise = []
 test_losses_epochwise = []
 test_accuracy_epochwise = []
 
-def train(train_loader, model, errorFun, optimizer, epoch_no, device=None):
+"1. X,Y -> 2. Y_Pred = Model(X,W) -> Output -> 3. Error = Output - Observed -> 4. Error Backward -> 5. Parameter Update"
+def train(train_dataloader, model, errorFun, optimizer, epoch_no, device=None):
 	model.train()
 	model.to(device)
-	pbar = tqdm(train_loader)
+	pbar = tqdm(train_dataloader)
 	
 	train_loss_total = 0
 	correct_preds_total = 0
@@ -21,21 +22,25 @@ def train(train_loader, model, errorFun, optimizer, epoch_no, device=None):
 
 	"Training Loop"
 	for batch_idx, (x_batch, y_actual) in enumerate(pbar):
+		"1"
 		x_batch, y_actual = x_batch.to(device), y_actual.to(device)
 		
-		"1. Forward Pass. Builds graph"
+		"2. Forward Pass. Builds graph"
 		y_pred_probs = model(x_batch)
 		
-		"2. Error Value for model"
+		"3. Error Value for model"
 		error_value_batch = errorFun(y_pred_probs, y_actual, reduction = "mean")
 		
-		"3. Error wrt W, backprogated to each W"
+		"4. Error wrt W, backprogated to each W. dE/dW"
 		error_value_batch.backward()
 		
-		"4. Update parameters W in direction of Error_gradient"
-		optimizer.step()
+		"5. Update parameters W in direction of Error_gradient"
+		"W = W - dE/dW* learning_rate"
+		for parameter in model.parameters():
+			parameter = parameter - parameter.grad * learning_rate
+		# optimizer.step()
 		
-		"5. Clean graph"
+		"6. Clean graph"
 		optimizer.zero_grad()
 
 		"Acc Value for Humans"
@@ -83,7 +88,7 @@ def test(test_dataloader, model, errorFun, device=None):
 			comparison = torch.eq(y_pred_class, target)
 			# test_correct_preds_batch = target[comparison]
 			correct_pred_indexes = torch.where(comparison == True)
-			correct_preds_batch = y_actual[correct_pred_indexes].numel()
+			correct_preds_batch = target[correct_pred_indexes].numel()
 			accuracy_batch = 100.0 * ( correct_preds_batch / data.shape[0])
 			
 			test_loss_total += error_value_batch
