@@ -18,16 +18,13 @@ train_transforms = transforms.Compose([
 
 # Test data transformations
 test_transforms = transforms.Compose([
+	transforms.RandomApply([transforms.CenterCrop(22), ], p=0.1),
+    transforms.Resize((28, 28)),
+    transforms.RandomRotation((-15., 15.), fill=0),
     transforms.ToTensor(),
-    transforms.Normalize((0.1407,), (0.4081,))
+    transforms.Normalize((0.1307,), (0.3081,))
     ])
 
-"Data Loaders"
-batch_size = 32
-kwargs = {'batch_size': batch_size, 'shuffle': True}
-
-train_dataloader = torch.utils.data.DataLoader(train_dataset, **kwargs)
-test_dataloader = torch.utils.data.DataLoader(test_dataset, **kwargs)
 
 if __name__ =="__main__":
 	# Test

@@ -36,9 +36,9 @@ def train(train_dataloader, model, errorFun, optimizer, epoch_no, device=None):
 		
 		"5. Update parameters W in direction of Error_gradient"
 		"W = W - dE/dW* learning_rate"
-		for parameter in model.parameters():
-			parameter = parameter - parameter.grad * optimizer.defaults['lr']
-		# optimizer.step()
+		# for parameter in model.parameters():
+		# 	parameter = parameter - parameter.grad * optimizer.defaults['lr']
+		optimizer.step()
 		
 		"6. Clean graph"
 		optimizer.zero_grad()
@@ -74,6 +74,7 @@ def test(test_dataloader, model, errorFun, device=None):
 	test_loss_total = 0
 	correct_preds_total = 0
 	processed_total = 0
+	test_correct_preds_total = 0
 
 	with torch.no_grad():		
 		for data, target in pbar:
