@@ -36,9 +36,9 @@ def train(train_dataloader, model, errorFun, optimizer, epoch_no, device=None):
 		
 		"5. Update parameters W in direction of Error_gradient"
 		"W = W - dE/dW* learning_rate"
-		for parameter in model.parameters():
-			parameter = parameter - parameter.grad * learning_rate
-		# optimizer.step()
+		# for parameter in model.parameters():
+		# 	parameter = parameter - parameter.grad * optimizer.defaults['lr']
+		optimizer.step()
 		
 		"6. Clean graph"
 		optimizer.zero_grad()
