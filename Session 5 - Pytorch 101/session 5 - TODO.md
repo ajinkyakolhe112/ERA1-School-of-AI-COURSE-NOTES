@@ -13,3 +13,5 @@ Tiers of Coding
 4. Make test cases, modularity
 
 1. Study dir of np, tf & torch, torch.nn and tf.nn and tf.keras
+
+Here, should have created modular code for running experiemnts, but I did more as isolation of individual file. In Session 6, using notebook to run experiment, and designing with precise Names, makes writing code easier.

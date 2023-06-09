@@ -12,6 +12,12 @@
 9. Markdown + Maths
 10. View Image Python Debugging
 
+### General Tools
+1. Notebooks: Kaggle, Colab, PaperSpace, DeepNote
+
+## Markdown Color Test
+
+
 
 Font: Fire Code Retina
 
