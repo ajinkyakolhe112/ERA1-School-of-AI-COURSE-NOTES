@@ -126,7 +126,7 @@ Let's start with the model we first saw
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        # Input Block 28  >>> 64
+        # Input Block 28
         self.convblock1 = nn.Sequential(
             nn.Conv2d(in_channels=1, out_channels=10, kernel_size=(3, 3), padding=0, bias=False),
             nn.BatchNorm2d(10),
@@ -158,7 +158,7 @@ class Net(nn.Module):
             nn.Conv2d(in_channels=10, out_channels=10, kernel_size=(3, 3), padding=0, bias=False),
             nn.BatchNorm2d(10),
             nn.ReLU()
-        ) # output_size = 9 >>> 27
+        ) # output_size = 9
         self.convblock6 = nn.Sequential(
             nn.Conv2d(in_channels=10, out_channels=20, kernel_size=(3, 3), padding=0, bias=False),
             nn.BatchNorm2d(20),
