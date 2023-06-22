@@ -30,6 +30,14 @@ VS Code Settings
     },
 ```
 
+VS Code: Doesn't have floating window for notebook view
+Github: Doesn't have multiple individual lines select
+
+IDEs
+1. CodeRunner. Fast & Simple Debugging
+2.  Visual Studio Code. Notebook Native View + Advanced Debugging in Notebook + Markdown
+3. Pycharm: Source Code Reading
+
 ## Better Comments 
 
 in VS Code & Custom As Needed
