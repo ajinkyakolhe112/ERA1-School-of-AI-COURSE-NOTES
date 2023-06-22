@@ -1,4 +1,7 @@
-1. 10 Iterations code diff by Rohan. (Just copy first)
+
+**Deadlines**
+- [ ] 10 Iterations code diff by Rohan. (Just copy first)
+
 
 5. MNIST in Kaggle
 3. Same code of Class in Tensorflow Keras
