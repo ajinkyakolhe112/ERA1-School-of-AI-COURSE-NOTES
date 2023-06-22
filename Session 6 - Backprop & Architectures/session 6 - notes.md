@@ -37,6 +37,21 @@ Life Cycle of One Batch
     - Batch Details of Error
 
 
+Good to imagine on Imagenet. Real life objects are easier to visualize.
+Imagine a classification problem.
+```python
+	nn.Sequential( Successive distillation. 
+		nn.Conv2d(400, (7,7)), # Localized intelligence. Looks at image, and extracts only information edges & gradients. Or adds edges & gradients info. Extract into channels & combine clustering
+		nn.MaxPool2d(2,2)
+		nn.Conv2d(400,(7,7)),  # Previous condensed info as input, and further advanced processing
+		nn.Conv2d(400,feature maps, (7,7)), # Each Neuron Expected to create, parts of object. How many parts of objects do we have. (Nose of dog). Huge number of sub features
+		nn.Conv2d(400 feature maps,(7,7)), 1*1. Each neuron should be, a object relevent to our classes. Dog # imagenet, 10k objects at least. Each with
+		nn.Conv2d(10, (1,1)) # Should give us, 10 images we want.
+		nn.Linear(10,10),
+		nn.Linear(10,10) # 
+	)
+```
+
 ## Week 6 TODO:
 - [ ] Write modular code from scratch for MNIST, CIFAR10, CIFAR100. (3 Modules at least)
 - [ ] Explain entire NN using modular code from scratch (2 attempts)
