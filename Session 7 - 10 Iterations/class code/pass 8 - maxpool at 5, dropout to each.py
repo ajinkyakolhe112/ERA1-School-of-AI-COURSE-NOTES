@@ -123,76 +123,85 @@ print(' - var:', torch.var(exp_data))
 Let's start with the model we first saw
 """
 
+dropout_value = 0.1
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
         # Input Block
         self.convblock1 = nn.Sequential(
-            nn.Conv2d(in_channels=1, out_channels=10, kernel_size=(3, 3), padding=0, bias=False),
-            nn.BatchNorm2d(10),
-            nn.ReLU()
+            nn.Conv2d(in_channels=1, out_channels=16, kernel_size=(3, 3), padding=0, bias=False),
+            nn.ReLU(),
+            nn.BatchNorm2d(16),
+            nn.Dropout(dropout_value)
         ) # output_size = 26
 
         # CONVOLUTION BLOCK 1
         self.convblock2 = nn.Sequential(
-            nn.Conv2d(in_channels=10, out_channels=10, kernel_size=(3, 3), padding=0, bias=False),
-            nn.BatchNorm2d(10),
-            nn.ReLU()
+            nn.Conv2d(in_channels=16, out_channels=32, kernel_size=(3, 3), padding=0, bias=False),
+            nn.ReLU(),
+            nn.BatchNorm2d(32),
+            nn.Dropout(dropout_value)
         ) # output_size = 24
-        self.convblock3 = nn.Sequential(
-            nn.Conv2d(in_channels=10, out_channels=20, kernel_size=(3, 3), padding=0, bias=False),
-            nn.BatchNorm2d(20),
-            nn.ReLU()
-        ) # output_size = 22
 
         # TRANSITION BLOCK 1
-        self.pool1 = nn.MaxPool2d(2, 2) # output_size = 11
-        self.convblock4 = nn.Sequential(
-            nn.Conv2d(in_channels=20, out_channels=10, kernel_size=(1, 1), padding=0, bias=False),
-            nn.BatchNorm2d(10),
-            nn.ReLU()
-        ) # output_size = 11
+        self.convblock3 = nn.Sequential(
+            nn.Conv2d(in_channels=32, out_channels=10, kernel_size=(1, 1), padding=0, bias=False),
+        ) # output_size = 24
+        self.pool1 = nn.MaxPool2d(2, 2) # output_size = 12
 
         # CONVOLUTION BLOCK 2
+        self.convblock4 = nn.Sequential(
+            nn.Conv2d(in_channels=10, out_channels=16, kernel_size=(3, 3), padding=0, bias=False),
+            nn.ReLU(),            
+            nn.BatchNorm2d(16),
+            nn.Dropout(dropout_value)
+        ) # output_size = 10
         self.convblock5 = nn.Sequential(
-            nn.Conv2d(in_channels=10, out_channels=10, kernel_size=(3, 3), padding=0, bias=False),
-            nn.BatchNorm2d(10),
-            nn.ReLU()
-        ) # output_size = 9
+            nn.Conv2d(in_channels=16, out_channels=16, kernel_size=(3, 3), padding=0, bias=False),
+            nn.ReLU(),            
+            nn.BatchNorm2d(16),
+            nn.Dropout(dropout_value)
+        ) # output_size = 8
         self.convblock6 = nn.Sequential(
-            nn.Conv2d(in_channels=10, out_channels=20, kernel_size=(3, 3), padding=0, bias=False),
-            nn.BatchNorm2d(20),
-            nn.ReLU()
-        ) # output_size = 7
-
-        # OUTPUT BLOCK
+            nn.Conv2d(in_channels=16, out_channels=16, kernel_size=(3, 3), padding=0, bias=False),
+            nn.ReLU(),            
+            nn.BatchNorm2d(16),
+            nn.Dropout(dropout_value)
+        ) # output_size = 6
         self.convblock7 = nn.Sequential(
-            nn.Conv2d(in_channels=20, out_channels=32, kernel_size=(3, 3), padding=0, bias=False),
-            nn.BatchNorm2d(32),
-            nn.ReLU()
-        ) # output_size = 5
-        self.convblock8 = nn.Sequential(
-            nn.Conv2d(in_channels=32, out_channels=10, kernel_size=(1, 1), padding=0, bias=False),
-        ) # output_size = 5
+            nn.Conv2d(in_channels=16, out_channels=16, kernel_size=(3, 3), padding=1, bias=False),
+            nn.ReLU(),            
+            nn.BatchNorm2d(16),
+            nn.Dropout(dropout_value)
+        ) # output_size = 6
+        
+        # OUTPUT BLOCK
         self.gap = nn.Sequential(
-            nn.AvgPool2d(kernel_size=5)
+            nn.AvgPool2d(kernel_size=6)
         ) # output_size = 1
 
-        self.dropout = nn.Dropout(0.25)
+        self.convblock8 = nn.Sequential(
+            nn.Conv2d(in_channels=16, out_channels=10, kernel_size=(1, 1), padding=0, bias=False),
+            # nn.BatchNorm2d(10),
+            # nn.ReLU(),
+            # nn.Dropout(dropout_value)
+        ) 
+
+
+        self.dropout = nn.Dropout(dropout_value)
 
     def forward(self, x):
         x = self.convblock1(x)
         x = self.convblock2(x)
         x = self.convblock3(x)
-        x = self.dropout(x)
         x = self.pool1(x)
         x = self.convblock4(x)
         x = self.convblock5(x)
         x = self.convblock6(x)
-        x = self.dropout(x)
         x = self.convblock7(x)
+        x = self.gap(x)        
         x = self.convblock8(x)
-        x = self.gap(x)
+
         x = x.view(-1, 10)
         return F.log_softmax(x, dim=-1)
 
@@ -216,41 +225,43 @@ cpu
 ----------------------------------------------------------------
         Layer (type)               Output Shape         Param #
 ================================================================
-            Conv2d-1           [-1, 10, 26, 26]              90
-       BatchNorm2d-2           [-1, 10, 26, 26]              20
-              ReLU-3           [-1, 10, 26, 26]               0
-            Conv2d-4           [-1, 10, 24, 24]             900
-       BatchNorm2d-5           [-1, 10, 24, 24]              20
-              ReLU-6           [-1, 10, 24, 24]               0
-            Conv2d-7           [-1, 20, 22, 22]           1,800
-       BatchNorm2d-8           [-1, 20, 22, 22]              40
-              ReLU-9           [-1, 20, 22, 22]               0
-          Dropout-10           [-1, 20, 22, 22]               0
-        MaxPool2d-11           [-1, 20, 11, 11]               0
-           Conv2d-12           [-1, 10, 11, 11]             200
-      BatchNorm2d-13           [-1, 10, 11, 11]              20
-             ReLU-14           [-1, 10, 11, 11]               0
-           Conv2d-15             [-1, 10, 9, 9]             900
-      BatchNorm2d-16             [-1, 10, 9, 9]              20
-             ReLU-17             [-1, 10, 9, 9]               0
-           Conv2d-18             [-1, 20, 7, 7]           1,800
-      BatchNorm2d-19             [-1, 20, 7, 7]              40
-             ReLU-20             [-1, 20, 7, 7]               0
-          Dropout-21             [-1, 20, 7, 7]               0
-           Conv2d-22             [-1, 32, 5, 5]           5,760
-      BatchNorm2d-23             [-1, 32, 5, 5]              64
-             ReLU-24             [-1, 32, 5, 5]               0
-           Conv2d-25             [-1, 10, 5, 5]             320
-        AvgPool2d-26             [-1, 10, 1, 1]               0
+            Conv2d-1           [-1, 16, 26, 26]             144
+              ReLU-2           [-1, 16, 26, 26]               0
+       BatchNorm2d-3           [-1, 16, 26, 26]              32
+           Dropout-4           [-1, 16, 26, 26]               0
+            Conv2d-5           [-1, 32, 24, 24]           4,608
+              ReLU-6           [-1, 32, 24, 24]               0
+       BatchNorm2d-7           [-1, 32, 24, 24]              64
+           Dropout-8           [-1, 32, 24, 24]               0
+            Conv2d-9           [-1, 10, 24, 24]             320
+        MaxPool2d-10           [-1, 10, 12, 12]               0
+           Conv2d-11           [-1, 16, 10, 10]           1,440
+             ReLU-12           [-1, 16, 10, 10]               0
+      BatchNorm2d-13           [-1, 16, 10, 10]              32
+          Dropout-14           [-1, 16, 10, 10]               0
+           Conv2d-15             [-1, 16, 8, 8]           2,304
+             ReLU-16             [-1, 16, 8, 8]               0
+      BatchNorm2d-17             [-1, 16, 8, 8]              32
+          Dropout-18             [-1, 16, 8, 8]               0
+           Conv2d-19             [-1, 16, 6, 6]           2,304
+             ReLU-20             [-1, 16, 6, 6]               0
+      BatchNorm2d-21             [-1, 16, 6, 6]              32
+          Dropout-22             [-1, 16, 6, 6]               0
+           Conv2d-23             [-1, 16, 6, 6]           2,304
+             ReLU-24             [-1, 16, 6, 6]               0
+      BatchNorm2d-25             [-1, 16, 6, 6]              32
+          Dropout-26             [-1, 16, 6, 6]               0
+        AvgPool2d-27             [-1, 16, 1, 1]               0
+           Conv2d-28             [-1, 10, 1, 1]             160
 ================================================================
-Total params: 11,994
-Trainable params: 11,994
+Total params: 13,808
+Trainable params: 13,808
 Non-trainable params: 0
 ----------------------------------------------------------------
 Input size (MB): 0.00
-Forward/backward pass size (MB): 0.70
+Forward/backward pass size (MB): 1.06
 Params size (MB): 0.05
-Estimated Total Size (MB): 0.75
+Estimated Total Size (MB): 1.12
 ----------------------------------------------------------------
 """
 #%%
