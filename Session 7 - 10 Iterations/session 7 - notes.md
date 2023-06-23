@@ -67,3 +67,23 @@ Network Complexity: Low, Medium, High
 
 Overfitting  ??
 Underfitting ??
+
+----
+---
+Principles of Pytorch
+1. Low Level Library & Pythonic. (Not comprehensive functions because low level. Just essential. Pythonic: Easy to Read Source Code)
+- Need to be familiar with its source code, because core essential functionality is given. Understand what is given & what is not given. Use external libraries or write own library
+- torchsummary or torchinfo
+- train & test methods in pytorch
+- Because Pythonic, its easier to read
+- Why Low Level??
+- Field is Nascent. New Knowledge needs to be implemented so library should be flexible
+- Hardware for running library: Nvidia, Cuda. New: Apple, AMD
+- Librares Optimized for Hardware. 
+- Pytorch
+- Julia or Jax for accelerated performance. Need to write things from scratch where library isn't built
+2. Not just using Pytorch API, but reading source code & understanding how to do software engineering of Python + Forum + Podcast, together should give an deeper understanding of Pytorch
+3. Writing Good README & Essential Functions & Fun Name Design. (Verbose - Succinct)
+4. Don't overfit on Pytorch. Generalize on Library not Overfit on Pytorch.
+1. Because Pytorch is so popular, overtime knowledge of NN becomes same as Knowledge of Pytorch.
+2. So think in terms of general NN always, and then convert that to Pytorch. That way, knowledge is generalizable across libraries. 
