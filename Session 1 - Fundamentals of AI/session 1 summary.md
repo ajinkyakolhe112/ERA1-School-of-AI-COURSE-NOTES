@@ -4,14 +4,14 @@
 3. Receptive Field of Image & Attention
 4. Layers = Transformations (PYTORCH)
    1. Input of transform
-   2. Output of transform (Geometry + Matrix Multiplication + Latex Tikz + Javascript webpage)
-   3. Parameters in Layer. 
+   2. Output of transform (Geometry + Matrix Multiplication + Latex Tikz & Latex + Javascript webpage)
+   3. Parameters in Layer
       1. Parameter count 
       2. Parameter memory
-   4. Flops Operation
+   4. Flops Operations
    5. Transform Layers, what they are each doing list
 5. DIKW Successive Transformations & Pytorch transformations
-   1. Pytorch model as sequential  
+   1. Pytorch model as sequential
 6. Types of Layers. Conv, FC (PYTORCH)
    1. [Channel Notes & Experiments colab](https://colab.research.google.com/drive/1cKqF4fO5eWTOITeeFfe5Oy0fERGmiuML)
 

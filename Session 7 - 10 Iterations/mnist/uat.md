@@ -22,5 +22,7 @@ $$
 
 ### Extra
   - [ ] Save & Load model. Save time on training
-  - [ ] TensorBoard Monitoring Training
+  - [ ] TensorBoard Monitoring Training 
   - [ ] Weight & Bias Experiment Monitoring
+  - [ ] Visualize output at different layers to see extracted features
+  - [ ] YMAL for configuration instead of hardcoded in code
