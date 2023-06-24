@@ -24,7 +24,13 @@ Architecture / System Design
 Fixed Order Base Modules
 - `dataset_load.py` - Doesn't change much
 - `model_dev.py` - Dev Copy for model improvement. Future experimentation here
-- `train_test.py` - Doesn't change much
+	- Blocks with nn.ModuleDict for easier calling layers for forward pass
+	- If done with nn.Sequential then easier to get layer output by calling layer index
+- `train_test.py` - Doesn't change much. 
+	- Function definitions for consistency
+		- `def train_model(train_loader, model, error_func, optimizer, device=None, epoch_no=1):`
+		- `def test_model(test_loader, model, error_func, device=None, epoch_no=1):`
+		- **Metrics** to be monitor equally important as train & test methods
 - `utils.py` - General Utils. Experiment Tracking, Logging, Visualization
 - `notebook.ipynb` - experiment executed here
 
