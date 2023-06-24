@@ -14,10 +14,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
-!pip install torchsummary
+# !pip install torchsummary
 from torchsummary import summary
 
-!pip install torchinfo # has more advanced functionality
+# !pip install torchinfo # has more advanced functionality
 from torchinfo import summary as summaryNew
 
 summaryNew(model,input_size=(1,28,28),verbose=2,
@@ -96,7 +96,8 @@ class CustomReshape(nn.Module): # NO RESHAPE IN PYTORCH
     def forward(self,x):
         try:
           return x.view(-1,self.shape) # view function in Tensor module not in torch.nn.functional module
-        except ReshapeNotPossibleError
+        except ReshapeNotPossibleError:
+            pass
         # return x.view(*self.shape)
 
 # Making it work All Again
@@ -156,19 +157,20 @@ import torch.nn.functional as functions
 
 class FirstDNN(nn.Module):
     def __init__(self): # Initialization for layers to be used
-        super(FirstDNN,self):__init__()
+        super(FirstDNN,self).__init__()
         nn.Conv2d() # Processing & Parameters... Parameters initialize. 
         nn.ReLU() # Don't need to create. Non parameter layer. Just processing layer. 
         nn.Conv2d()
         CustomReshapeImageto1D() # For Vision. Somewhere from Image * Channel view, we will go into vector space of integers for further processing Generally final block of 4 block structure NN
 
     # extending method 
-    def forward(self,inputData or inputDataBatch): # \latex single Example.. one by one x_1, x_2 or array of batch of datapoints # this will have hooks
+    def forward(self,inputData): # \latex single Example.. one by one x_1, x_2 or array of batch of datapoints # this will have hooks
         firstTransformedData = Conv2d(inputData)
         secondTransformedData = Conv2d(firstTransformedData)
 
     def backward(ErrorFunction): # will probably have hooks
-        According to dynamic operation in above forward, we have library which can calculate this. why do we have that library, because we have fast computers which can calculate this. 
+        pass
+        # According to dynamic operation in above forward, we have library which can calculate this. why do we have that library, because we have fast computers which can calculate this. 
 
 class CustomReshape(nn.Module):
     def __init__(self,newShape):
@@ -210,19 +212,20 @@ import torch.nn.functional as functions
 
 class FirstDNN(nn.Module):
     def __init__(self): # Initialization for layers to be used
-        super(FirstDNN,self):__init__()
+        super(FirstDNN,self).__init__()
         nn.Conv2d() # Processing & Parameters... Parameters initialize. 
         nn.ReLU() # Don't need to create. Non parameter layer. Just processing layer. 
         nn.Conv2d()
         CustomReshapeImageto1D() # For Vision. Somewhere from Image * Channel view, we will go into vector space of integers for further processing Generally final block of 4 block structure NN
 
     # extending method 
-    def forward(self,inputData or inputDataBatch): # \latex single Example.. one by one x_1, x_2 or array of batch of datapoints # this will have hooks
+    def forward(self,inputData): # \latex single Example.. one by one x_1, x_2 or array of batch of datapoints # this will have hooks
         firstTransformedData = Conv2d(inputData)
         secondTransformedData = Conv2d(firstTransformedData)
 
     def backward(ErrorFunction): # will probably have hooks
-        According to dynamic operation in above forward, we have library which can calculate this. why do we have that library, because we have fast computers which can calculate this. 
+        pass
+        # According to dynamic operation in above forward, we have library which can calculate this. why do we have that library, because we have fast computers which can calculate this. 
 
 class CustomReshape(nn.Module):
     def __init__(self,newShape):

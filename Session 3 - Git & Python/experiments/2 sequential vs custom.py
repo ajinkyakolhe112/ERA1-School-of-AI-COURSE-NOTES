@@ -41,7 +41,7 @@ class FirstDNN(nn.Module):
 		CustomReshape() # Imageto1D. For Vision. Somewhere from Image * Channel view, we will go into vector space of integers for further processing Generally final block of 4 block structure NN
 		
 	# extending method 
-	def forward(self,inputData)# single Example.. one by one x_1, x_2 or array of batch of datapoints # this will have hooks
+	def forward(self,inputData): # single Example.. one by one x_1, x_2 or array of batch of datapoints # this will have hooks
 		firstTransformedData = Conv2d(inputData)
 		secondTransformedData = Conv2d(firstTransformedData)
 		

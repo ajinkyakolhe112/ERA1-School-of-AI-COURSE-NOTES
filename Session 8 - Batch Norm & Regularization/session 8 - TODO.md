@@ -1,5 +1,6 @@
 
 **Deadlines**
+- [x] **Catch up with previous week's code**
 - [x] 10 Iterations code diff by Rohan. (Just copy first)
 - [x] Session 7 MNIST Assignment (FOR SELF)
 	- [x] ~~Extra: Kaggle + (Pytorch, Keras, TF) + ( W&B )~~
