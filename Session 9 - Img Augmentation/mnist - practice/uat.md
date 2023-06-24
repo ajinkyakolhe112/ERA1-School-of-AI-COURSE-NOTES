@@ -21,11 +21,15 @@ optimizer.zero\_grad()\\
 $$
 
 Architecture / System Design
+Fixed Order Base Modules
 - `dataset_load.py` - Doesn't change much
-- `train_test.py` - Doesn't change much
 - `model_dev.py` - Dev Copy for model improvement. Future experimentation here
-- `models.py` - Saving All Models here. Increamental 
+- `train_test.py` - Doesn't change much
+- `utils.py` - General Utils. Experiment Tracking, Logging, Visualization
 - `notebook.ipynb` - experiment executed here
+
+Later
+- `models.py` - Saving All Models here. Increamental 
 - `notebook.py` - experiment in script format
 
 
