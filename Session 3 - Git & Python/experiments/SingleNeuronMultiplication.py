@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
-import torch.nn as nn
 import torch
+import torch.nn as nn
+
 class customMultiplicationNeuron(nn.Module):
 	def __init__():
 		super().__init__()

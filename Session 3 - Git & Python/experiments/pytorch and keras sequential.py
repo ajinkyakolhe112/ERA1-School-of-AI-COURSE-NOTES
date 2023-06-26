@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import torch
 import torch.nn as nn
 
@@ -17,7 +15,6 @@ class customNN(nn.Module):
 		super().__init__()
 		self.conv1 = nn.Conv2d(input_Channels,output_Channels,(3,3))
 	
-		
 	def forward(self,inputData):
 		firstLayerOutput = self.conv1(inputData) # CHW
 		pass
@@ -27,10 +24,5 @@ keras.Sequential(
 	layers.Dense(units=1,activation="relu"),
 	
 )
-	
-
-
-
-	
 
 print("End")

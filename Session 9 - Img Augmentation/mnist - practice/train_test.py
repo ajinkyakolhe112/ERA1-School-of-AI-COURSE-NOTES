@@ -18,7 +18,7 @@ def train_model(train_loader, model, error_func, optimizer, device=None, epoch_n
 		optimizer.step()
 		optimizer.zero_grad() # Needed inside forloop. Also keep optimizer outside too. Pythonic
 
-		# Metrics
+		# Training Loop Metrics
 		pbar.set_description(f'Batch Train Loss= {loss.item():0.4f}')
 	pass
 

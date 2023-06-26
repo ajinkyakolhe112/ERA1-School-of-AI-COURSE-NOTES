@@ -34,6 +34,7 @@ from torchvision import datasets, transforms
 from torchsummary import summary
 # Important for checking parameters & output size. But has been superseded by torchinfo package. 
 # torchinfo has verbose customizable output compared to this one
+from tqdm import tqdm
 
 
 use_cuda = torch.cuda.is_available()       
@@ -72,14 +73,14 @@ test_loader = torch.utils.data.DataLoader(
                     ])),
     batch_size=batch_size, shuffle=True)
 
-"""# Some Notes on our naive model
+#%% [markdown]
+"""
+# Some Notes on our naive model
 
 We are going to write a network based on what we have learnt so far. 
-
 The size of the input image is 28x28x1. We are going to add as many layers as required to reach RF = 32 "atleast".
 
-# Commentary
-
+Commentary
 1. nn.Module Base module for Neural Network & Also Custom Layer if extending
 1. Custom NN, has 1. initialization of Network layers & parameters.  2. forward pass & 3. error backward propogation
 1. Base NN, would be at least when we have reached RF limit. Generally based on image, depth is max ImageSize/2. (Because current kernels is size 3)
@@ -96,6 +97,7 @@ $$
 Or we can just keep adding until we reach $n_{out} = 1$
 """
 
+#%%
 class FirstDNN(nn.Module):
     # nn.Module either model or layer or block of layers
     def __init__(self):
@@ -124,6 +126,7 @@ class FirstDNN(nn.Module):
         x = x.view(-1, 10) # Shape to 10 because 10 number of classes and we will be doing softmax across those values
         return F.log_softmax(x)
 
+#%%
 model = FirstDNN() # create the model
 model.to(device)   # send model to device
 model # Print the model
@@ -134,7 +137,7 @@ summary(model, input_size=(1, 28, 28)) # can use this output to check if calcula
 # Output Shape is also stored in memory
 # Matrix operations are done on Input or Output to update Parameters
 
-from tqdm import tqdm
+#%%
 def train(model, device, train_loader, optimizer, epoch): # simple function to do entire code of training. 
     model.train()
     pbar = tqdm(train_loader)
@@ -153,6 +156,7 @@ def test(model, device, test_loader):
     test_loss = 0
     correct = 0
     with torch.no_grad():
+
         for data, target in test_loader:
             data, target = data.to(device), target.to(device)
             output = model(data)
@@ -166,12 +170,7 @@ def test(model, device, test_loader):
         test_loss, correct, len(test_loader.dataset),
         100. * correct / len(test_loader.dataset)))
 
-optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
-
-for epoch in range(1, 2):
-    train(model, device, train_loader, optimizer, epoch)
-    test(model, device, test_loader)
-
+#%%
 device = "cpu"
 device = torch.device(device)
 

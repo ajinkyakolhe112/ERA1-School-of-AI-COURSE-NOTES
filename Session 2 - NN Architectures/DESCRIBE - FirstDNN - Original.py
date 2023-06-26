@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
-
+#%%
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
+from tqdm import tqdm
 #!pip install torchsummary
 from torchsummary import summary
 
@@ -31,7 +31,7 @@ test_loader = torch.utils.data.DataLoader(
 	batch_size=batch_size, shuffle=True)
 
 #%%
-from tqdm import tqdm
+# Test Train Loader
 pbar = tqdm(train_loader)
 
 for batch_idx, (data, target) in enumerate(pbar):
@@ -60,25 +60,32 @@ class FirstDNN(nn.Module):
 		self.conv6 = nn.Conv2d(512, 1024, 3)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
 		self.conv7 = nn.Conv2d(1024, 10, 3)
-# Correct values
-# https://user-images.githubusercontent.com/498461/238034116-7db4cec0-7738-42df-8b67-afa971428d39.png
+	
+	# https://user-images.githubusercontent.com/498461/238034116-7db4cec0-7738-42df-8b67-afa971428d39.png
 	def forward(self, x):
 		x = self.pool1(F.relu(self.conv2(F.relu(self.conv1(x)))))
 		x = self.pool2(F.relu(self.conv4(F.relu(self.conv3(x)))))
 		x = F.relu(self.conv6(F.relu(self.conv5(x))))
-		x = F.relu(self.conv7(x)) #<< Correct answer is to remove the ReLU from here
+		
+		#<< Correct answer is to remove the ReLU from here
+		x = F.relu(self.conv7(x)) 
 		x = x.view(-1, 10)
-		return F.log_softmax(x)
+		output = F.log_softmax(x) 
+
+		return output
 
 #%%
+# Model Summary
 model = FirstDNN().to(device)
 summary(model, input_size=(1, 28, 28))
 
 #%%
-from tqdm import tqdm
-def train(model, device, train_loader, optimizer, epoch):
-	model.train()
+
+def train(train_loader, model, optimizer, device):
 	pbar = tqdm(train_loader)
+	model.train(model=True)
+	# model.to(device)
+
 	for batch_idx, (data, target) in enumerate(pbar):
 		data, target = data.to(device), target.to(device)
 		optimizer.zero_grad()
@@ -86,21 +93,25 @@ def train(model, device, train_loader, optimizer, epoch):
 		loss = F.nll_loss(output, target)
 		loss.backward()
 		optimizer.step()
+		
 		pbar.set_description(desc= f'loss={loss.item()} batch_id={batch_idx}')
 		
-		
-def test(model, device, test_loader):
+def test(test_loader, model, device):
 	model.eval()
+	# model.to(device)
+	
 	test_loss = 0
 	correct = 0
-	with torch.no_grad():
-		for data, target in test_loader:
-			data, target = data.to(device), target.to(device)
-			output = model(data)
-			test_loss += F.nll_loss(output, target, reduction='sum').item()  # sum up batch loss
-			pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
-			correct += pred.eq(target.view_as(pred)).sum().item()
-			
+	
+	torch.set_grad_enabled(False)
+	for data, target in test_loader:
+		data, target = data.to(device), target.to(device)
+		output = model(data)
+		test_loss += F.nll_loss(output, target, reduction='sum').item()  # sum up batch loss
+		pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
+		correct += pred.eq(target.view_as(pred)).sum().item()
+	torch.set_grad_enabled(True)
+	
 	test_loss /= len(test_loader.dataset)
 	
 	print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
@@ -108,8 +119,8 @@ def test(model, device, test_loader):
 		100. * correct / len(test_loader.dataset)))
 	
 #%%
-optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
+optimizer = optim.SGD(params = [ *model.parameters() ], lr=0.01, momentum=0.9)
 
 for epoch in range(1, 2):
-	train(model, device, train_loader, optimizer, epoch)
-	test(model, device, test_loader)
+	train(train_loader, model, optimizer, device)
+	test(test_loader, model, device)

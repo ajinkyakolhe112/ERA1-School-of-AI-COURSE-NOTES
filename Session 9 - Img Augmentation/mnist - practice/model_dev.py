@@ -41,7 +41,7 @@ class Baseline(nn.Module):
 
 		b4_output = b4.relu(b4.conv1(b3_output))
 
-		b4_output = b4_output.view(-1,100*1*1)
+		b4_output = b4_output.view(-1,100*1*1) # ! Didn't assign back before
 
 		feature_map = m.fc1(b4_output)
 		classes_neurons = m.fc2(feature_map)
