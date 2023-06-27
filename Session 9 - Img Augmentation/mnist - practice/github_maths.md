@@ -7,6 +7,11 @@ block multi line not possible:
 $$x\\
 y\\ z\\\ $$
 
+```latex
+x\\
+y\\
+```
+
 math block
 ```math
 x\\
