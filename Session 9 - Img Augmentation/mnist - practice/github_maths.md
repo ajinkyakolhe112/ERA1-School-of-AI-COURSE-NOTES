@@ -24,9 +24,9 @@ z\\
 	\label{eq:testing}
 \end{equation}
 
-
+refering \ref{eq:testing}
 
 }
 ```
 
-refering \ref{eq:testing}
+
