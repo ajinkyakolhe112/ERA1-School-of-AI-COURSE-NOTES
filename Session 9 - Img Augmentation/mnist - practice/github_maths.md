@@ -31,6 +31,8 @@ z\\
 
 
 $$
+\display{lines}{
 x\\
-y
+y\\
+}
 $$
