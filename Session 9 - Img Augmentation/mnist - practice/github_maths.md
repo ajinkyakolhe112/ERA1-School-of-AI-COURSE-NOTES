@@ -7,6 +7,8 @@ block multi line not possible:
 $$x\\
 y\\ z\\\ $$
 
+$$\begin{equation} x = 3\end{equation}$$
+
 
 math block
 ```math
