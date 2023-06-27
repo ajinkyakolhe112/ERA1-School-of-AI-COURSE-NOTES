@@ -32,7 +32,7 @@ z\\
 
 $$
 \displaylines{
-x \tag{1}\\
+\left(x \tag{1})\\
 y\\
 }
 $$
