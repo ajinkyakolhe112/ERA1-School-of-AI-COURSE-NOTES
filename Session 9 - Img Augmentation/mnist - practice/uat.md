@@ -19,10 +19,7 @@ optimizer.zero\_grad()\\
 ```
 ### Technical Implementation
 Maths
-$
-\Large
-Training\ Loop\\
-Y_{pred} = model(X_{actual})\\
+$\Large Training\ Loop\\ Y_{pred} = model(X_{actual})\\
 error\ =\ loss\ (Y_{pred},Y_{actual})\\
 error.backward()\\
 optimizer.step()\\
