@@ -6,6 +6,11 @@
 - Types of wrong predictions, Types of high confidence wrong predictions (Understanding Solutions quality)
 - Internal Working of Technical Algorithm for added intelligence. (Exceptions made right with human intelligence)
 
+single dollar, inline
+$ y = f(X,W) $
+double dollar, seperate block but expression in one line while writing
+$$  y = f(X,W)$$
+math block, allows multi line writing. new line doesn't work. so using a hack
 ```math
 \displaylines{
 \Large
