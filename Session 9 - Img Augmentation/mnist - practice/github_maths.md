@@ -19,9 +19,9 @@ x\\
 y\\
 z\\
 
-\begin{align}
+\begin{equation}
     r  = \frac{1}{n-1} \sum_{i=1}^{n} \frac{(X_i - \bar{X})(Y_i - \bar{Y})}{S_xS_y}
-\end{align}
+\end{equation}
 
 }
 ```
