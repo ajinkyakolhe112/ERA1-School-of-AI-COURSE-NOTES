@@ -9,7 +9,6 @@
 ### Technical Implementation
 1. Training Loop
 $$
-\large
 \begin{align}
 Y_{pred} = model(X_{actual})
 error\ =\ loss\ (Y_{pred},Y_{actual})\\
@@ -19,7 +18,7 @@ optimizer.zero\_grad()\\
 \end{align}
 $$
 
-2. Architecture / System Design
+1. Architecture / System Design
 	- Base Modules (Fixed Order)
 	- `dataset_load.py` - Doesn't change much
 	- `model_dev.py` - Dev Copy for model improvement. Future experimentation here
