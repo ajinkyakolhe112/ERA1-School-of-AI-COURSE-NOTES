@@ -1,6 +1,8 @@
 ---
-html:
-	include-in-header: mathjax.html
+title: "Test"
+format: 
+  html: 
+    include-in-header: mathjax.html
 ---
 
 inline example: $x$
