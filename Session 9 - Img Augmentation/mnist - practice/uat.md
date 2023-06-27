@@ -56,15 +56,14 @@ optimizer.zero\_grad()\\
 \\
 $
 
-$$
-\Large
+$$\Large
 Training\ Loop\\
 Y_{pred} = model(X_{actual})\\
 error\ =\ loss\ (Y_{pred},Y_{actual})\\
 error.backward()\\
 optimizer.step()\\
 optimizer.zero\_grad()\\
-\\$$
+$$
 
 Architecture / System Design
 Fixed Order Base Modules
