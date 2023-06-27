@@ -6,9 +6,7 @@ x
 $$
 
 block multi line:
-$$x\\,
-y\\,
-z\\,$$
+$$x\\,y\\, z\\,$$
 
 math block
 ```math
