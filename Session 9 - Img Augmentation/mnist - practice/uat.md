@@ -12,7 +12,6 @@ double dollar, seperate block but expression in one line while writing
 $$  y = f(X,W)$$
 math block, allows multi line writing. new line doesn't work. so using a hack
 ```math
-\begin{aligned}
 \displaylines{
 \Large
 Training\ Loop\\
@@ -21,9 +20,21 @@ error\ =\ loss\ (Y_{pred},Y_{actual})\\
 error.backward()\\
 optimizer.step()\\
 optimizer.zero\_grad()\\
+\\}
+```
+
+latex block
+```latex
+
+\Large
+Training\ Loop\\
+Y_{pred} = model(X_{actual})\\
+error\ =\ loss\ (Y_{pred},Y_{actual})\\
+error.backward()\\
+optimizer.step()\\
+optimizer.zero\_grad()\\
 \\
-\end{aligned}
-}
+
 ```
 ### Technical Implementation
 Maths
