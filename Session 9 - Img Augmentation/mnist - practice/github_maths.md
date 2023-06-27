@@ -4,7 +4,8 @@ block example:
 $$\ x\ $$
 
 block multi line not possible:
-$$x\\ y\\ z\\\ $$
+$$x\\
+y\\ z\\\ $$
 
 math block
 ```math
