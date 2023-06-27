@@ -1,10 +1,3 @@
----
-title: "Test"
-format: 
-  html: 
-    include-in-header: mathjax.html
----
-
 inline example: $x$
 
 block example. entire equation needs to be in one line:
@@ -21,8 +14,8 @@ math block
 ```math
 \displaylines{
 
-x  = 3\tag{1}\\
-x\\
+x  = 3 \tag{1} \\
+x \text{2}\\
 y\\
 z\\
 
