@@ -12,10 +12,10 @@ $$\begin{equation} x = 3\end{equation}$$
 
 math block
 ```math
+x
 \displaylines{
 
 x  = 3 \tag{1} \\
-x \text{2}\\
 y\\
 z\\
 
@@ -24,9 +24,13 @@ z\\
 	\label{eq:testing}
 \end{equation}
 
-refering \ref{eq:testing}
 
 }
 ```
 
 
+
+$$
+x
+y
+$$
