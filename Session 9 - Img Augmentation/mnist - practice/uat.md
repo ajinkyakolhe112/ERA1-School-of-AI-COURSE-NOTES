@@ -6,7 +6,11 @@
 - Types of wrong predictions, Types of high confidence wrong predictions (Understanding Solutions quality)
 - Internal Working of Technical Algorithm for added intelligence. (Exceptions made right with human intelligence)
 
+```math
+Y_{pred} = model(X_{actual})\\
+error.backward()\\
 
+```
 ### Technical Implementation
 Maths
 $$
