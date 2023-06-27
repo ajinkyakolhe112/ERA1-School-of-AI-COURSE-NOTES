@@ -13,7 +13,6 @@ $$  y = f(X,W)$$
 math block, allows multi line writing. new line doesn't work. so using a hack
 ```math\
 \begin{aligned}
-\displaylines{
 \Large
 Training\ Loop\\
 \begin{equation}
@@ -23,7 +22,6 @@ error\ =\ loss\ (Y_{pred},Y_{actual})\\
 error.backward()\\
 optimizer.step()\\
 optimizer.zero\_grad()\\
-\\}
 \end{aligned}
 ```
 
