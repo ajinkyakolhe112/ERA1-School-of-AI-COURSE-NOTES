@@ -1,3 +1,8 @@
+---
+html:
+	include-in-header: mathjax.html
+---
+
 inline example: $x$
 
 block example. entire equation needs to be in one line:
