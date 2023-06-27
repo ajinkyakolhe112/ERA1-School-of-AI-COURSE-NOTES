@@ -11,11 +11,11 @@ Training Loop
 
 $$
 \begin{align*}
-Y_{pred} = model(X_{actual})
-error\ =\ loss\ (Y_{pred},Y_{actual})\\
-error.backward()\\
-optimizer.step()\\
-optimizer.zerograd()\\
+& Y_{pred} = model(X_{actual}) \\
+error\ =\ loss\ (Y_{pred},Y_{actual}) \\
+error.backward() \\
+optimizer.step() \\
+optimizer.zerograd() \\
 \end{align*}
 $$
 
