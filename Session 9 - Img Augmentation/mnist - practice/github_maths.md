@@ -13,7 +13,9 @@ math block
 \begin{equation}
 x  = 3
 \end{equation}
+\begin{equation}
 x\\
+\begin{equation}
 y\\
 z\\
 ```
