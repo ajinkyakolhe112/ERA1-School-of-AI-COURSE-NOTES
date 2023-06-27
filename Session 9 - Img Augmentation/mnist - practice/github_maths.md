@@ -1,7 +1,7 @@
 inline example: $x$
 
 block example:
-$$ x $$
+$$\ x\ $$
 
 block multi line not possible:
 $$x\\,y\\, z\\,$$
