@@ -16,7 +16,7 @@
 		- [x] Lecture 2 - NN Architectures
 		- [x] Lecture 3 - Python 101
 		- [ ] Lecture 5 - Pytorch 101
-		- [ ] Lecture 4 - Building first NN - (Finding bugs & fixing them) 
+		- [x] Lecture 4 - Building first NN - (Finding bugs & fixing them) 
 	- [ ] Revisit Pytorch Fundamentals. Small End to End Tutorial
 		- What is nn really?
 		- Blitz Pytorch
