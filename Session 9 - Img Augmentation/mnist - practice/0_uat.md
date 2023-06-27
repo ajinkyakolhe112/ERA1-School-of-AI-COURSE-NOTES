@@ -7,15 +7,15 @@
 - Internal Working of Technical Algorithm for added intelligence. (Exceptions made right with human intelligence)
 
 ### Technical Implementation
-1. Training Loop
+Training Loop
 $$
-\begin{align}
+\begin{align*}
 Y_{pred} = model(X_{actual})
 error\ =\ loss\ (Y_{pred},Y_{actual})\\
 error.backward()\\
 optimizer.step()\\
-optimizer.zero\_grad()\\
-\end{align}
+optimizer.zerograd()\\
+\end{align*}
 $$
 
 1. Architecture / System Design
