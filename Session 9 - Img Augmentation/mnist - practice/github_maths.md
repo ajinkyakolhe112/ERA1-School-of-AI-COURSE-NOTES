@@ -13,6 +13,5 @@ $$
 \displaylines{
 x \tag{1}\\
 y\\
-
 }
 $$
