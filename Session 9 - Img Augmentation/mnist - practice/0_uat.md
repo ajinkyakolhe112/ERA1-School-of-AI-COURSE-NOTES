@@ -8,6 +8,7 @@
 
 ### Technical Implementation
 Training Loop
+
 $$
 \begin{align*}
 Y_{pred} = model(X_{actual})
