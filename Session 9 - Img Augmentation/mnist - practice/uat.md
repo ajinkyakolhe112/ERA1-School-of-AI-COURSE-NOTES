@@ -7,6 +7,7 @@
 - Internal Working of Technical Algorithm for added intelligence. (Exceptions made right with human intelligence)
 
 ```math
+\displaylines{
 \Large
 Training\ Loop\\
 Y_{pred} = model(X_{actual})\\
@@ -14,7 +15,7 @@ error\ =\ loss\ (Y_{pred},Y_{actual})\\
 error.backward()\\
 optimizer.step()\\
 optimizer.zero\_grad()\\
-\\
+\\}
 ```
 ### Technical Implementation
 Maths
