@@ -12,6 +12,7 @@ $$\begin{equation} x = 3\end{equation}$$
 
 math block
 ```math
+\usepackage{amsmath}
 \begin{align*}
 x  = 3
 x
