@@ -14,7 +14,7 @@ math block
 x  = 3
 \end{equation}
 \begin{equation}
-x\\
+x
 \begin{equation}
 y\\
 z\\
