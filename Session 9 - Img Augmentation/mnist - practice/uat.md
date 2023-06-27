@@ -57,8 +57,8 @@ optimizer.zero\_grad()\\
 $
 
 $$\Large
-Training\ Loop\\
-Y_{pred} = model(X_{actual})\\
+Training\ Loop\\,
+Y_{pred} = model(X_{actual})\\,
 error\ =\ loss\ (Y_{pred},Y_{actual})\\
 error.backward()\\
 optimizer.step()\\
