@@ -11,7 +11,7 @@ $ y = f(X,W) $
 double dollar, seperate block but expression in one line while writing
 $$  y = f(X,W)$$
 math block, allows multi line writing. new line doesn't work. so using a hack
-```math\
+```math
 \begin{aligned}
 \Large
 Training\ Loop\\
