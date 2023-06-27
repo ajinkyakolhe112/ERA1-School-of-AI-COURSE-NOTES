@@ -1,8 +1,8 @@
 
-inline example: $ x $
+inline example: $x$
 
 block example: 
-$$ x $$
+$$x$$
 
 block multi line:
 $$
