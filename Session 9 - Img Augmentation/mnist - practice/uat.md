@@ -9,7 +9,6 @@
 ```math
 Y_{pred} = model(X_{actual})\\
 error.backward()\\
-
 ```
 ### Technical Implementation
 Maths
