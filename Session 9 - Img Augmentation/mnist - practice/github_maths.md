@@ -12,12 +12,10 @@ $$\begin{equation} x = 3\end{equation}$$
 
 math block
 ```math
-\begin{equation}
+\begin{align*}
 x  = 3
-\end{equation}
-\begin{equation}
 x
-\begin{equation}
 y\\
 z\\
+\end{align*}
 ```
