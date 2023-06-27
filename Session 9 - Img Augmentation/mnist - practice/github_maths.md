@@ -12,5 +12,4 @@ $$ x $$
 block multi line:
 $$x\\
 y\\
-z\\
-$$
+z\\$$
