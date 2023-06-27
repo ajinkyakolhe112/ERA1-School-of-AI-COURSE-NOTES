@@ -3,6 +3,8 @@ inline example: $x$
 block example. entire equation needs to be in one line:
 $$\ x\ $$
 
+`$$` : Must have empty space before. but first line after can't be empty. 
+
 
 $$
 \begin{align}
