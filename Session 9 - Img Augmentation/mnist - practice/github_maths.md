@@ -5,6 +5,8 @@ $$\ x\ $$
 
 
 $$
-x \tag{1}\\
+\begin{align*}
+x \tag{1} \\
 y\\
+\end{align*}
 $$
