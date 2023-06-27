@@ -14,7 +14,7 @@ math block
 ```math
 \displaylines{
 
-x  = 3\\
+x  = 3\tag{1}\\
 x\\
 y\\
 z\\
