@@ -1,3 +1,6 @@
+**GITHUB Maths is basic Mathsjax implementation**
+hence limited features. Entire syntax of latex isn't supported
+
 inline example: $x$
 
 block example. entire equation needs to be in one line:
