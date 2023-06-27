@@ -15,7 +15,9 @@ math block, allows multi line writing. new line doesn't work. so using a hack
 \displaylines{
 \Large
 Training\ Loop\\
+\begin{equation}
 Y_{pred} = model(X_{actual})\\
+\end{equation}
 error\ =\ loss\ (Y_{pred},Y_{actual})\\
 error.backward()\\
 optimizer.step()\\
@@ -23,9 +25,8 @@ optimizer.zero\_grad()\\
 \\}
 ```
 
-latex block
+latex block.
 ```latex
-
 \Large
 Training\ Loop\\
 Y_{pred} = model(X_{actual})\\
@@ -34,7 +35,6 @@ error.backward()\\
 optimizer.step()\\
 optimizer.zero\_grad()\\
 \\
-
 ```
 ### Technical Implementation
 Maths
