@@ -13,3 +13,9 @@ block multi line:
 $$x\\
 y\\
 z\\$$
+
+```math
+x\\
+y\\
+z\\
+```
