@@ -5,7 +5,7 @@ from tqdm import tqdm
 def train_model(train_loader, model, error_func, optimizer, device=None, epoch_no=1):
 	# Follow kitchen philosophy. Make everything ready for training loop
 	pbar = tqdm(train_loader)
-	model.to(device)
+	model.train(mode=True)
 	optimizer.zero_grad()
 
 	#Training Loop Metrics
