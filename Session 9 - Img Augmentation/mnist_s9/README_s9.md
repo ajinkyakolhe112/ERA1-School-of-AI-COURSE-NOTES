@@ -43,4 +43,4 @@ Later
 ### 3. Scientist POV / Experiment Log
 1. ~~`Session 9 Model`~~ doesn't learn. But `Session 7 Model` does. Some bug in code
    - [x] tested S7 model, doesn't learn here. But same model learns in S7. Bug in dataset or train
-   - [ ]  
+   - [x] test S9 model, with S7 training. It works. Bug in likely in `s9_train_test.py`
