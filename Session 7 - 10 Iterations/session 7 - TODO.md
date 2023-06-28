@@ -8,8 +8,9 @@ Remaining to Study
 2. Experiment Management & Curves for understanding train & test log in W & B
 3. Same code of Class in Tensorflow Keras
 4. Same code of in keras & pytorch, tensorflow
-1. CIFAR & Imagenet datasets
-2. ~~Alexnet, Vgg, Inception, Other Architecture Research Papers~~
-3. ZTM Pytorch Course
-4. Pytorch Official Tutorials
+5. Automatic testing method, to immediately know when any change breaks the code
+6. CIFAR & Imagenet datasets
+7. ~~Alexnet, Vgg, Inception, Other Architecture Research Papers~~
+8. ZTM Pytorch Course
+9. Pytorch Official Tutorials
 

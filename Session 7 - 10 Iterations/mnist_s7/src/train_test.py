@@ -25,7 +25,7 @@ def train_model(train_loader, model, error_func, optimizer, metric_logger: Custo
 	
 	total_correct = 0
 	for batch_no,(images_batch,labels_batch) in enumerate(pbar):
-		images_batch.to(device),labels_batch.to(device)
+		images_batch,labels_batch = images_batch.to(device),labels_batch.to(device)
 		
 		# Training Loop
 		y_pred = model(images_batch)
@@ -39,13 +39,15 @@ def train_model(train_loader, model, error_func, optimizer, metric_logger: Custo
 		target_preds = y_pred.argmax(dim=1,keepdim=False)
 		correct_preds = torch.eq(target_preds,labels_batch).count_nonzero().item()
 		total_correct = total_correct + correct_preds
-		total_acc = 100 * float(total_correct) / ((batch_no+1)*train_loader.batch_size)
+		total_processed = (batch_no + 1) * train_loader.batch_size
+		total_acc = ( 100.0 * total_correct ) / total_processed
 		
 		metric_logger.train_loss_batches.append(loss_batch)		# Because inside forloop. It's printing train_loss per batch
 		metric_logger.train_acc_batches.append(total_acc)		# When outside loop, it will print train_loss per epoch
 		
-		message = f"Batch_id= {batch_no}, Batch Loss: {loss_batch:0.4f}, Correct: {correct_preds:2d}, Total Acc {total_acc:0.4f}"
+		message = f"Batch_id= {batch_no}, Batch Loss: {loss_batch:0.4f}, Correct: {correct_preds:3d}, Total Acc {total_acc:0.4f}"
 		pbar.set_description(message)
+		pass
 
 
 def test_model(test_loader, model, error_func, metric_logger: CustomMetrics, device=None):
@@ -113,16 +115,16 @@ if __name__ == "__main__":
 	from model_architecture import *
 	
 	train_loader,test_loader
-	model = s7_baseline()
-	
+
+	model_s7 = S7_Baseline()
 	error_func = nn.functional.nll_loss # function is in nn.functional
-	
 	# optimizer what? & how
-	optimizer = torch.optim.SGD(params = model.parameters(), lr = 0.1 )
+	optimizer = torch.optim.SGD(params = model_s7.parameters(), lr = 0.1 )
 	
-	metrics = Metrics()
-	train_model(train_loader, model, error_func, metrics, optimizer)
-	test_model(test_loader,model,error_func, metrics)
-	plot_train_test_loss(train_loss_batches, train_acc_batches, test_loss_batches, test_acc_batches)
+	metrics = CustomMetrics()
+	train_model(train_loader, model_s7, error_func, optimizer, metrics)
+	test_model(test_loader,model_s7,error_func, metrics)
+
+	# plot_train_test_loss(train_loss_batches, train_acc_batches, test_loss_batches, test_acc_batches)
 	
 	print("END")

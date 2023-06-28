@@ -31,13 +31,13 @@ class S7_Baseline(nn.Module):
 		b3_output = b3.relu(b3.conv1(b2_output))
 		b4_output = b4.relu(b4.conv1(b3_output))
 		
-		b4_output = b4_output.view(-1,32)
+		b4_output = b4_output.view(-1,32*1*1)
 		fc_output = self.fc(b4_output)
 		
 		output_probs = nn.functional.softmax(fc_output,dim=1)
-		output = nn.functional.log_softmax(fc_output,dim=1)
+		output_log = nn.functional.log_softmax(fc_output,dim=1)
 
-		return output
+		return output_log
 	
 
 if __name__ == "__main__":

@@ -6,6 +6,7 @@ def train_model(train_loader, model, error_func, optimizer, device=None, epoch_n
 	# Follow kitchen philosophy. Make everything ready for training loop
 	pbar = tqdm(train_loader)
 	model.train(mode=True)
+	model.to(device)
 	optimizer.zero_grad()
 
 	#Training Loop Metrics
@@ -33,14 +34,15 @@ def train_model(train_loader, model, error_func, optimizer, device=None, epoch_n
 		optimizer.zero_grad() # Needed inside forloop. Also keep optimizer outside too. Pythonic
 
 		# Training Loop Metrics
+		loss_batch = loss.item()
 		y_pred,y_actual
 		y_pred_class = y_pred.argmax(dim=1,keepdim=False)
 		batch_correct_pred = y_pred_class.eq(y_actual).count_nonzero().item()
 		total_correct = total_correct + batch_correct_pred
 		total_processed = (batch_no + 1) * train_loader.batch_size
-		total_acc = (1.0 * total_correct) / total_processed
+		total_acc = (100.0 * total_correct) / total_processed
 
-		pbar.set_description(f'Batch No= {batch_no:3d} Train Loss= {loss.item():0.4f}, Acc Total = {total_acc:0.4f}')
+		pbar.set_description(f'Batch No= {batch_no}, Batch Loss= {loss_batch:0.4f}, Batch Correct= {batch_correct_pred:3d}, Acc Total = {total_acc:0.4f}')
 		
 		training_metrics["batch_loss"].append(loss.item())
 		training_metrics["batch_acc"].append( 1.0 * batch_correct_pred / train_loader.batch_size )
@@ -68,11 +70,10 @@ if __name__ == "__main__":
 	from dataset_load import *
 	from model_dev import *
 
-	model = s9_baseline()
+	model_s9 = S9_Baseline()
 	error_func = nn.functional.nll_loss
-	optimizer_name = torch.optim.SGD
-	optimizer = optimizer_name(params = model.parameters(), lr = 0.01)
+	optimizer = torch.optim.SGD(params = model_s9.parameters(), lr = 0.01)
 
-	train_model(train_loader, 	model, error_func, optimizer)
-	test_model(	test_loader, 	model, error_func)
+	train_model(train_loader, 	model_s9, error_func, optimizer)
+	test_model(	test_loader, 	model_s9, error_func)
 	pass
