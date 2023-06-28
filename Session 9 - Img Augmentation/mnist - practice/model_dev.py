@@ -4,7 +4,7 @@ from torch.nn import ReLU as RELU
 
 # TODO: Baseline model for Future Customizations.
 
-class Baseline(nn.Module):
+class S9_Baseline(nn.Module):
 	def __init__(m):
 		super().__init__()
 		m.block1 = nn.ModuleDict({
@@ -23,11 +23,11 @@ class Baseline(nn.Module):
 
 		})
 		m.block4 = nn.ModuleDict({
-			"conv1": nn.Conv2d(10,100,(8,8)),
+			"conv1": nn.Conv2d(10,32,(8,8)),
 			"relu": RELU()
 
 		})
-		m.fc1 = nn.Linear(100,50)
+		m.fc1 = nn.Linear(32,50)
 		m.fc2 = nn.Linear(50,10)
 		m.log_softmax = nn.functional.log_softmax
 
@@ -41,17 +41,18 @@ class Baseline(nn.Module):
 
 		b4_output = b4.relu(b4.conv1(b3_output))
 
-		b4_output = b4_output.view(-1,100*1*1) # ! Didn't assign back before
+		b4_output = b4_output.view(-1,32*1*1) # ! Didn't assign back before
 
 		feature_map = m.fc1(b4_output)
-		classes_neurons = m.fc2(feature_map)
-		output = m.log_softmax(classes_neurons, dim=1)
+		output_classes_neurons = m.fc2(feature_map)
+		output = m.log_softmax(output_classes_neurons, dim=1)
+
 		# output.shape = torch.Size([B, 10])
 		return output
 
 if __name__ == "__main__":
 	test_data = torch.randn(3,1,28,28) # B C H W
-	model = Baseline()
+	model = S9_Baseline()
 	model(test_data)
 
 	print("END")

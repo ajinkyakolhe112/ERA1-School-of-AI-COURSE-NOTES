@@ -1,13 +1,17 @@
 # User Acceptance Testing
+**Agenda**
+1. User POV / Functionality
+2. Technical POV / Implementation
+3. Scientist POV / Experiment Log
 
-### User POV / Functionality
+### 1. User POV / Functionality
 - MNIST, 10 Digits Classification (Problem Statement)
 - Web App, where you classify the digit. (Javascript Webpage)
 - Types of wrong predictions, Types of high confidence wrong predictions (Understanding Solutions quality)
 - Internal Working of Technical Algorithm for added intelligence. (Exceptions made right with human intelligence)
 
-### Technical POV / Implementation
-Training Loop
+### 2. Technical POV / Implementation
+Simple Training Loop
 
 $$
 \begin{align*}
@@ -34,3 +38,9 @@ Architecture / System Design: Base Modules (Fixed Order)
 Later
 - `models.py` - Saving All Models here. Increamental 
 - `notebook.py` - experiment in script format
+
+
+### 3. Scientist POV / Experiment Log
+1. ~~`Session 9 Model`~~ doesn't learn. But `Session 7 Model` does. Some bug in code
+   - [x] tested S7 model, doesn't learn here. But same model learns in S7. Bug in dataset or train
+   - [ ]  

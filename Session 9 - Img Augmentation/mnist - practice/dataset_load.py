@@ -14,10 +14,10 @@ test_dataset = datasets.MNIST(download=True,root="./data",train=False,
 		transforms.ToTensor()
 		]))
 
-plt.imshow(train_dataset[0][0].squeeze(dim=0))
+# plt.imshow(train_dataset[0][0].squeeze(dim=0))
 
 keyword_value_pair = {
-	"batch_size": 64,
+	"batch_size": 128,
 	"shuffle": True
 }
 kwargs = keyword_value_pair
@@ -28,7 +28,10 @@ test_loader = torch.utils.data.DataLoader(test_dataset,**kwargs)
 
 
 if __name__ == "__main__":
+
 	len(train_dataset),len(train_dataset)
+	plt.imshow(train_dataset[0][0].squeeze(dim=0))
+	
 	total_batches = len(train_dataset) / kwargs["batch_size"]
 	for batch_no,(image_tensor,label) in enumerate(tqdm(train_loader)):
 		batch_no,image_tensor.shape,label

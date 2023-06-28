@@ -68,7 +68,7 @@ if __name__ == "__main__":
 	from dataset_load import *
 	from model_dev import *
 
-	model = Baseline()
+	model = s9_baseline()
 	error_func = nn.functional.nll_loss
 	optimizer_name = torch.optim.SGD
 	optimizer = optimizer_name(params = model.parameters(), lr = 0.01)

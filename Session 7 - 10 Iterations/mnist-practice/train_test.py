@@ -3,7 +3,7 @@ import torch.nn as nn
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 
-class Metrics:
+class CustomMetrics:
 	def __init__(s):
 		s.train_loss_batches = []
 		s.train_acc_batches = []
@@ -17,9 +17,8 @@ class Metrics:
 		s.test_loss_epochs = []
 		s.test_acc_epochs = []
 
-metrics = Metrics()
-
-def train_model(train_loader, model, error_func, optimizer, device=None):
+def train_model(train_loader, model, error_func, optimizer, metric_logger: CustomMetrics, device=None):
+	# Make parameters ready immediately after receiving them
 	pbar = tqdm(train_loader)
 	model.train(mode=True)
 	model.to(device)
@@ -28,26 +27,28 @@ def train_model(train_loader, model, error_func, optimizer, device=None):
 	for batch_no,(images_batch,labels_batch) in enumerate(pbar):
 		images_batch.to(device),labels_batch.to(device)
 		
+		# Training Loop
 		y_pred = model(images_batch)
 		loss = error_func(y_pred, labels_batch, reduction="mean")
 		loss.backward()
 		optimizer.step()
 		optimizer.zero_grad()
 		
+		# Training Loop Metrics
 		loss_batch = loss.item()
 		target_preds = y_pred.argmax(dim=1,keepdim=False)
 		correct_preds = torch.eq(target_preds,labels_batch).count_nonzero().item()
 		total_correct = total_correct + correct_preds
 		total_acc = 100 * float(total_correct) / ((batch_no+1)*train_loader.batch_size)
 		
-		metrics.train_loss_batches.append(loss_batch)		# Because inside forloop. It's printing train_loss per batch
-		metrics.train_acc_batches.append(total_acc)			# When outside loop, it will print train_loss per epoch
+		metric_logger.train_loss_batches.append(loss_batch)		# Because inside forloop. It's printing train_loss per batch
+		metric_logger.train_acc_batches.append(total_acc)		# When outside loop, it will print train_loss per epoch
 		
 		message = f"Batch_id= {batch_no}, Batch Loss: {loss_batch:0.4f}, Correct: {correct_preds:2d}, Total Acc {total_acc:0.4f}"
 		pbar.set_description(message)
 
 
-def test_model(test_loader, model, error_func, device=None):
+def test_model(test_loader, model, error_func, metric_logger: CustomMetrics, device=None):
 	model.eval()
 	# DOESN"T HAVE MODE PARAMETER LIKE model.train()
 	# ERROR: model.eval(True)
@@ -60,10 +61,12 @@ def test_model(test_loader, model, error_func, device=None):
 		for batch_no,(images,labels) in enumerate(tqdm(test_loader)):
 			images.to(device),labels.to(device)
 			
+			# Test Loop
 			target_pred = model(images)
 			# ERROR: loss = error_func(target,target_pred, reduction="sum")
 			loss = error_func(target_pred, labels, reduction="sum")
 			
+			# Test Loop Metrics
 			test_loss_total = test_loss_total + loss.item()
 			correct_preds = torch.eq(target_pred.argmax(dim=1,keepdim=False),labels).count_nonzero().item()
 			test_correct_total = test_correct_total + correct_preds
@@ -74,11 +77,12 @@ def test_model(test_loader, model, error_func, device=None):
 			
 		test_loss_avg = test_loss_total / len(test_loader.dataset)
 		test_acc_total = 100 * float(test_correct_total) / len(test_loader.dataset)
-		metrics.test_loss_epochs.append(test_loss_avg)
-		metrics.test_acc_epochs.append(test_acc_total)
+		metric_logger.test_loss_epochs.append(test_loss_avg)
+		metric_logger.test_acc_epochs.append(test_acc_total)
 
 
-def plot_train_test_loss(train_loss, train_acc, test_loss, test_acc):
+def plot_train_test_loss(metric_logger: CustomMetrics):
+	train_loss, train_acc = metric_logger.train_loss_batches, metric_logger.train_acc_batches
 	fig, axs = plt.subplots(2,2,figsize=(15,10))
 	axs[0, 0].plot(train_loss)
 	axs[0, 0].set_title("Training Loss")
@@ -90,16 +94,15 @@ def plot_train_test_loss(train_loss, train_acc, test_loss, test_acc):
 	axs[1, 0].set_xlabel("batches")
 	axs[1, 0].set_ylabel("acc %")
 
-	axs[0, 1].plot(test_loss)
-	axs[0, 1].set_title("Test Loss")
-	axs[0, 1].set_xlabel("batches")
-	axs[0, 1].set_ylabel("loss")
+	# axs[0, 1].plot(test_loss)
+	# axs[0, 1].set_title("Test Loss")
+	# axs[0, 1].set_xlabel("batches")
+	# axs[0, 1].set_ylabel("loss")
 
-
-	axs[1, 1].plot(test_acc)
-	axs[1, 1].set_title("Test Accuracy")
-	axs[1, 1].set_xlabel("batches")
-	axs[1, 1].set_ylabel("acc %")
+	# axs[1, 1].plot(test_acc)
+	# axs[1, 1].set_title("Test Accuracy")
+	# axs[1, 1].set_xlabel("batches")
+	# axs[1, 1].set_ylabel("acc %")
 
 def experiment_wandb(loader, model):
 	pass 
@@ -110,7 +113,7 @@ if __name__ == "__main__":
 	from model_architecture import *
 	
 	train_loader,test_loader
-	model = baseline()
+	model = s7_baseline()
 	
 	error_func = nn.functional.nll_loss # function is in nn.functional
 	
@@ -118,8 +121,8 @@ if __name__ == "__main__":
 	optimizer = torch.optim.SGD(params = model.parameters(), lr = 0.1 )
 	
 	metrics = Metrics()
-	train_model(train_loader, model, error_func, optimizer)
-	test_model(test_loader,model,error_func)
+	train_model(train_loader, model, error_func, metrics, optimizer)
+	test_model(test_loader,model,error_func, metrics)
 	plot_train_test_loss(train_loss_batches, train_acc_batches, test_loss_batches, test_acc_batches)
 	
 	print("END")

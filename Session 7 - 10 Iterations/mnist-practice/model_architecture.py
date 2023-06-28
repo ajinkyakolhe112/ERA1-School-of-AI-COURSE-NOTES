@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from torch.nn import ReLU as RELU
 
-class baseline(nn.Module):
+class S7_Baseline(nn.Module):
 	def __init__(self):
 		super().__init__()
 		self.block1 = nn.ModuleDict({
@@ -42,6 +42,6 @@ class baseline(nn.Module):
 
 if __name__ == "__main__":
 	test_batch = torch.randn(32,1,28,28)
-	model = baseline()
+	model = S7_Baseline()
 	test_forward_pass = model(test_batch)
 	
