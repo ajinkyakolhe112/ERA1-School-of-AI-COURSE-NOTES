@@ -89,3 +89,50 @@ LGN
 
 1. Walking in Room in real life vs walking in room in video game. (video game is all about matrix transformations).
 1. Computational maths because fast computers as machines available.
+
+
+#### Session 4 Revision
+Brain Neuron
+- Input -> Cell -> Output -> Output_Input -> Input -> Cell -> Output
+- Dendrite -> Cell -> Axon -> Synapse -> Dendrite -> Cell -> Axon
+
+Multi-Channel Convolution
+- ( B, C, H, W ) AND ( ch_in, k , ch_out )
+- (400,400,ch_in) AND ( ch_out x (3,3,ch_in) )
+
+Architecture
+
+1. Convolution Block - Just Channel Numbers or Neurons
+$$\Large initialize = (ch_{input}, ch_{output}) $$
+$$ch\_width_{output} = \frac{ch\_width_{input} + 2p - k }{s} + 1 \tag{a}\\$$
+feature map = (channel_size_(H,W) * no_of_channels)
+
+```python
+channels_in_out = {
+	"layer_1": (32,64),
+	"layer_2": (64,128),
+	"layer_3": (128,256),
+	"layer_4": (256,512)
+}
+```
+2. Convolution Block - Kernel Size & RF
+$$\Large initialize = (kernel, stride, padding )$$
+
+$$
+\begin{align*}
+rf_{output} = rf_{input} + (k-1) \cdot s_{current} \cdot \prod_{l = 0}^{l = prev} s \tag{b} \\
+j_{output} = j_{input} \cdot s  \\
+j_{output} = s_{current} \cdot \prod_{l = 0}^{l = prev} s \\
+\end{align*}
+$$
+
+Values with "-1" will be calculated based on initialization values
+```python
+kernel_details = {"RF": -1, "j_in":-1 , "j_out":-1, "delta_size": -1, "delta_RF": -1}
+layer_kernels = {
+	"layer_1": kernel_details.copy(),
+	"layer_2": kernel_details.copy(),
+	"layer_3": kernel_details.copy(),
+	"layer_4": kernel_details.copy(),
+}
+```
