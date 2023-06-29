@@ -8,3 +8,5 @@
 *.ipynb_checkpoints
 .gitattributes
 .*vscode
+.unotes/templates/title_date.hbs
+.unotes/unotes_meta.json
