@@ -4,12 +4,14 @@ import torch.nn.functional as F
 class Model_2(nn.Module):
     def __init__(self):
         super().__init__()
+
+        self.conv0 = nn.Conv2d(1,32, 3, padding=1)    # 28 -> 28 | 3
         
         # Block 1
         self.block1 = nn.ModuleDict({
-            "conv1": nn.Conv2d(1, 32, 3, padding=1),
+            "conv1": nn.Conv2d(32, 64, 3, padding=1),
             "relu" : nn.ReLU(),
-            "conv2": nn.Conv2d(32, 64, 3, padding=1),
+            "conv2": nn.Conv2d(64, 128, 3, padding=1),
             "relu" : nn.ReLU(),
         })
 
@@ -19,9 +21,9 @@ class Model_2(nn.Module):
 
         # Block 2
         self.block2 = nn.ModuleDict({
-            "conv3": nn.Conv2d(64, 128, 3, padding=1),
+            "conv3": nn.Conv2d(128, 256, 3, padding=1),
             "relu" : nn.ReLU(),
-            "conv4": nn.Conv2d(128, 256, 3, padding=1),
+            "conv4": nn.Conv2d(256, 512, 3, padding=1),
             "relu" : nn.ReLU(),
         })
         
@@ -31,10 +33,14 @@ class Model_2(nn.Module):
 
         # Block 3
         self.block3 = nn.ModuleDict({
-            "conv5": nn.Conv2d(256, 512, 3),
+            "conv5": nn.Conv2d(512, 1024, 3),
             "relu" : nn.ReLU(),
-            "conv6": nn.Conv2d(512, 1024, 3),
+            "conv6": nn.Conv2d(1024, 1024, 3),
             "relu" : nn.ReLU(),
+        })
+
+        self.transition3 = nn.ModuleDict({
+
         })
 
         # Block 4
@@ -43,6 +49,8 @@ class Model_2(nn.Module):
         })
 
     def forward(self, x):
+        x = self.conv0(x)
+
         x = self.block1(x)
         x = self.transition1(x)
         
@@ -50,6 +58,7 @@ class Model_2(nn.Module):
         x = self.transition2(x)
         
         x = self.block3(x)
+        x = self.transition3(x)
 
         x = self.block4(x)
 
