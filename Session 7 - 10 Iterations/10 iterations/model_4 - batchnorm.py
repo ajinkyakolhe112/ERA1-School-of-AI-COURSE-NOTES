@@ -1,58 +1,91 @@
 import torch.nn as nn
 import torch.nn.functional as F
 
-class Net(nn.Module):
+class Model_2(nn.Module):
     def __init__(self):
         super().__init__()
 
-        # k:3, RF: 3 | Output: 28 -> 28 | Channels: (1 -> 32)
-        # Layer 1: Parameters = 32 * (1 * 3*3)
-        self.conv1 = nn.Conv2d(1, 32, 3, padding=1)
+        self.conv0 = nn.Conv2d(1,32, 3, padding=1)    # 28 -> 28 | 3
+        
+        # Block 1
+        self.block1 = nn.ModuleDict({
+            "conv1": nn.Conv2d(32, 64, 3, padding=1),
+            "relu1" : nn.ReLU(),
+            "conv2": nn.Conv2d(64, 128, 3, padding=1),
+            "relu2" : nn.ReLU(),
+        })
 
-        # k:3, RF: 5 | Output: 28 -> 28 | Channels: (32 -> 64)
-        # Layer 2: Parameters = 64 * (32 * 3*3)   
-        self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
+        # Maxpooling before or after 1x1 convolution?
+        self.transition1 = nn.Sequential(
+            nn.MaxPool2d(2, 2),
+            nn.Conv2d(128,32,1), # Squeeze
+        )
 
-        # k:2, RF: 10 | Output: 28 -> 14 | Channels: (64 -> 64)
-        # Layer 3: Parameters = 0
-        self.pool1 = nn.MaxPool2d(2, 2)
+        # Block 2
+        self.block2 = nn.ModuleDict({
+            "conv1": nn.Conv2d(32, 64, 3, padding=1),
+            "relu1" : nn.ReLU(),
+            "conv2": nn.Conv2d(64, 128, 3, padding=1),
+            "relu2" : nn.ReLU(),
+        })
+        
+        self.transition2 = nn.Sequential(
+            nn.MaxPool2d(2, 2),
+            nn.Conv2d(128,32,1), # Squeeze
+        )
 
-        # k:3, RF: 12 | Output: 14 -> 14 | Channels: (64 -> 128)
-        # Layer 4: Parameters = 128 * (64 * 3*3)
-        self.conv3 = nn.Conv2d(64, 128, 3, padding=1)
+        # Block 3
+        self.block3 = nn.ModuleDict({
+            "conv1": nn.Conv2d(32, 64, 3, padding=1),
+            "relu1" : nn.ReLU(),
+            "conv2": nn.Conv2d(64, 128, 3, padding=1),
+            "relu2" : nn.ReLU(),
+        })
 
-        # k:3, RF: 14 | Output: 14 -> 14 | Channels: (128 -> 256)
-        # Layer 5: Parameters = 256 * (128 * 3*3)
-        self.conv4 = nn.Conv2d(128, 256, 3, padding=1)
+        self.transition3 = nn.Sequential(
+            nn.MaxPool2d(2, 2),
+            nn.Conv2d(128,32,1), # Squeeze
+        )
 
-        # k:2, RF: 28 | Output: 14 -> 7 | Channels: (256 -> 256)
-        # Layer 6: Parameters = 0
-        self.pool2 = nn.MaxPool2d(2, 2)
-
-        # k:3, RF: 30 | Output:  7 -> 5 | Channels: (256 -> 512)
-        # Layer 7: Parameters = 512 * (256 * 3*3)           
-        self.conv5 = nn.Conv2d(256, 512, 3)
-
-        # k:3, RF: 32 | Output:  5 -> 3 | Channels: (512 -> 1024)
-        # Layer 8: Parameters = 1024 * (512 * 3*3)        
-        self.conv6 = nn.Conv2d(512, 1024, 3)
-
-        # k:3, RF: 34 | Output:  3 -> 1 | Channels (1 -> 32)    
-        # Layer 9: Parameters = 1024 * (10 * 3*3)      
-        self.conv7 = nn.Conv2d(1024, 10, 3)             
+        # Block 4
+        self.block4 = nn.ModuleDict({
+            "conv7": nn.Conv2d(32, 10, 3),
+        })
 
     def forward(self, x):
-        x = self.pool1(F.relu(self.conv2(F.relu(self.conv1(x)))))
-        x = self.pool2(F.relu(self.conv4(F.relu(self.conv3(x)))))
-        x = F.relu(self.conv6(F.relu(self.conv5(x))))
-        # x = F.relu(self.conv7(x))
-        x = self.conv7(x)
+        b1, b2, b3, b4 = self.block1, self.block2, self.block3, self.block4
 
-        # 1*1*10 > (-1,10)
-        x = x.view(-1, 10)                              
-        # -1 means last dimention which is dim 1 in this case
-        # Two dimentions. dim 0 & dim 1
-        output = F.log_softmax(x, dim= 1) # OR F.log_softmax(x, dim=-1)
-        probs = F.softmax(x,dim=1)
+        x = self.conv0(x)
+
+        x = b1.relu2(b1.conv2(b1.relu1(b1.conv1(x))))
+        x = self.transition1(x)
         
+        x = b2.relu2(b2.conv2(b2.relu1(b2.conv1(x))))
+        x = self.transition2(x)
+        
+        x = b3.relu2(b3.conv2(b3.relu1(b3.conv1(x))))
+        x = self.transition3(x)
+
+        x = b4.conv7(x)
+
+        # (-1 = dim 0, 10 = dim 1)
+        x = x.view(-1, 10)
+
+        output = F.log_softmax(x, dim=1)
+        probs = F.softmax(x, dim=1)
         return output
+
+if __name__=="__main__":
+    # from torchsummary import summary
+
+    model_2 = Model_2()
+
+    for name in model_2.state_dict():
+        print(name)
+    
+    for module in model_2.modules():
+        print(module)
+
+        
+
+
