@@ -35,11 +35,11 @@ test_loader = torch.utils.data.DataLoader(
 
 # Testing
 device = torch.device("cuda") # cuda, cpu, tpu
-channels, neurons = 1, 1
-singleImage = torch.randn(channels,28,28)
+channels_in, neurons = 1, 1
+singleImage = torch.randn(channels_in,28,28)
 
 basicModel = nn.Sequential(
-  nn.Conv2d(channels,neurons,3)
+  nn.Conv2d(channels_in,neurons,3)
   )
 basicModel(singleImage)
 

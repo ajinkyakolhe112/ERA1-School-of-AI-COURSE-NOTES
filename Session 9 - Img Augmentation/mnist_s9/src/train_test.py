@@ -51,7 +51,7 @@ def train_model(train_loader, model, error_func, optimizer, device=None, epoch_n
 		training_metrics["batch_no"].append(batch_no+1)
 
 		# training_metrics["customizable"].append("")
-	pass
+	return training_metrics
 
 def test_model(test_loader, model, error_func, device=None, epoch_no=1):
 	pbar = tqdm(test_loader)

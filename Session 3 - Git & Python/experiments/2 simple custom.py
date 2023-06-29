@@ -2,15 +2,6 @@ import torch
 import torch.nn as nn
 from torchvision import datasets, transforms
 
-"""
-Structure of Code
-1. Data of MNIST
-2. Model for MNIST
-
-Structure of Solution and then writing code in it iteratively. 
-
-"""
-
 class CustomModule(nn.Module):
 	def __init__(self):
 		super().__init__()  # Very important. Otherwise CustomModule won't be registered as NN

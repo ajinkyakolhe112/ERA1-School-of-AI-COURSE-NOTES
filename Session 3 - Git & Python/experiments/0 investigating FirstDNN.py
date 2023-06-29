@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-
+#%%
 import torch
 import torch.nn as nn
 import numpy as np
@@ -14,6 +13,7 @@ model = nn.Sequential(
 )
 singleImage = torch.randn(1,28,28)
 
+#%%
 flattenLayer = torch.nn.Flatten()
 vars(flattenLayer) # Flatten Layer doesn't have weights... Not every layer is transformation. Max Pooling, Flattening, Conv1D are different kind of layers. 
 
@@ -28,8 +28,8 @@ model = nn.Sequential(
 )
 output = model(singleImage)
 output, output.shape
-vars(output)
-dir(output)
+vars(model)
+dir(model)
 
 #%%
 example = torch.randn(1,10)

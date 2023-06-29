@@ -2,6 +2,7 @@
 
 # You can't do any branching at all. And branching is very powerful. So we use alternative.
 
+#%% [markdown]
 """
 Model Architecture & Parameters
 Data fed Batch by Batch
@@ -13,16 +14,15 @@ Data fed Batch by Batch
 4. FOR Error back propogation reverse layer by layer
 5. Weight Update accordingly
 """
-
+#%% [markdown]
 """
-A Single Neuron we put. It's a building block of learning. Each Single Neuron is just X_batch \odot W_neuronNo
-Every Single Neuron, according to Error Value, corrects its individual weights, according to each's contribution to Error
-W = horizontal array of weights. 
-
-
-Human Brain Hz = one Cycle in seconds. One second calculations
-Computer Brain Hz = one Cycle in second. One second calculations
+- A Single Neuron we put. It's a building block of learning. Each Single Neuron is just $X\_batch \odot W\_neuron\_no$
+- Every Single Neuron, according to Error Value, corrects its individual weights, according to each's contribution to Error
+- W = horizontal array of weights. 
+- Human Brain Hz = one Cycle in seconds. One second calculations
+- Computer Brain Hz = one Cycle in second. One second calculations
 """
+#%%
 import torch
 import torch.nn as nn
 import torch.nn.functional as F # functional module is all the Classes in nn module but in format of functions. Simple functions. F.relu F.selu() F.conv2d

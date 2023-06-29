@@ -32,7 +32,7 @@ VS Code Settings
 VS Code: Doesn't have floating window for notebook view
 Github: Doesn't have multiple individual lines select
 
-Github: Mathsjax markdown implementation is lacking. 
+Github: Mathsjax markdown implementation is lacking.
 
 IDEs
 
@@ -45,10 +45,10 @@ IDEs
 in VS Code & Custom As Needed
 List
 
-- !
-- ?
-- //
-- todo
--
--
--
+* !
+* ?
+* //
+* todo
+* 
+* 
+* 

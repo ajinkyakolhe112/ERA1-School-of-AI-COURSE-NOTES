@@ -17,6 +17,7 @@
 		- [x] Lecture 3 - Python 101
 		- [x] Lecture 5 - Pytorch 101 & Practice NN Design on Paper
 		- [x] Lecture 4 - Building first NN - (Finding bugs & fixing them) 
+		- [x] Lecture 6 - Pass 1 backprop & architecture & experiment model 8k parameters
 	- [ ] Revisit Pytorch Fundamentals. Small End to End Tutorial
 		- What is nn really?
 		- Blitz Pytorch
