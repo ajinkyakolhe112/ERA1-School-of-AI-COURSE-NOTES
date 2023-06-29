@@ -10,57 +10,63 @@ class Model_2(nn.Module):
         # Block 1
         self.block1 = nn.ModuleDict({
             "conv1": nn.Conv2d(32, 64, 3, padding=1),
-            "relu" : nn.ReLU(),
+            "relu1" : nn.ReLU(),
             "conv2": nn.Conv2d(64, 128, 3, padding=1),
-            "relu" : nn.ReLU(),
+            "relu2" : nn.ReLU(),
         })
 
-        self.transition1 = nn.ModuleDict({
-            "pool1": nn.MaxPool2d(2, 2),
-        })
+        # Maxpooling before or after 1x1 convolution?
+        self.transition1 = nn.Sequential(
+            nn.MaxPool2d(2, 2),
+            nn.Conv2d(128,32,1), # Squeeze
+        )
 
         # Block 2
         self.block2 = nn.ModuleDict({
-            "conv3": nn.Conv2d(128, 256, 3, padding=1),
-            "relu" : nn.ReLU(),
-            "conv4": nn.Conv2d(256, 512, 3, padding=1),
-            "relu" : nn.ReLU(),
+            "conv1": nn.Conv2d(32, 64, 3, padding=1),
+            "relu1" : nn.ReLU(),
+            "conv2": nn.Conv2d(64, 128, 3, padding=1),
+            "relu2" : nn.ReLU(),
         })
         
-        self.transition2 = nn.ModuleDict({
-            "pool1": nn.MaxPool2d(2, 2),
-        })
+        self.transition2 = nn.Sequential(
+            nn.MaxPool2d(2, 2),
+            nn.Conv2d(128,32,1), # Squeeze
+        )
 
         # Block 3
         self.block3 = nn.ModuleDict({
-            "conv5": nn.Conv2d(512, 1024, 3),
-            "relu" : nn.ReLU(),
-            "conv6": nn.Conv2d(1024, 1024, 3),
-            "relu" : nn.ReLU(),
+            "conv1": nn.Conv2d(32, 64, 3, padding=1),
+            "relu1" : nn.ReLU(),
+            "conv2": nn.Conv2d(64, 128, 3, padding=1),
+            "relu2" : nn.ReLU(),
         })
 
-        self.transition3 = nn.ModuleDict({
-
-        })
+        self.transition3 = nn.Sequential(
+            nn.MaxPool2d(2, 2),
+            nn.Conv2d(128,32,1), # Squeeze
+        )
 
         # Block 4
         self.block4 = nn.ModuleDict({
-            "conv7": nn.Conv2d(1024, 10, 3),
+            "conv7": nn.Conv2d(32, 10, 3),
         })
 
     def forward(self, x):
+        b1, b2, b3, b4 = self.block1, self.block2, self.block3, self.block4
+
         x = self.conv0(x)
 
-        x = self.block1(x)
+        x = b1.relu2(b1.conv2(b1.relu1(b1.conv1(x))))
         x = self.transition1(x)
         
-        x = self.block2(x)
+        x = b2.relu2(b2.conv2(b2.relu1(b2.conv1(x))))
         x = self.transition2(x)
         
-        x = self.block3(x)
+        x = b3.relu2(b3.conv2(b3.relu1(b3.conv1(x))))
         x = self.transition3(x)
 
-        x = self.block4(x)
+        x = b4.conv7(x)
 
         # (-1 = dim 0, 10 = dim 1)
         x = x.view(-1, 10)
@@ -68,3 +74,18 @@ class Model_2(nn.Module):
         output = F.log_softmax(x, dim=1)
         probs = F.softmax(x, dim=1)
         return output
+
+if __name__=="__main__":
+    # from torchsummary import summary
+
+    model_2 = Model_2()
+
+    for name in model_2.state_dict():
+        print(name)
+    
+    for module in model_2.modules():
+        print(module)
+
+        
+
+
