@@ -5,6 +5,7 @@
 	- [ ] Finish Assignment 7
 	- [ ] Participate in MNIST Kaggle
 	- [ ] Improve models
+	- [x] Experiment Tracking on w&b
 - Catch Up
 	- [ ] Session 8: Batch Norm, Layer Norm & Regulalization
 - Current Lecture

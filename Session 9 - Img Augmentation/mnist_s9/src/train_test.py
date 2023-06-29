@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from tqdm import tqdm
+import wandb
 
 def train_model(train_loader, model, error_func, optimizer, device=None, epoch_no=1):
 	# Follow kitchen philosophy. Make everything ready for training loop
@@ -49,6 +50,14 @@ def train_model(train_loader, model, error_func, optimizer, device=None, epoch_n
 		training_metrics["acc_total"].append(total_acc)
 		training_metrics["batch_correct"].append(batch_correct_pred)
 		training_metrics["batch_no"].append(batch_no+1)
+		wandb.log({
+		"batch_no": batch_no,
+		"acc": training_metrics["acc_total"][-1], 
+		"loss": training_metrics["batch_loss"][-1], 
+		"batch_acc": training_metrics["batch_acc"][-1],
+		"batch_correct": training_metrics["batch_correct"][-1],
+		})
+
 
 		# training_metrics["customizable"].append("")
 	return training_metrics
@@ -66,6 +75,18 @@ def test_model(test_loader, model, error_func, device=None, epoch_no=1):
 		
 	pass
 
+def wandb_init():
+	wandb.init(
+		name= "configuring wandb",
+		project="mnist",
+		config = {
+			"dataset": "MNIST",
+			"learning_rate": 0.01,
+		}
+	)
+
+
+
 if __name__ == "__main__":
 	from dataset_load import *
 	from model_dev import *
@@ -73,7 +94,10 @@ if __name__ == "__main__":
 	model_s9 = S9_Baseline()
 	error_func = nn.functional.nll_loss
 	optimizer = torch.optim.SGD(params = model_s9.parameters(), lr = 0.01)
+	wandb_init()
 
-	train_model(train_loader, 	model_s9, error_func, optimizer)
+	training_metrics = train_model(train_loader, 	model_s9, error_func, optimizer)
+
+
 	test_model(	test_loader, 	model_s9, error_func)
 	pass
