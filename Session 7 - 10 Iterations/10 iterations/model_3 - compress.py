@@ -4,55 +4,55 @@ import torch.nn.functional as F
 import torch.nn as nn
 import torch.nn.functional as F
 
-class Model_2(nn.Module):
+class Model_3(nn.Module):
     def __init__(self):
         super().__init__()
 
-        self.conv0 = nn.Conv2d(1,32, 3, padding=1)    # 28 -> 28 | 3
+        self.conv0 = nn.Conv2d(1,10, 3, padding=1)    # 28 -> 28 | 3
         
         # Block 1
         self.block1 = nn.ModuleDict({
-            "conv1": nn.Conv2d(32, 64, 3, padding=1),
+            "conv1": nn.Conv2d(10, 10, 3, padding=1),
             "relu1" : nn.ReLU(),
-            "conv2": nn.Conv2d(64, 128, 3, padding=1),
+            "conv2": nn.Conv2d(10, 20, 3, padding=1),
             "relu2" : nn.ReLU(),
         })
 
         # Maxpooling before or after 1x1 convolution?
         self.transition1 = nn.Sequential(
             nn.MaxPool2d(2, 2),
-            nn.Conv2d(128,32,1), # Squeeze
+            nn.Conv2d(20,10,1), # Squeeze
         )
 
         # Block 2
         self.block2 = nn.ModuleDict({
-            "conv1": nn.Conv2d(32, 64, 3, padding=1),
+            "conv1": nn.Conv2d(10, 10, 3, padding=1),
             "relu1" : nn.ReLU(),
-            "conv2": nn.Conv2d(64, 128, 3, padding=1),
+            "conv2": nn.Conv2d(10, 20, 3, padding=1),
             "relu2" : nn.ReLU(),
         })
         
         self.transition2 = nn.Sequential(
             nn.MaxPool2d(2, 2),
-            nn.Conv2d(128,32,1), # Squeeze
+            nn.Conv2d(20,10,1), # Squeeze
         )
 
         # Block 3
         self.block3 = nn.ModuleDict({
-            "conv1": nn.Conv2d(32, 64, 3, padding=1),
+            "conv1": nn.Conv2d(10, 10, 3, padding=1),
             "relu1" : nn.ReLU(),
-            "conv2": nn.Conv2d(64, 128, 3, padding=1),
+            "conv2": nn.Conv2d(10, 20, 3, padding=1),
             "relu2" : nn.ReLU(),
         })
 
         self.transition3 = nn.Sequential(
             nn.MaxPool2d(2, 2),
-            nn.Conv2d(128,32,1), # Squeeze
+            nn.Conv2d(20,10,1), # Squeeze
         )
 
         # Block 4
         self.block4 = nn.ModuleDict({
-            "conv7": nn.Conv2d(32, 10, 3),
+            "conv7": nn.Conv2d(10, 10, 3),
         })
 
     def forward(self, x):
@@ -79,15 +79,18 @@ class Model_2(nn.Module):
         return output
 
 if __name__=="__main__":
-    # from torchsummary import summary
+    from torchsummary import summary
 
-    model_2 = Model_2()
+    model_3 = Model_3()
+    summary(model_3,input_size=(1,28,28))
 
-    for name in model_2.state_dict():
+    for name in model_3.state_dict():
         print(name)
     
-    for module in model_2.modules():
-        print(module)
+    # for module in model_3.modules():
+        # print(module)
+
+    
 
         
 
