@@ -1,11 +1,11 @@
 
 **Deadlines**
 - [x] 10 Iterations code diff by Rohan. (Just copy first)
-- [ ] Maths & Latex & Markdown & Readme Design
+- [x] Maths & Latex & Markdown & Readme Design
 
 Remaining to Study
 1. MNIST in Kaggle
-2. Experiment Management & Curves for understanding train & test log in W & B
+- [x] Experiment Management & Curves for understanding train & test log in W & B
 3. Same code of Class in Tensorflow Keras
 4. Same code of in keras & pytorch, tensorflow
 5. Automatic testing method, to immediately know when any change breaks the code
