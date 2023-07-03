@@ -7,6 +7,9 @@ Projects to Finish
 - MNIST
 	- [ ] Participate in MNIST Kaggle Competition ![](https://geps.dev/progress/5)
 	- [ ] Finish Assignment 7
+- CS230 & Videos
+  - [ ] 5 Courses ![](https://geps.dev/progress/25)
+  - [ ] Youtube ![](https://geps.dev/progress/0)
 - CIFAR10
 	- [ ] Attempt Assignment 8
 	- [ ] **Attempt Assignment 9**
