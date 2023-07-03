@@ -5,19 +5,19 @@ import torch.nn.functional as F
 "DataSet, DataLoader, Model & Model Parameters, Training the Model & Evaluation via Accuracy, Improvement of Model"
 from torchvision import datasets 
 from torchvision import transforms
-from torchvision import datasets as visionDatasets 
-from torchvision import transforms as visionTransforms
+from torchvision import datasets as vision_datasets 
+from torchvision import transforms as vision_transformers
 
-transformList = visionTransforms.Compose([visionTransforms.ToTensor(),])
+transformList = vision_transformers.Compose([vision_transformers.ToTensor(),])
 
-MnistTrainingDataset = visionDatasets.MNIST("./data",download=True,train=True, transform = transformList, target_transform = None)
-MnistTestingDataset = visionDatasets.MNIST("./data",download=True,train=False, transform = transformList, target_transform = None)
+train_dataset = vision_datasets.MNIST("./data",download=True,train=True, transform = transformList, target_transform = None)
+test_dataset = vision_datasets.MNIST("./data",download=True,train=False, transform = transformList, target_transform = None)
 
-TrainLoader = torch.utils.data.DataLoader(MnistTrainingDataset, shuffle=True,batch_size = 128)
-TestLoader = torch.utils.data.DataLoader(MnistTestingDataset, shuffle=True, batch_size = 128)
+train_loader = torch.utils.data.DataLoader(train_dataset, shuffle=True,batch_size = 128)
+test_loader = torch.utils.data.DataLoader(test_dataset, shuffle=True, batch_size = 128)
 
-for batchId , (data,target) in enumerate(TrainLoader): # data = (BatchSize, Channels, Width, Height) , target = (BatchSize)
-	print(batchId,data.shape,target.shape)
+for batchId , (image_tensors,labels) in enumerate(train_loader): # data = (BatchSize, Channels, Width, Height) , target = (BatchSize)
+	print(batchId,image_tensors.shape,labels.shape)
 	"X & y","prediction = f(x,W)"
 	break
 

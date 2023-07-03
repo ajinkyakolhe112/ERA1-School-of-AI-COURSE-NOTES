@@ -2,7 +2,8 @@ import torch
 import numpy as np
 import tensorflow as tf
 
-#%% LIBRARIES, FUNCTIONS & MEMORY
+#%%
+# LIBRARIES, FUNCTIONS & MEMORY
 "Memory: However, in general, you can expect the NumPy, Torch, and TensorFlow modules to take up around 60 MB, 100 MB, and 150 MB of memory"
 "Functions and how they are named in each Library"
 
@@ -15,8 +16,8 @@ len(dir(torch)),len(dir(tf)),dir(tf.keras),len(dir(np))  # (1251, 342, 35, 600)
 "Tensorflow, low & high level. So module name design is importantly"
 "np is also for number array & tensor is also for numerical tensor in Pytorch. np is specialized for numerical processing. Pytorch is specialized for DNN implemented by Facebook" "np is wider in scope than Pytorch"
 
-"NumPy(1300+) has more functions implemented than PyTorch (600+). \
-NumPy is a general-purpose scientific computing library, while PyTorch is a deep learning library."
+# NumPy(1300+) has more functions implemented than PyTorch (600+). \
+# NumPy is a general-purpose scientific computing library, while PyTorch is a deep learning library.
 
 
 #%% TENSOR DIMENTION

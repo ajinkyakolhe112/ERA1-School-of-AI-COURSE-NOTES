@@ -8,11 +8,11 @@ from sklearn import datasets as toysets
 
 
 class reshape2d(nn.Module):
-	def __init__(self,nClasses):
+	def __init__(self,n_classes):
 		super().__init__()
-		self.nClasses = nClasses
+		self.n_classes = n_classes
 	def forward(self,inputX): # inputX = C * H * W
-		outputX = inputX.view(-1,self.nClasses) # n_dim = 1 ( channels, 1 dim. or channels, 2 dim, or channels , 3 dims
+		outputX = inputX.view(-1,self.n_classes) # n_dim = 1 ( channels, 1 dim. or channels, 2 dim, or channels , 3 dims
 		return outputX
 
 

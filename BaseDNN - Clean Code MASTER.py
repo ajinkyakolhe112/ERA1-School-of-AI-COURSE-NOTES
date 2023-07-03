@@ -42,7 +42,7 @@ class FirstDNN(nn.Module):
 		"FILTER SIZE, CHANNEL SIZE"
 		"PARAMETERS & CHANNEL SIZE MEMORY"
 		"RF & X_OUT formula"
-		self.conv1 = nn.Conv2d(1, 32, 3, padding=1)      #(W)Filter Size= , (X_out)Channel Size=, RF: , (PARAMETERS & MEMORY, CHANNEL SIZE)"
+		self.conv1 = nn.Conv2d(1, 32, (3,3), padding=1)      #(W)Filter Size= , (X_out)Channel Size=, RF: , (PARAMETERS & MEMORY, CHANNEL SIZE)"
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
 		self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:

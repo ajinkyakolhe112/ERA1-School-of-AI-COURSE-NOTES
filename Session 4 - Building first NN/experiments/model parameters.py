@@ -9,27 +9,41 @@ from torchinfo import summary
 summary(nn.Sequential(), input_size=(1, 28, 28), verbose=2,
 		col_names=["input_size", "output_size", "kernel_size", "mult_adds", "num_params", "params_percent"], col_width=20);
 
+#%%
+if torch.backends.cuda.is_available():
+	accelerator = "cuda"
+elif torch.backends.mps.is_available():
+	if not torch.backends.mps.is_built():
+		accelerator = "mps"
+	else:
+		accelerator = "cpu"
+else:
+	accelerator = "cpu"
 
-use_cuda = torch.cuda.is_available()
-device = torch.device("cuda" if use_cuda else "cpu")
+device = torch.device(accelerator)
 device
 
+#%%
 
 class Net(nn.Module):
 	#This defines the structure of the NN.
 	def __init__(self):
-		super(Net, self).__init__()
+		super().__init__()
 		# 4 blocks of 4 conv layers each extracting increasing in number & higher depth features each
 		# 2 max pooling & 4 conv layers. (image size after: (28 - 4*2)/2*2
-		self.conv1 = nn.Conv2d(1, 32, kernel_size=3)  # 26*26
+
+		self.conv1 = nn.Conv2d(in_channels = 1, out_channels = 32, kernel_size = (3,3),
+								padding = 0)  # 26*26
 		self.conv2 = nn.Conv2d(32, 64, kernel_size=3)  # 24*24, 12*12
 		self.conv3 = nn.Conv2d(64, 128, kernel_size=3)  # 10*10
 		self.conv4 = nn.Conv2d(128, 256, kernel_size=3)  # 8*8, 4*4
 		# output Image = (256,5,5)
-		# check transform stage in forward
+
+		# check in forward: output of transform
 		# self.fc0 = nn.Linear(256*4*4, 256*4*4)
-		self.fc1 = nn.Linear(256 * 4 * 4,
-							50)  # singleImage = 256 Channels. Size = 4*4. Converted to Vector. Output = (1*50) or (1,50)
+		self.fc1 = nn.Linear(in_features = 256 * 4 * 4,
+							out_features = 50)  
+		# singleImage = 256 Channels. Size = 4*4. Converted to Vector. Output = (1*50) or (1,50)
 		self.fc2 = nn.Linear(50, 10)  # Output = (1*10) or (1,10)
 		self.fc0 = nn.Sequential() #nn.Linear(256 * 4 * 4, 256 * 4 * 4)
 		
@@ -49,7 +63,6 @@ class Net(nn.Module):
 	
 	
 model = Net()
-
 
 summary(model, input_size=(1, 28, 28), verbose=2,
 		col_names=["input_size", "output_size", "kernel_size", "mult_adds", "num_params", "params_percent"], col_width=20);
