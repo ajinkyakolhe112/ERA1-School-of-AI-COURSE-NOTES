@@ -5,7 +5,10 @@
 Projects to Finish
 
 - MNIST
-	- [ ] Participate in MNIST Kaggle Competition ![](https://geps.dev/progress/5)
+	- [ ] Participate in MNIST Kaggle Competition ![](https://geps.dev/progress/15)
+    	- [ ] Dataset ![](https://geps.dev/progress/100)
+    	- [ ] Model ![](https://geps.dev/progress/30)
+    	- [ ] Training ![](https://geps.dev/progress/10)
 	- [ ] Finish Assignment 7
 - CS230 & Videos
   - [ ] 5 Courses ![](https://geps.dev/progress/25)
@@ -17,6 +20,7 @@ Projects to Finish
 	- [ ] Session 8: Batch Norm, Layer Norm & Regulalization
 	- [ ] Session 9: **Img Augmentation & Dialted Kernels**
 	- [ ] Session 10: One Cycle Policy & Advanced Convolutions
+	- [ ] Autograd tutorial ![](https://geps.dev/progress/30)
 - End to End Coding from Scratch
 	- Ideal MNIST
 		- modular & well designed file names
