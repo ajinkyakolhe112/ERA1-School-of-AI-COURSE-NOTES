@@ -1,25 +1,43 @@
 RF Formula in Excel & Markdown Latex Equation
+```python
+height,width,channels = (28,28,1)
+pytorch_img = torch.randn(channels,height,width)
 
-## With Padding & Stride
+conv_operation = nn.Conv2d(in_channels, out_channels, (k,k), stride= 1, padding= 0)
+# arguments are in descending order of their importance. (in_channels, out_channels) & (kernel,stride,padding)
+# main is kernel size. nested across depth times in block of layers
+
+# padding is choosen for keeping channel size same. Its difficult to manually remember what's the channel size which changes each layer. so better choose a padding value, so that, channel size remains the same. 
+# stride for increasing jump size. reduces channel size drastically. its introduced occasionally
+
+```
 $$
-\Large
-n_{output} = \frac {(n_{input} + 2 \cdot p - k)}{s} + 1\\
-
-rf_{output} = rf_{input} + (k - 1) \cdot s \cdot j_{input}\\
-
-j_{output} = j_{input} \cdot s
+\begin{align*}
+img &= (H,W,C)\\
+kernel &= (k,k,C)\\
+output &= (reduced, reduced, 1)\\
+\\
+height_{output} &= \frac {(height_{input} - kernel + 2 \cdot padding )}{stride} + 1 \tag{1}\\
+\end{align*}
 $$
 
-## Without Padding
+
+$$
+\begin{align*}
+rf^{global} &= rf_{input} + (kernel - 1) \cdot stride \cdot s_{accum}\\
+\\
+s_{accum} &= s_{accum} \cdot stride\\
+\\
+depth &= \frac {width} {(kernel -1) \cdot s \cdot s_{accum}}
+\end{align*}
 $$
 
-\Large
-n_{output} = \frac{n_{input} - k}{s} + 1\\
-
-rf_{output} = rf_{input} + (k - 1) \cdot s \cdot s_{accum}\\
-
-depth = \frac {rf_{goal}} {(k -1) \cdot s \cdot s_{accum}}\\
-
-\Delta rf = (k-1) \cdot s \cdot s_{accum}\\
-
+Stride = 1, padding for same height
+$$
+\begin{align*}
+s &= 1 \\
+padding &= \frac{( kernel - 1 )}{2}\\
+\Delta rf &= kernel - 1\\
+depth &= \frac{width}{kernel - 1}\\
+\end{align*}
 $$
