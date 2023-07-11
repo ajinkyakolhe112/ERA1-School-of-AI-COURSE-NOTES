@@ -13,16 +13,21 @@ testImageTensor = torch.randn(10,28,28) # 2 dimentional h*w image in c channels.
 class customNN(nn.Module):
 	def __init__():
 		super().__init__()
-		self.conv1 = nn.Conv2d(input_Channels,output_Channels,(3,3))
+		self.conv1 = nn.Conv2d(input_channels,output_channels,(3,3))
 	
-	def forward(self,inputData):
-		firstLayerOutput = self.conv1(inputData) # CHW
+	def forward(self,input_data_batch):
+		first_layer_output = self.conv1(input_data_batch) # CHW
+		output = F.relu(first_layer_output)
 		pass
 
 
-keras.Sequential(
+model = keras.Sequential(
 	layers.Dense(units=1,activation="relu"),
-	
 )
+y_pred = model(x_train_data)
+error_func = keras.losses.MeanSquaredError()
+optimizer = keras.optimizer.Adam(learning_rate = 0.001)
+model.compile(loss=error_func, optimizer = optimizer)
+model.fit(x_train_data,y_train_data)
 
 print("End")

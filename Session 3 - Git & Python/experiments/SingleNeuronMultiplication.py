@@ -6,11 +6,11 @@ class customMultiplicationNeuron(nn.Module):
 		super().__init__()
 		self.parameter = nn.Parameter()
 		
-		self.multiplierToLearn = nn.Parameter()
+		self.multiplier_to_learn = nn.Parameter()
 		
 		
-	def forward(self,inputData):
-		outputData = inputData * self.multiplierToLearn
-		return outputData
+	def forward(self,input_data):
+		output_data = input_data * self.multiplier_to_learn
+		return output_data
 
 self.parameter.grad

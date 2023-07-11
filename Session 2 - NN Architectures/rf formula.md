@@ -10,6 +10,7 @@ conv_operation = nn.Conv2d(in_channels, out_channels, (k,k), stride= 1, padding=
 # padding is choosen for keeping channel size same. Its difficult to manually remember what's the channel size which changes each layer. so better choose a padding value, so that, channel size remains the same. 
 # stride for increasing jump size. reduces channel size drastically. its introduced occasionally
 
+# !IMP: GOOGLE SHEETS, with analysis of kernel, stride, padding. and important extra properties we should know.
 ```
 $$
 \begin{align*}

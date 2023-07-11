@@ -8,6 +8,14 @@
 5. Pytorch model Sequential -> nn.Module & Functional
 6. Data Loader for model
 
+## NN Design PLACES SELF
+1. Use EXCEL. Visual formula
+2. Use Markdown Maths Equation. Maths Formula
+3. Code: Keras just for architecture
+4. Code: Pytorch
+5. Tensorflow Playground Visual Architecture
+6. Text File, Numerical Calculation
+7. Markdown Table
 
 
 Advanced Question.
