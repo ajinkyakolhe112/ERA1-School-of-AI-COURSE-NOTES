@@ -51,6 +51,30 @@ Imagine a classification problem.
 		nn.Linear(10,10) # 
 	)
 ```
+$$
+\Large 
+\begin{align*}
+Conv2d(n\_classes,k = 1*1) \rightarrow Flatten1D &\rightarrow FC(n\_classes)\\
+&OR\\
+Conv2d(n\_classes, k=1*1) &\rightarrow GAP(full)\\
+&OR\\
+GAP(full) &\rightarrow FC(n\_classes)\\
+\end{align*}
+$$
+```python
+import torch.nn as nn
+
+batch = torch.randn(1,512,7,7)
+
+"GAP -> FC"
+nn.AvgPool2d(kernel_size=7) # output: 1*512
+nn.Linear(512,n_classes)    # output: 1* n_classes
+
+or
+"Conv2d(k=1) -> GAP"
+nn.Conv2d(512,n_classes,1) # output: 7*7* n_classes
+nn.AvgPool2d(7)     # output: 1* n_classes
+```
 
 ## Week 6 TODO:
 - [ ] Write modular code from scratch for MNIST, CIFAR10, CIFAR100. (3 Modules at least)

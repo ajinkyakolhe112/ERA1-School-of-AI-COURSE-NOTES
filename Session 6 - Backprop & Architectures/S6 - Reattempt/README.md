@@ -1,4 +1,4 @@
-### Usage
+### Usage / Development Plan
 - `dataset.py`
   - returns `train_dataset` & `validation_dataset`
   - returns `train_dataloader` & `validation_dataloader`
@@ -7,3 +7,4 @@
   - 
 - `utils.py`
 - `S6 - experiment.ipynb`
+
