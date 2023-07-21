@@ -2,6 +2,7 @@
 
 Reflection at end of the week.
 STILL REMAINING
+- [ ] NEW: Tensorflow Dev Certificate Course: (in keras, certification for curriculum)
 - [ ] STUDY: Session 8 to Session 10 remaining
 - [ ] STUDY: Pass 2 of Deeper Mastery with focus on VISUAL components
   - [ ] Math3Brown: NN

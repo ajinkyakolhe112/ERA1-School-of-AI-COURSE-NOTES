@@ -2,6 +2,7 @@ vars()
 dir()
 locals(), globals()
 help()
+print(np.zeros.__doc__) # prints doc string of the function
 
 from loguru import logger
 logger.debug("loguru debug")

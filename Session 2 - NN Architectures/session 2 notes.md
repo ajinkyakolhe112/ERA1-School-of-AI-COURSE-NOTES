@@ -9,11 +9,11 @@
 6. Data Loader for model
 
 ## NN Design PLACES SELF
-1. Use EXCEL. Visual formula
-2. Use Markdown Maths Equation. Maths Formula
+1. *FIRST**Tensorflow Playground Visual Architecture
+1. **SECOND**. Use EXCEL. Visual formula. Always
+2. **THIRD**Use Markdown Maths Equation. Maths Formula
 3. Code: Keras just for architecture
 4. Code: Pytorch
-5. Tensorflow Playground Visual Architecture
 6. Text File, Numerical Calculation
 7. Markdown Table
 
