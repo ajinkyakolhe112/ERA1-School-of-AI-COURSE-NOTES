@@ -1,7 +1,7 @@
 ## Week 12 Status
 
 TODOs
-- [ ] Finish C1:                            ![](https://geps.dev/progress/70)
+- [ ] Finish C1:                            ![](https://geps.dev/progress/80)
 - [ ] Kaggle - Mnist & Cifar Competition:   ![](https://geps.dev/progress/0)
 - [ ] ERA Session 10:                       ![](https://geps.dev/progress/0)
 - [ ] Extra
