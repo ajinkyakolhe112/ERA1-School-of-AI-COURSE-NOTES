@@ -43,3 +43,12 @@ Power of neurons table
 
 **Brain Diagram**
 Cerebellum vs Motor Cortex
+
+
+Landscapes in Deep Learning
+Error wrt Weights
+And Dataset of all Data points. Generally > 1 million data points
+
+Weights - random
+- Y = f(dataset_x,W)
+- E = f(dataset_x,W) - dataset_y
