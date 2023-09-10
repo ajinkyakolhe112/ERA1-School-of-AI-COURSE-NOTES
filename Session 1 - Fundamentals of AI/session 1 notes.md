@@ -33,3 +33,24 @@ Experiment
    1. [Channel Notes & Experiments colab](https://colab.research.google.com/drive/1cKqF4fO5eWTOITeeFfe5Oy0fERGmiuML)
 6. Python Memory Profile & Python Execution Profile
 
+
+
+Image Data = (Channels, Height Pixels, Width Pixels)
+**Color Depth = 8bits color depth**
+- Image Dataset format is: (Number of Examples, Number of Channels, Height Pixels, Width Pixels)
+- 1 Pixel = Total number of shades of color. Color Depth = bits per color. 
+- Human Vision Color Depth = 8bits per color. We see 3 such colors, Red, Green & Blue
+
+https://en.wikipedia.org/wiki/Color_depth
+- Human Eye   = 10 million colors. 
+- TV          = 24 bits for rgb = 2^24 = 16.7 million colors
+- TV          = 30 bits for rgb = 2^30 = 1.07 billion colors = 64 times more colors than 24 bit
+
+vs "Total Pixels with that Color Depth"
+- Human Eye       = Total Simulated Megapixels 576. Actual megpixels = 7 mega pixels at center
+- TV Resolution   = 1920 * 1080 pixels (1080p)    = 2    mega pixels 
+- TV Resolution   = 3840 * 2160 pixels (4K)       = 8.3  mega pixels
+- TV Resolution   = 7680 * 4320 pixels (8K)       = 16.3 mega pixels
+
+Colored Image = Color Channel * Height Pixels * Width Pixels
+Each Pixel    = 8bit Color Depth Color
