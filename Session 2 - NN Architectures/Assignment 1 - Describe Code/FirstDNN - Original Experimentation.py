@@ -84,7 +84,7 @@ class CustomReshape(nn.Module): # NO RESHAPE IN PYTORCH
     
     def forward(self,x):
         try:
-          return x.view(-1,self.shape) # view function in Tensor module not in torch.nn.functional module
+            return x.view(-1,self.shape) # view function in Tensor module not in torch.nn.functional module
         except ReshapeNotPossibleError:
             pass
         # return x.view(*self.shape)
@@ -130,11 +130,8 @@ Data fed Batch by Batch
 A Single Neuron we put. It's a building block of learning. Each Single Neuron is just X_batch \odot W_neuronNo
 Every Single Neuron, according to Error Value, corrects its individual weights, according to each's contribution to Error
 W = horizontal array of weights. 
-
-
-Human Brain Hz = one Cycle in seconds. One second calculations
-Computer Brain Hz = one Cycle in second. One second calculations
 """
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F # functional module is all the Classes in nn module but in format of functions. Simple functions. F.relu F.selu() F.conv2d
@@ -167,33 +164,4 @@ class CustomReshape(nn.Module):
     def forward(self,inputData):
         torch.nn.functional.view
 # customNeural Network + CustomLayer in that network + Functional Pytorch for forward. extending forward pass for each.
-
-"""
-Model Architecture & Parameters
-Data fed Batch by Batch
-
-1. initialization of layers & parameters
-1. FOR Data fed batch by batch
-2. FOR forward pass layer by layer
-3. error calculation at last layer. (Activation Function Choosen)
-4. FOR Error back propogation reverse layer by layer
-5. Weight Update accordingly
-"""
-
-"""
-A Single Neuron we put. It's a building block of learning. Each Single Neuron is just X_batch \odot W_neuronNo
-Every Single Neuron, according to Error Value, corrects its individual weights, according to each's contribution to Error
-W = horizontal array of weights. 
-
-
-Human Brain Hz = one Cycle in seconds. One second calculations
-Computer Brain Hz = one Cycle in second. One second calculations
-"""
-import torch
-import torch.nn as nn
-import torch.nn.functional as F # functional module is all the Classes in nn module but in format of functions. Simple functions. F.relu F.selu() F.conv2d
-import torch.nn.functional as functions
-
-## Layers in pytorch, actually are nothing but functions from functional module being called with inputX * Weight + Bias. 
-## Layer is a class instantiated with its internal variables or parameters being updated for all batches of data. 
 

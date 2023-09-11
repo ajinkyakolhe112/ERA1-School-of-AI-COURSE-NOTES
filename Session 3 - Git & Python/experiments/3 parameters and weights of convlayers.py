@@ -7,7 +7,9 @@ from torchinfo import summary
 from torchvision import datasets,transforms
 from sklearn import datasets as toysets
 
-linear11= nn.Linear(1,1)
+# in_features vs out_features
+
+linear11 = nn.Linear(1,1)
 linear12 = nn.Linear(1,2)
 linear21 = nn.Linear(2,1)
 linear22 = nn.Linear(2,2)

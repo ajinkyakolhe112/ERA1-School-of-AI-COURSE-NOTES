@@ -1,12 +1,10 @@
 
 **Why & how to Revision**
-- Before: Read & Confirm. But in brain its simply running recognition algorithm. And general thinking
+- Before: Read & Confirm. But in brain its simply running recognition algorithm. Recogniztion, not being able to recreate when needed
+- Build your own, from scratch model, so that revision, is a creationist activity. Not just passive reading.
+- Each time connect to all the existing information in brain..
 - Improvement: While reading, in mind build entire knowledge mental model from scratch, with logical connections. Like Rohan. This will access through brain's neural network & build knowledge. 
-Build your own, from scratch model, so that revision, is a creationist activity. Not just passive reading.
-Each time connect to all the existing information in brain..
 
-
-**
 ```python
 input, output
 for layer in model.layers:
@@ -31,24 +29,6 @@ using 22 because 10 value is also num_classes. hence choosing number higher. 22.
 - 7k parameters. mnist. (28,28,1) -> fc 784 to 22 -> fc 22 to 10 -> (1,10)
 - 7k parameters. mnist. (28,28,1) -> conv2d (ch_out = 22, k = 28 ) -> fc 22 to 10 -> (1,10)
 
----
-**Brain Diagram**
-Area & neurons: Gets this `"Narrow Intelligence"` task Done
-
 Power of neurons table  
 - wasp. 5000 neurons: Survival, Navigation in 3d, Movement for navigation with reading sensor data 
 - human. 88 billion neurons: 
-
-----
-
-**Brain Diagram**
-Cerebellum vs Motor Cortex
-
-
-Landscapes in Deep Learning
-Error wrt Weights
-And Dataset of all Data points. Generally > 1 million data points
-
-Weights - random
-- Y = f(dataset_x,W)
-- E = f(dataset_x,W) - dataset_y

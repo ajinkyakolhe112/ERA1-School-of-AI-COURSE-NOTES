@@ -4,15 +4,14 @@ import builtins # names of built-in functions and variables
 dir(builtins)
 # we are importing more functions & variables from libraries we will need
 
-import torch 
-#%% [markdown]
+import torch
 # 1. `import torch` module. It contains Tensors, Random Sampling methods group, Math Operations & torch compile . 
 # 2. to check what each module is importing, execute
 #   - dir(torch)
 #   - vars(torch)
 
 import torch.nn as nn
-# nn basic building block for NN. Layers, Activations, Loss Functions. Each is extendible. 
+# nn basic building block for NN. Layers, Activations, Loss Functions. Each is extendable. 
 # Base: nn.Containers module. Imp once are (nn.Module, nn.Sequential), nn.ParameterDict. Extra forward & backward pre & post hooks.  
 # Details of nn.Module: essential methods to override init & forward. 
 # Module.training<Status> represents whether this module is in training or evaluation mode.

@@ -43,13 +43,13 @@ class FirstDNN(nn.Module):
 	def __init__(self):
 		super(FirstDNN, self).__init__()
 		# r_in:1, n_in:28, j_in:1, s:1, r_out:3, n_out:28, j_out:1
-		self.conv1 = nn.Conv2d(1, 32, 3, padding=1)
+		self.conv1 = nn.Conv2d(1, 32, 3, padding= 1)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
-		self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
+		self.conv2 = nn.Conv2d(32, 64, 3, padding= 1)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
 		self.pool1 = nn.MaxPool2d(2, 2)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
-		self.conv3 = nn.Conv2d(64, 128, 3, padding=1)
+		self.conv3 = nn.Conv2d(64, 128, 3, padding= 1)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
 		self.conv4 = nn.Conv2d(128, 256, 3, padding = 1)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:

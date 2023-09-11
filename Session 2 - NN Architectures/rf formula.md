@@ -18,7 +18,7 @@ img &= (H,W,C)\\
 kernel &= (k,k,C)\\
 output &= (reduced, reduced, 1)\\
 \\
-height_{output} &= \frac {(height_{input} - kernel + 2 \cdot padding )}{stride} + 1 \tag{1}\\
+height_{output} &= \frac {(height_{input} + 2 \cdot padding - (kernel - 1)  )}{stride} \tag{1}\\
 \end{align*}
 $$
 
