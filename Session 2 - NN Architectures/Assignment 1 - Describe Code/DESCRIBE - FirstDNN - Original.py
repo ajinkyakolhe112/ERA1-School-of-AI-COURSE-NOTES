@@ -43,23 +43,23 @@ class FirstDNN(nn.Module):
 	def __init__(self):
 		super(FirstDNN, self).__init__()
 		# r_in:1, n_in:28, j_in:1, s:1, r_out:3, n_out:28, j_out:1
-		self.conv1 = nn.Conv2d(1, 32, 3, padding= 1)
+		self.conv1 = nn.Conv2d(in_channels=1, out_channels=32, kernel_size=3, padding= 1)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
-		self.conv2 = nn.Conv2d(32, 64, 3, padding= 1)
+		self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding= 1)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
-		self.pool1 = nn.MaxPool2d(2, 2)
+		self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
-		self.conv3 = nn.Conv2d(64, 128, 3, padding= 1)
+		self.conv3 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding= 1)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
-		self.conv4 = nn.Conv2d(128, 256, 3, padding = 1)
+		self.conv4 = nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, padding = 1)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
-		self.pool2 = nn.MaxPool2d(2, 2)
+		self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
-		self.conv5 = nn.Conv2d(256, 512, 3)
+		self.conv5 = nn.Conv2d(in_channels=256, out_channels=512, kernel_size=3)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
-		self.conv6 = nn.Conv2d(512, 1024, 3)
+		self.conv6 = nn.Conv2d(in_channels=512, out_channels=1024, kernel_size=3)
 		# r_in: , n_in: , j_in: , s: , r_out: , n_out: , j_out:
-		self.conv7 = nn.Conv2d(1024, 10, 3)
+		self.conv7 = nn.Conv2d(in_channels=1024, out_channels=10, kernel_size=3)
 	
 	# https://user-images.githubusercontent.com/498461/238034116-7db4cec0-7738-42df-8b67-afa971428d39.png
 	def forward(self, x):
